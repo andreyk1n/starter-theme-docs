@@ -1,20 +1,18 @@
-    <footer>
+<footer>
 
-    </footer>
+</footer>
 
 
-    <!-- У вашому HTML-файлі -->
-    <script src="js/functions/lazyImg.js" defer></script>
-    <script type="module" src="js/app.js"></script>
-    <script>
-      const sidebarLinks = document.querySelectorAll('.sidebar__link');
-      const currentPath = window.location.pathname.split('/').pop();
-      sidebarLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-          link.classList.add('currentPage');
-        }
-      });
-    </script>
-  </body>
+<!-- У вашому HTML-файлі -->
+<script src="js/functions/lazyImg.js" defer></script>
+<script type="module" src="js/app.js"></script>
+<script>
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.sidebar__link').forEach(link => {
+  if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
+});
+
+</script>
+</body>
 
 </html>
