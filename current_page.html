@@ -27,7 +27,7 @@
       <a href="get_started.html" class="sidebar__link">Встановлення і запуск</a>
       <a href="structure.html" class="sidebar__link">Структура</a>
       <a href="mixins.html" class="sidebar__link">Міксини</a>
-      <a href="#" class="sidebar__link">Визначення поточної сторінки</a>
+      <a href="current_page.html" class="sidebar__link">Визначення поточної сторінки</a>
       <a href="#" class="sidebar__link">Стікі хедер</a>
       <a href="#" class="sidebar__link">Бургер меню</a>
       <a href="#" class="sidebar__link">Спостерігач елементів</a>
@@ -42,9 +42,46 @@
     </nav>
   </aside>
       <main class="content">
-
-
-
+        <h1 class="content__title">Визначення класу для активної сторінки</h1>
+        <p class="content__text">
+          У цьому розділі описано функціонал для визначення активної сторінки та додавання класу <code class="code__inline">currentPage</code> до відповідного пункту меню.
+        </p>
+      
+        <h2 class="content__subtitle">Призначення</h2>
+        <p class="content__text">
+          Скрипт додає клас <code class="code__inline">currentPage</code> до елемента навігації, URL якого відповідає поточній сторінці. Це забезпечує візуальне виділення активного пункту меню.
+        </p>
+      
+        <h2 class="content__subtitle">Реалізація</h2>
+        <p class="content__text">
+          Основна логіка знаходиться у файлі <code class="code__inline">currentPage.js</code>, який розташований у папці <code class="code__inline">functions</code>. Цей файл підключається через <code class="code__inline">app.js</code>.
+        </p>
+        <pre class="code">
+          <code>
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav__link').forEach(link => {
+          if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
+      });
+          </code>
+        </pre>
+        <h3 class="content__subtitle">Підключення</h3>
+        <p class="content__text">
+          У файлі <code class="code__inline">app.js</code> підключається скрипт <code class="code__inline">currentPage.js</code>, щоб функція додавання класу працювала коректно.
+        </p>
+      
+        <h2 class="content__subtitle">Клас <code>currentPage</code></h2>
+        <p class="content__text">
+          Для стилізації активного пункту меню використовується клас <code class="code__inline">currentPage</code>, який можна визначити у CSS, наприклад:
+        </p>
+        <pre class="code">
+          <code>
+      .currentPage {
+          font-weight: bold;
+          text-decoration: underline;
+      }
+          </code>
+        </pre>
+      
         <footer>
 
 </footer>
@@ -64,6 +101,7 @@ document.querySelectorAll('.sidebar__link').forEach(link => {
 
 </html>
       </main>
+      
     </div>
   </div>
 
