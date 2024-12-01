@@ -1,0 +1,108 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'header';
+@use 'footer';
+
+
+// Підключення стилів аккордіону
+// @use 'accordion';
+
+// Підключення стилів табів
+// @use 'tabs';
+
+// Підключення стилізації модальних вікон та поп-апів
+// @use 'modal';
+
+// Підключення базової стилізації кастомного селекту
+// @use 'customSelect';
+
+// За потреби можна підключати анімації за клосом
+// @use 'animation';
+
+// Для стартових налаштувнань теми
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    color: $fontColor;
+    background-color: $bgColor;
+    overflow-x: hidden;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+}
+
+.page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+// Обмежуючий контейнер - цей контейнер часто зустрічається в проектах, якщо сайт має певну геометрію.
+[class*='__container'] {
+    max-width: $maxWidthContainer;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px
+}
+
+// Застосування стилів для посилання: колір, час анімації, активний стан.
+a {
+    color: $linkColor;
+    text-decoration: none;
+    transition-duration: $transitionDuration;
+}
+
+a:hover {
+    color: $linkHoverColor;
+}
+
+a:active {
+    color: $activeColor;
+}
+
+// Застосування стилів для кнопкки з класом .button
+.button {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $buttonBgColor;
+    transition-duration: $transitionDuration;
+    color: $buttonFontColor;
+    padding: $buttonPaddings;
+    border-radius: $buttonBorderRadius;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+}
+
+.button:hover {
+    background-color: $buttonHover;
+}
+
+.button:active {
+    background-color: $buttonActive;
+}
+
+// Загальні стилі для списків
+ol, ul {
+    padding-left: 20px;
+    li:not(:last-child) {
+        padding-bottom: 15px;
+    }
+}
+
+h1 {
+    @include adaptiveValue('font-size', 50px, 10px);
+}
