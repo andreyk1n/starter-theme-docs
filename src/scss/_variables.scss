@@ -34,7 +34,7 @@ $buttonHover: lightBlue;
 $buttonActive: rgb(16, 77, 97);
 
 // Обмеження контейнера
-$maxWidthContainer: 1170px;
+$maxWidthContainer: 1240px;
 $paddingContainer: 15px;
 
 // Адаптив
@@ -49,3 +49,17 @@ $desktopBig: 1400px;
 
 // Перехід
 $transitionDuration: .5s;
+
+// test
+
+$color-bg: #f4f4f9;
+$color-sidebar: #333;
+$color-text: #444;
+$color-link: #007bff;
+$color-link-hover: darken($color-link, 10%);
+$color-code-bg: #272822;
+$color-code-text: #f8f8f2;
+
+$spacing-unit: 1rem;
+$font-base: 16px;
+
