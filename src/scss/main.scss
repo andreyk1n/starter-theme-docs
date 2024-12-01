@@ -137,6 +137,7 @@ h2, h3 {
   padding: 1rem;
   color: #444;
   margin-left: 320px;
+  padding: 0 25px;
 
   p {
     margin-bottom: 1rem;
@@ -148,6 +149,7 @@ h2, h3 {
     font-family: 'Courier New', Courier, monospace;
     padding: 0.25em 0.5em;
     border-radius: 4px;
+    overflow-x: auto;
   }
 
   pre {
