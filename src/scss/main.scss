@@ -44,8 +44,9 @@ body {
         display: flex;
         gap: 40px;
         background-color: #f4f4f9;
-        font-size: 16px;
+        font-size: 18px;
         line-height: 1.6;
+        min-height: 100vh;
     }
 }
 
@@ -115,6 +116,10 @@ ol, ul {
 
 h1 {
     @include adaptiveValue('font-size', 50px, 10px);
+}
+
+.currentPage {
+  background-color: #484848;
 }
 
 .content {
