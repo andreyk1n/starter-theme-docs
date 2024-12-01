@@ -1,0 +1,44 @@
+@@include('head.html')
+
+<body>
+
+  <div class="wrapper">
+    <div class="wrapper__container">
+      @@include('sidebar.html')
+      <main class="content">
+        <h1 class="content__title">Початкова структура проекту</h1>
+        <p class="content__text">
+          Нижче наведена структура проекту, яка включає всі необхідні папки та файли для роботи:
+        </p>
+        <pre class="code">
+          <code>
+      project-folder/
+      │
+      ├── src/  ---- наше середовище для розробки
+      │   ├── partials/
+      │   │   ├── header.html
+      │   │   └── footer.html
+      │   ├── pages/
+      │   │   └── index.html
+      │   ├── scss/
+      │   │   └── main.scss
+      │
+      ├── dist/   ---- вміст папки генерується галпом
+      │   ├── css/ main.min.css
+      │   ├── js/
+      |   ├── images/  ---- усі медіафайли 
+      │   │   ├── Functions/
+      │   │   │   В цій папці знаходяться усі скрипти компонентів
+      │   │   └── app.js   --- середовище підключення функціоналу компонентів
+      │   └── index.html – і решта сторінок якщо ще є
+      │
+      ├── gulpfile.js
+      ├── package.json
+      └── .gitignore
+          </code>
+        </pre>
+        @@include('footer.html')
+      </main>
+    </div>
+  </div>
+
