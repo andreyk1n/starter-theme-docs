@@ -3,27 +3,70 @@
 <body>
 
   <div class="wrapper">
-      <div class="wrapper__container">
+    <div class="wrapper__container">
       @@include('sidebar.html')
       <main class="content">
-        <h1 class="content__title">Documentation</h1>
+        <h1 class="content__title">Вступ</h1>
         <p class="content__text">
-          Welcome to the documentation! Here you will find all the information needed to get started with our product.
-        </p>
-        <h2 class="content__subtitle">Code Example</h2>
-        <pre class="code">
-          <code>
-            const greet = () => console.log("Hello, World!");
-            greet();
-          </code>
-        </pre>
-        <p class="content__text">
-          This code demonstrates a simple JavaScript function.
+          Ця стартова тема є готовим рішенням для швидкої та зручної розробки сучасних вебсайтів. Вона створена для
+          спрощення процесу верстання, організації структури проєкту та забезпечення базового функціоналу, необхідного
+          для роботи з різними типами контенту. Завдяки цій темі ви зможете зосередитися на створенні унікального
+          дизайну та функціональності вашого проєкту, заощаджуючи час на налаштування базових аспектів.
         </p>
 
+        <h2 class="content__subtitle">Основні особливості:</h2>
+        <ul class="content__list">
+          <li class="content__list-item">
+            <strong>Організована структура файлів:</strong> Всі компоненти розділені за функціональними групами, що
+            полегшує пошук і редагування коду.
+          </li>
+          <li class="content__list-item">
+            <strong>Адаптивність і масштабованість:</strong> Використання сучасних підходів до верстання забезпечує
+            підтримку різних роздільностей екрана та пристроїв.
+          </li>
+          <li class="content__list-item">
+            <strong>Готові функціональні модулі:</strong> Тема включає попередньо налаштований JavaScript і SCSS, що
+            дозволяє швидко реалізовувати поширені функції, такі як анімації, аккордеони, таби тощо.
+          </li>
+        </ul>
+
+        <h2 class="content__subtitle">Для кого призначена ця тема:</h2>
+        <ul class="content__list">
+          <li class="content__list-item">
+            <strong>Верстальники та фронтенд-розробники:</strong> Для прискорення створення прототипів і остаточних
+            версій сайтів.
+          </li>
+          <li class="content__list-item">
+            <strong>Новачки:</strong> Як навчальний інструмент, що демонструє структуру організованого проєкту.
+          </li>
+          <li class="content__list-item">
+            <strong>Досвідчені розробники:</strong> Як база для кастомізації та розширення відповідно до потреб клієнтів
+            або власних проєктів.
+          </li>
+        </ul>
+
+        <h2 class="content__subtitle">Як працювати з темою:</h2>
+        <ol class="content__list content__list--ordered">
+          <li class="content__list-item">
+            Визначте основні вимоги до сайту на основі наданого дизайну.
+          </li>
+          <li class="content__list-item">
+            Налаштуйте стартову тему відповідно до ваших потреб, змінивши стилі, компоненти або функціонал.
+          </li>
+          <li class="content__list-item">
+            Використовуйте попередньо налаштовані модулі для швидкої реалізації функцій.
+          </li>
+          <li class="content__list-item">
+            Оптимізуйте кінцевий продукт перед розгортанням у продакшн.
+          </li>
+        </ol>
+
+        <p class="content__text">
+          Ця стартова тема є надійною основою для будь-якого типу проєктів — від простих лендингів до складних
+          корпоративних сайтів.
+        </p>
+        @@include('footer.html')
       </main>
     </div>
   </div>
-
-@@include('footer.html')
 
