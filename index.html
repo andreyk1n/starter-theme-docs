@@ -27,6 +27,7 @@
       <a href="get_started.html" class="sidebar__link">Встановлення і запуск</a>
       <a href="#" class="sidebar__link">Структура</a>
       <a href="#" class="sidebar__link">Міксини</a>
+      <a href="#" class="sidebar__link">Визначення поточної сторінки</a>
       <a href="#" class="sidebar__link">Стікі хедер</a>
       <a href="#" class="sidebar__link">Бургер меню</a>
       <a href="#" class="sidebar__link">Спостерігач елементів</a>
@@ -37,6 +38,7 @@
       <a href="#" class="sidebar__link">Анімація цифрового лічильника</a>
       <a href="#" class="sidebar__link">Таймер для модального вікна</a>
       <a href="#" class="sidebar__link">Контакти</a>
+      <p>v.1.4.4</p>
     </nav>
   </aside>
       <main class="content">
@@ -59,24 +61,22 @@
     </div>
   </div>
 
-    <footer>
+<footer>
 
-    </footer>
+</footer>
 
 
-    <!-- У вашому HTML-файлі -->
-    <script src="js/functions/lazyImg.js" defer></script>
-    <script type="module" src="js/app.js"></script>
-    <script>
-      const sidebarLinks = document.querySelectorAll('.sidebar__link');
-      const currentPath = window.location.pathname.split('/').pop();
-      sidebarLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-          link.classList.add('currentPage');
-        }
-      });
-    </script>
-  </body>
+<!-- У вашому HTML-файлі -->
+<script src="js/functions/lazyImg.js" defer></script>
+<script type="module" src="js/app.js"></script>
+<script>
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.sidebar__link').forEach(link => {
+  if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
+});
+
+</script>
+</body>
 
 </html>
 
