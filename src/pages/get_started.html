@@ -3,27 +3,63 @@
 <body>
 
   <div class="wrapper">
-      <div class="wrapper__container">
+    <div class="wrapper__container">
       @@include('sidebar.html')
       <main class="content">
-        <h1 class="content__title">Get started</h1>
+        <h1 class="content__title">Інструкція з ініціалізації та розгортання</h1>
+
+        <h2 class="content__subtitle">Ініціалізація теми</h2>
         <p class="content__text">
-          Welcome to the documentation! Here you will find all the information needed to get started with our product.
+          Для початку роботи з темою виконайте наступні команди:
         </p>
-        <h2 class="content__subtitle">Code Example</h2>
         <pre class="code">
-          <code>
-            const greet = () => console.log("Hello, World!");
-            greet();
-          </code>
-        </pre>
+            <code>
+npm install
+gulp
+            </code>
+          </pre>
+
+        <h2 class="content__subtitle">Розгортання проєкту на GitHub Pages</h2>
         <p class="content__text">
-          This code demonstrates a simple JavaScript function.
+          Використовуйте ці кроки для розгортання вашого проєкту з Gulp на GitHub Pages:
         </p>
-
+        <ol class="content__list content__list--ordered">
+          <li class="content__list-item">
+            <strong>Зібрати проєкт локально:</strong> Виконайте всі команди для збірки (наприклад, <code>gulp</code>).
+            Це створить статичну версію проєкту у папці для результатів (зазвичай <code>dist</code> або
+            <code>build</code>).
+          </li>
+          <li class="content__list-item">
+            <strong>Підготуйте <code>dist</code> або <code>build</code> для розгортання:</strong> Після збірки проєкту
+            переконайтеся, що GitHub Pages налаштовано для розгортання з цієї папки.
+          </li>
+          <li class="content__list-item">
+            <strong>Створіть гілку <code>gh-pages</code>:</strong> Для розгортання тільки з папки <code>dist</code>,
+            створіть нову гілку <code>gh-pages</code> та завантажте туди лише вміст цієї папки:
+            <pre class="code">
+                <code>
+git checkout --orphan gh-pages
+git --work-tree dist add --all
+git --work-tree dist commit -m "Deploy to GitHub Pages"
+git push origin gh-pages --force
+                </code>
+              </pre>
+          </li>
+          <li class="content__list-item">
+            <strong>Налаштуйте GitHub Pages:</strong> Вкажіть GitHub використовувати гілку <code>gh-pages</code> для
+            розгортання:
+            <ul class="content__list">
+              <li class="content__list-item">Відкрийте налаштування вашого репозиторію на GitHub.</li>
+              <li class="content__list-item">У розділі "GitHub Pages" оберіть <code>gh-pages</code> як основну гілку для
+                розгортання.</li>
+            </ul>
+          </li>
+          <li class="content__list-item">
+            <strong>Перевірте розгортання:</strong> Через кілька хвилин ваш сайт стане доступним за URL:
+            <code>https://&lt;ваше_ім'я_користувача&gt;.github.io/&lt;назва_репозиторію&gt;</code>.
+          </li>
+        </ol>
         @@include('footer.html')
-
       </main>
     </div>
   </div>
-
