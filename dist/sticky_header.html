@@ -42,37 +42,67 @@
     </nav>
   </aside>
       <main class="content">
-        <h1 class="content__title">Початкова структура проекту</h1>
+        <h1 class="content__title">Скрипт приховування/показу заголовка при прокручуванні</h1>
         <p class="content__text">
-          Нижче наведена структура проекту, яка включає всі необхідні папки та файли для роботи:
+          У цьому розділі описано функціонал, який забезпечує динамічне приховування та показ заголовка сторінки (header) залежно від напряму прокручування сторінки.
+        </p>
+      
+        <h2 class="content__subtitle">Призначення</h2>
+        <p class="content__text">
+          Скрипт додає інтерактивність до заголовка, приховуючи його під час прокручування сторінки вниз і показуючи при прокручуванні вгору або при поверненні до початку сторінки.
+        </p>
+      
+        <h2 class="content__subtitle">Реалізація</h2>
+        <p class="content__text">
+          Логіка реалізована за допомогою обробника події <code class="code__inline">scroll</code>. Скрипт знаходиться в окремому файлі, <code class="code__inline">scrollHeader.js</code>, який підключається через <code class="code__inline">app.js</code>.
+        </p>
+        <pre class="code">
+          <code>
+      let lastScrollTop = 0;
+      window.addEventListener('scroll', () => {
+          const scrollTop = window.pageYOffset;
+          document.querySelector('.header').style.top = (scrollTop <= 10 || scrollTop < lastScrollTop) ? '0' : '-100px';
+          lastScrollTop = scrollTop;
+      });
+          </code>
+        </pre>
+      
+        <h2 class="content__subtitle">Структура проекту</h2>
+        <p class="content__text">
+          Файли, пов'язані з функціоналом, мають наступну структуру:
         </p>
         <pre class="code">
           <code>
       project-folder/
-      │
-      ├── src/  ---- наше середовище для розробки
-      │   ├── partials/
-      │   │   ├── header.html
-      │   │   └── footer.html
-      │   ├── pages/
-      │   │   └── index.html
-      │   ├── scss/
-      │   │   └── main.scss
-      │
-      ├── dist/   ---- вміст папки генерується галпом
-      │   ├── css/ main.min.css
+      ├── src/
       │   ├── js/
-      |   ├── images/  ---- усі медіафайли 
-      │   │   ├── Functions/
-      │   │   │   В цій папці знаходяться усі скрипти компонентів
-      │   │   └── app.js   --- середовище підключення функціоналу компонентів
-      │   └── index.html – і решта сторінок якщо ще є
-      │
-      ├── gulpfile.js
-      ├── package.json
-      └── .gitignore
+      │   │   ├── functions/
+      │   │   │   └── scrollHeader.js
+      │   │   └── app.js
           </code>
         </pre>
+      
+        <h2 class="content__subtitle">Стилі заголовка</h2>
+        <p class="content__text">
+          Для коректної роботи функціоналу необхідно застосувати наступні стилі до заголовка:
+        </p>
+        <pre class="code">
+          <code>
+      .header {
+          z-index: 100;
+          width: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          transition: top 0.3s ease;
+      }
+          </code>
+        </pre>
+      
+        <h3 class="content__subtitle">Рекомендації</h3>
+        <p class="content__text">
+          Рекомендується використовувати властивість <code class="code__inline">transition</code> для забезпечення плавного переміщення заголовка при зміні його позиції.
+        </p>
         <footer class="footer">
   <div class="footer__container">
       <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
