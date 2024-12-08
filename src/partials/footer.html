@@ -15,6 +15,13 @@ document.querySelectorAll('.sidebar__link').forEach(link => {
   if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
 });
 
+const tempLinks = document.querySelectorAll('.temp');
+tempLinks.forEach(link => {
+    link.addEventListener('click', event => {
+        event.preventDefault(); 
+        window.location.href = 'temp.html';  
+    });
+});
 </script>
 </body>
 

@@ -68,18 +68,15 @@ body {
 
 
 // Застосування стилів для посилання: колір, час анімації, активний стан.
-a {
-    color: $linkColor;
+.content__link {
+    text-decoration: underline;
+    color: #484848;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.content__link:hover {
     text-decoration: none;
-    transition-duration: $transitionDuration;
-}
-
-a:hover {
-    color: $linkHoverColor;
-}
-
-a:active {
-    color: $activeColor;
 }
 
 // Застосування стилів для кнопкки з класом .button
