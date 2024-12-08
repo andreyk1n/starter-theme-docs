@@ -49,44 +49,76 @@
     </nav>
   </aside>
       <main class="content">
-        <h1 class="content__title">Скрипт та стилі для бургер-меню</h1>
+        <h1 class="content__title">Скрипт для динамічного переміщення елементів (moveTo.js)</h1>
         <p class="content__text">
-          У цьому розділі описується функціонал бургер-меню, яке використовується для адаптивної навігації, а також стилі, що забезпечують його коректну роботу.
+          У цьому розділі описується функціонал скрипта, що забезпечує динамічне переміщення елементів у DOM залежно від ширини вікна браузера.
         </p>
       
         <h2 class="content__subtitle">Призначення</h2>
         <p class="content__text">
-          Бургер-меню дозволяє відкривати та закривати навігаційне меню на мобільних пристроях. Користувач може взаємодіяти з меню за допомогою кліку на іконку бургера.
+          Скрипт `moveTo.js` переміщує елементи з одного контейнера в інший, якщо ширина вікна браузера менша або дорівнює заданому брейкпойнту. Це корисно для адаптивної верстки, де елементи повинні змінювати своє положення для кращої організації контенту.
         </p>
       
         <h2 class="content__subtitle">Реалізація</h2>
         <p class="content__text">
-          Функціонал меню реалізований у скрипті <code class="code__inline">initBurgerMenu.js</code>, який підключається через <code class="code__inline">app.js</code>. Код дозволяє відкривати меню при натисканні на бургер та закривати його при кліку за межами меню.
+          Основний функціонал реалізований у файлі <code class="code__inline">moveTo.js</code>, який підключається через <code class="code__inline">app.js</code>. Він використовує атрибути <code class="code__inline">data-move</code> для вказівки цільового контейнера та <code class="code__inline">data-breakpoint</code> для визначення умов переміщення.
         </p>
+        
         <pre class="code">
           <code>
-      document.addEventListener('DOMContentLoaded', () => {
-          const burger = document.querySelector('.header__burger');
-          const nav = document.querySelector('.header__nav');
-          const body = document.body;
+      document.addEventListener('DOMContentLoaded', function () {
+          console.log("moveElements готовий до роботи при запуску сторінки");
       
-          const toggleMenu = () => {
-              const isActive = burger.classList.toggle('active');
-              nav.classList.toggle('active', isActive);
-              body.classList.toggle('no-scroll', isActive);
-          };
+          const movedElements = document.querySelectorAll('[data-move]');
+          const originalContainers = new WeakMap();
+          const originalIndexes = new WeakMap();
       
-          burger.addEventListener('click', (e) => {
-              e.stopPropagation();
-              toggleMenu();
-          });
+          if (movedElements.length === 0) {
+              console.log("Не знайдено жодного елемента з атрибутом 'data-move'");
+          }
       
-          document.addEventListener('click', (e) => {
-              if (!nav.contains(e.target) && !burger.contains(e.target)) {
-                  burger.classList.remove('active');
-                  nav.classList.remove('active');
-                  body.classList.remove('no-scroll');
+          movedElements.forEach((element) => {
+              const targetSelector = element.getAttribute('data-move');
+              const breakpoint = parseInt(element.getAttribute('data-breakpoint'), 10);
+      
+              if (!targetSelector) {
+                  console.log(`Елемент (${element.className}) не має коректного атрибута 'data-move'`);
+                  return;
               }
+      
+              if (isNaN(breakpoint)) {
+                  console.log(`Елемент (${element.className}) не має коректного атрибута 'data-breakpoint'`);
+                  return;
+              }
+      
+              const parent = element.parentNode;
+              originalContainers.set(element, parent);
+              originalIndexes.set(element, Array.from(parent.children).indexOf(element));
+      
+              const moveElement = () => {
+                  if (window.innerWidth <= breakpoint) {
+                      const targetContainer = document.querySelector(targetSelector);
+                      if (targetContainer) {
+                          targetContainer.appendChild(element);
+                      } else {
+                          console.log(`Цільовий контейнер не знайдено для селектора (${targetSelector})`);
+                      }
+                  } else {
+                      const originalContainer = originalContainers.get(element);
+                      const originalIndex = originalIndexes.get(element);
+                      if (originalContainer) {
+                          const referenceNode = originalContainer.children[originalIndex];
+                          if (referenceNode) {
+                              originalContainer.insertBefore(element, referenceNode);
+                          } else {
+                              originalContainer.appendChild(element);
+                          }
+                      }
+                  }
+              };
+      
+              window.addEventListener('resize', moveElement);
+              moveElement();
           });
       });
           </code>
@@ -99,115 +131,17 @@
       ├── src/
       │   ├── js/
       │   │   ├── functions/
-      │   │   │   └── initBurgerMenu.js
+      │   │   │   └── moveTo.js
       │   │   └── app.js
-      │   ├── scss/
-      │   │   └── components/
-      │   │       └── _header.scss
+      │   ├── html/
+      │   │   └── index.html
           </code>
         </pre>
       
-        <h2 class="content__subtitle">CSS-стилі</h2>
+        <h2 class="content__subtitle">Приклад використання</h2>
         <p class="content__text">
-          Стилі оформлюють бургер-меню та забезпечують його коректну анімацію під час відкриття та закриття.
+          Для елемента можна додати атрибути <code class="code__inline">data-move</code> і <code class="code__inline">data-breakpoint</code>:
         </p>
-        <pre class="code">
-          <code>
-      .header {
-          z-index: 100;
-          width: 100%;
-          position: fixed;
-          top: 0;
-          left: 0;
-          transition: top 0.3s ease;
-      
-          &__nav {
-              width: 100%;
-              max-width: 715px;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              gap: 15px;
-      
-              @media (max-width: 768px) {
-                  position: absolute;
-                  right: -100%;
-                  top: 0;
-                  flex-direction: column;
-                  gap: 25px;
-                  align-items: center;
-                  justify-content: center;
-                  width: 100%;
-                  min-height: 100vh;
-                  background-color: #ffffff;
-                  transition: right 0.3s ease;
-              }
-      
-              &.active {
-                  right: 0;
-              }
-          }
-      
-          &__burger {
-              display: none;
-          }
-      
-          @media (max-width: 768px) {
-              &__burger {
-                  width: 40px;
-                  height: 30px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  cursor: pointer;
-                  position: relative;
-                  z-index: 11;
-      
-                  span {
-                      display: block;
-                      width: 100%;
-                      height: 2px;
-                      background-color: #333;
-                      position: relative;
-                      transition: all 0.3s ease;
-      
-                      &::before,
-                      &::after {
-                          content: "";
-                          position: absolute;
-                          width: 100%;
-                          height: 2px;
-                          background-color: #333;
-                          transition: all 0.3s ease;
-                      }
-      
-                      &::before {
-                          top: -10px;
-                      }
-      
-                      &::after {
-                          top: 10px;
-                      }
-                  }
-      
-                  &.active span {
-                      background-color: transparent;
-      
-                      &::before {
-                          top: 0;
-                          transform: rotate(45deg);
-                      }
-      
-                      &::after {
-                          top: 0;
-                          transform: rotate(-45deg);
-                      }
-                  }
-              }
-          }
-      }
-          </code>
-        </pre>
         <footer class="footer">
   <div class="footer__container">
       <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
@@ -232,3 +166,4 @@ document.querySelectorAll('.sidebar__link').forEach(link => {
       </main>
     </div>
   </div>
+
