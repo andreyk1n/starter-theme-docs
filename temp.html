@@ -49,81 +49,9 @@
       <p>v.1.4.4</p>
     </nav>
   </aside>
-      <main class="content">
-          <h1 class="content__title">Міксини та Функції</h1>
-          <p class="content__text">
-            У цьому розділі описані SCSS міксини та функції (файл _mixins.scss), які використовуються в проекті для спрощення розробки та забезпечення адаптивності стилів.
-          </p>
-        
-          <h2 class="content__subtitle">Міксини</h2>
-          <p class="content__text">
-            Міксини дозволяють повторно використовувати фрагменти CSS-коду з параметрами, що спрощує підтримку та розширення стилів.
-          </p>
-        
-          <h3 class="content__subtitle">Міксин <code>adaptiveValue</code></h3>
-          <p class="content__text">
-            Міксин <code>adaptiveValue</code> автоматично генерує адаптивні значення для вказаної CSS-властивості залежно від ширини екрану. Це корисно для таких властивостей, як шрифти, відступи або розміри елементів, забезпечуючи плавні переходи між різними роздільними здатностями.
-          </p>
-          <pre class="code">
-            <code>
-@mixin adaptiveValue($property, $maxValue, $minValue) {
-    // Стандартні брекпоїнти
-    $breakpoints: (
-        1200px,
-        992px,
-        768px,
-        576px,
-        480px,
-        360px,
-        320px
-    );
-
-    // Обчислюємо кількість кроків на основі кількості breakpoints
-    $steps: list.length($breakpoints);
-    $step-size: math.div(($maxValue - $minValue), $steps);
-
-    #{$property}: #{$maxValue};
-
-    @for $i from 1 through $steps {
-        $breakpoint: list.nth($breakpoints, $i);
-        $current-value: $maxValue - ($step-size * $i);
-
-        @media (max-width: $breakpoint) {
-            #{$property}: $current-value;
-        }
-    }
-}
-            </code>
-          </pre>
-        
-          <h2 class="content__subtitle">Функції</h2>
-          <p class="content__text">
-            Функції дозволяють виконувати обчислення та повертати значення, які можуть бути використані у стилях. Це допомагає зробити код більш гнучким та легким для підтримки.
-          </p>
-        
-          <h3 class="content__subtitle">Функція <code>toRem</code></h3>
-          <p class="content__text">
-            Функція <code>toRem</code> перетворює значення в пікселях у <code>rem</code>, що дозволяє забезпечити адаптивність тексту та елементів відносно кореневого розміру шрифту.
-          </p>
-          <pre class="code">
-            <code>
-@function toRem($px, $current: 16) {
-    @return ($px / $current) * 1rem;
-}
-            </code>
-          </pre>
-        
-          <h3 class="content__subtitle">Функція <code>toEm</code></h3>
-          <p class="content__text">
-            Функція <code>toEm</code> перетворює значення в пікселях у <code>em</code>, що дозволяє більш гнучко керувати розмірами елементів у відношенні до їх батьківських елементів.
-          </p>
-          <pre class="code">
-            <code>
-@function toEm($px, $current: 16) {
-    @return ($px / $current) * 1em;
-}
-            </code>
-          </pre>
+        <main class="content">
+            <h1 class="content__title">Ця сторінка знаходиться на етапі розробки/заповнення, поки раджу вам ознайомитись із іншими сторінками</h1>
+            <a class="content__link" href="mailto:andrii.panasiuk2002@gmail.com">Зворотній зв'язок. Проблеми. Пропозиції. Пишіть з радістю відповім.</a>
         <footer class="footer">
   <div class="footer__container">
       <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>

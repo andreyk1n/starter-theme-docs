@@ -39,12 +39,13 @@
       <a href="burger_menu.html" class="sidebar__link">Бургер меню</a>
       <a href="element_watcher.html" class="sidebar__link">Спостерігач елементів</a>
       <a href="move_to.html" class="sidebar__link">Динамічне перміщення</a>
-      <a href="#" class="sidebar__link">Аккордіон</a>
-      <a href="#" class="sidebar__link">Таби</a>
-      <a href="#" class="sidebar__link">Селект</a>
-      <a href="#" class="sidebar__link">Анімація цифрового лічильника</a>
-      <a href="#" class="sidebar__link">Таймер для модального вікна</a>
-      <a href="#" class="sidebar__link">Контакти</a>
+      <a href="#" class="sidebar__link temp">Аккордіон</a>
+      <a href="#" class="sidebar__link temp">Таби</a>
+      <a href="#" class="sidebar__link temp">Селект</a>
+      <a href="#" class="sidebar__link temp">Анімаційні заготовки шаблону</a>
+      <a href="#" class="sidebar__link temp">Анімація цифрового лічильника</a>
+      <a href="#" class="sidebar__link temp">Таймер для модального вікна</a>
+      <a href="#" class="sidebar__link temp">Контакти</a>
       <p>v.1.4.4</p>
     </nav>
   </aside>
@@ -97,6 +98,13 @@ document.querySelectorAll('.sidebar__link').forEach(link => {
   if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
 });
 
+const tempLinks = document.querySelectorAll('.temp');
+tempLinks.forEach(link => {
+    link.addEventListener('click', event => {
+        event.preventDefault(); 
+        window.location.href = 'temp.html';  
+    });
+});
 </script>
 </body>
 
