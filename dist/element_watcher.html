@@ -49,59 +49,90 @@
     </nav>
   </aside>
       <main class="content">
-        <h1 class="content__title">Інструкція з ініціалізації та розгортання</h1>
-
-        <h2 class="content__subtitle">Ініціалізація теми</h2>
+        <h1 class="content__title">Скрипт для відстеження елементів (Element Watcher)</h1>
         <p class="content__text">
-          Для початку роботи з темою виконайте наступні команди:
+          У цьому розділі описується функціонал скрипта, що відповідає за виявлення елементів, які стають видимими у вікні перегляду, а також можливість інтеграції з анімаціями.
+        </p>
+        
+        <h2 class="content__subtitle">Призначення</h2>
+        <p class="content__text">
+          Скрипт `elementWatcher.js` додає класи до елементів, які стають видимими у вікні перегляду, і дозволяє використовувати ці класи для активації анімацій або стилів.
+        </p>
+      
+        <h2 class="content__subtitle">Реалізація</h2>
+        <p class="content__text">
+          Основний функціонал реалізований у скрипті <code class="code__inline">elementWatcher.js</code>, який підключається через <code class="code__inline">app.js</code>. Він використовує API <code class="code__inline">IntersectionObserver</code> для спостереження за елементами з атрибутом <code class="code__inline">data-watch</code>.
+        </p>
+        
+        <pre class="code">
+          <code>
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log(`Element watcher --- Готовий до роботи.`);
+      
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+      
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                const element = entry.target;
+                if (entry.isIntersecting) {
+                    element.classList.add('_watcher--view');
+                    console.log(`Додано клас _watcher--view до елемента з класами: ${element.className}`);
+                } else {
+                    element.classList.remove('_watcher--view');
+                    console.log(`Видалено клас _watcher--view з елемента з класами: ${element.className}`);
+                }
+            });
+        };
+      
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+      
+        const elementsToWatch = document.querySelectorAll('[data-watch]');
+        elementsToWatch.forEach(element => observer.observe(element));
+      });
+          </code>
+        </pre>
+      
+        <h2 class="content__subtitle">Структура проекту</h2>
+        <pre class="code">
+          <code>
+      project-folder/
+      ├── src/
+      │   ├── js/
+      │   │   ├── functions/
+      │   │   │   └── elementWatcher.js
+      │   │   └── app.js
+      │   ├── scss/
+      │   │   └── components/
+      │   │       └── _animations.scss
+          </code>
+        </pre>
+      
+        <h2 class="content__subtitle">CSS-стилі</h2>
+        <p class="content__text">
+          Для інтеграції з анімаціями можна використовувати такі стилі:
         </p>
         <pre class="code">
-            <code>
-npm install
-gulp
-            </code>
-          </pre>
-
-        <h2 class="content__subtitle">Розгортання проєкту на GitHub Pages</h2>
+          <code>
+      .animated-section {
+          opacity: 0;
+          transform: translateY(50px);
+          transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      
+      .animated-section._watcher--view {
+          opacity: 1;
+          transform: translateY(0);
+      }
+          </code>
+        </pre>
         <p class="content__text">
-          Використовуйте ці кроки для розгортання вашого проєкту з Gulp на GitHub Pages:
-        </p>
-        <ol class="content__list content__list--ordered">
-          <li class="content__list-item">
-            <strong>Зібрати проєкт локально:</strong> Виконайте всі команди для збірки (наприклад, <code>gulp</code>).
-            Це створить статичну версію проєкту у папці для результатів (зазвичай <code>dist</code> або
-            <code>build</code>).
-          </li>
-          <li class="content__list-item">
-            <strong>Підготуйте <code>dist</code> або <code>build</code> для розгортання:</strong> Після збірки проєкту
-            переконайтеся, що GitHub Pages налаштовано для розгортання з цієї папки.
-          </li>
-          <li class="content__list-item">
-            <strong>Створіть гілку <code>gh-pages</code>:</strong> Для розгортання тільки з папки <code>dist</code>,
-            створіть нову гілку <code>gh-pages</code> та завантажте туди лише вміст цієї папки:
-            <pre class="code">
-                <code>
-git checkout --orphan gh-pages
-git --work-tree dist add --all
-git --work-tree dist commit -m "Deploy to GitHub Pages"
-git push origin gh-pages --force
-                </code>
-              </pre>
-          </li>
-          <li class="content__list-item">
-            <strong>Налаштуйте GitHub Pages:</strong> Вкажіть GitHub використовувати гілку <code>gh-pages</code> для
-            розгортання:
-            <ul class="content__list">
-              <li class="content__list-item">Відкрийте налаштування вашого репозиторію на GitHub.</li>
-              <li class="content__list-item">У розділі "GitHub Pages" оберіть <code>gh-pages</code> як основну гілку для
-                розгортання.</li>
-            </ul>
-          </li>
-          <li class="content__list-item">
-            <strong>Перевірте розгортання:</strong> Через кілька хвилин ваш сайт стане доступним за URL:
-            <code>https://&lt;ваше_ім'я_користувача&gt;.github.io/&lt;назва_репозиторію&gt;</code>.
-          </li>
-        </ol>
+            Або використовувати заготовки в файлі _animation.scss
+          </p>
+
         <footer class="footer">
   <div class="footer__container">
       <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
@@ -126,3 +157,4 @@ document.querySelectorAll('.sidebar__link').forEach(link => {
       </main>
     </div>
   </div>
+
