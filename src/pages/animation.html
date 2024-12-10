@@ -1,0 +1,56 @@
+@@include('head.html')
+
+<body>
+
+  <div class="wrapper">
+    <div class="wrapper__container">
+      @@include('sidebar.html')
+        <main class="content">
+            <h1 class="content__title">Анімаційні заготовки стартової теми</h1>
+            <p class="content__text">Стартова тема містить у собі базові анімаційні заготовки для появи блоків/тексту тощо. Вони коректно працюватимуть у зв'язці із <a href="/element_watcher.html"><code>elementWatcher.js</code></a>.</p>
+            <p class="content__text">Щоб анімації коректно працювали потрібно підключити стилі <code>_animation.scss</code> у файлі <code>main.scss</code>, також у файлі <code>app.js</code> необхідно підключити функціонал <code>elementWatcher.js</code>.</p>
+            <p class="content__text"><b>Як з цим працювати?</b></p>
+            <p class="content__text">Після підключення файлів стилів і функціоналу, задаємо необхідному блоку <code>data-watch</code> і клас який відповідає за потрібну вам анімацію.</p>
+            <p class="content__text">Нижче будуть показані усі анміації, які заготовлені в шаблоні:</p>
+            <div class="anim-block">
+                <div class="anim-block__content fadeIn" data-watch>Анімація .fadeIn</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content slideInLeft" data-watch>Анімація .slideInLeft</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content slideInRight" data-watch>Анімація .slideInRight</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content slideInUp" data-watch>Анімація .slideInUp</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content slideInDown" data-watch>Анімація .slideInDown</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content zoomIn" data-watch>Анімація .zoomIn</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content rotateIn" data-watch>Анімація .rotateIn</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content pulse" data-watch>Анімація .pulse</div>
+            </div>
+        
+            <div class="anim-block">
+                <div class="anim-block__content levitate" data-watch>Анімація .levitate</div>
+            </div>
+
+            <blockquote>Усі анімації можна кастомізувати під власні потреби, в стартовій темі вони тільки як заготовка. Проте варто пам'ятати, що перенасичення сайту анімаціями може погіршувати оптимізацію сайту (і звичайно візуальну складову теж, якщо анімації не доречні).</blockquote>
+        @@include('footer.html')
+      </main>
+    </div>
+  </div>
+
