@@ -6,7 +6,7 @@
 
 
 // Підключення стилів аккордіону
-// @use 'accordion';
+@use 'accordion';
 
 // Підключення стилів табів
 // @use 'tabs';
@@ -138,9 +138,12 @@ h2, h3 {
   margin-left: 320px;
   padding: 0 25px;
   overflow: hidden;
+  display: flex;
+    flex-direction: column;
+    gap: 15px;
 
   p {
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
   }
 
   code {
