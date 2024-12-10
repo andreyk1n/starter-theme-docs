@@ -49,67 +49,106 @@
       <p>v.1.4.4</p>
     </nav>
   </aside>
-      <main class="content">
-        <h1 class="content__title">Вступ</h1>
-        <p class="content__text">
-          Ця стартова тема є готовим рішенням для швидкої та зручної розробки сучасних вебсайтів. Вона створена для
-          спрощення процесу верстання, організації структури проєкту та забезпечення базового функціоналу, необхідного
-          для роботи з різними типами контенту. Завдяки цій темі ви зможете зосередитися на створенні унікального
-          дизайну та функціональності вашого проєкту, заощаджуючи час на налаштування базових аспектів.
-        </p>
+        <main class="content">
+            <h1 class="content__title">Кастомний селект</h1>
+            <p class="content__text">
+                Клас <code>select</code> використовується для контейнера самого елементу селекту. Він містить кнопку для відображення вибору та список варіантів, які можна вибрати. Клас <code>select__button</code> є кнопкою, яка показує поточний вибір і відкриває/закриває список. Клас <code>select__dropdown</code> відповідає за відображення списку варіантів, а клас <code>select__option</code> описує кожен варіант у списку. Клас <code>select__dropdown--active</code> додається до списку, коли він відкритий.
+            </p>
+            
+            <pre class="code">
+                <code>
+ &lt;div class="select"&gt;
+     &lt;button class="select__button" type="button"&gt;Оберіть варіант&lt;/button&gt;
+     &lt;ul class="select__dropdown"&gt;
+         &lt;li class="select__option" data-value="1"&gt;Варіант 1&lt;/li&gt;
+         &lt;li class="select__option" data-value="2"&gt;Варіант 2&lt;/li&gt;
+         &lt;li class="select__option" data-value="3"&gt;Варіант 3&lt;/li&gt;
+     &lt;/ul&gt;
+ &lt;/div&gt;
+                </code>
+            </pre>
+            <p class="content__text">Функція selectMenu (яка знаходиться в <code>app.js</code>) підключає функціонал кастомного селект меню. Також потрібно підключати стилі в <code>main.scss</code></p>
+            <pre class="code">
+                <code>
+export function selectMenu() {
+    document.addEventListener('click', (e) => {
+        // Закриваємо всі відкриті списки, окрім поточного
+        document.querySelectorAll('.select__dropdown').forEach(dropdown => {
+            const parentSelect = dropdown.closest('.select');
+            if (!parentSelect.contains(e.target)) {
+                dropdown.classList.remove('select__dropdown--active');
+            }
+        });
+    
+        // Обробка кліку по селекту
+        const select = e.target.closest('.select');
+        if (select) {
+            const dropdown = select.querySelector('.select__dropdown');
+            const button = select.querySelector('.select__button');
+    
+            // Перевіряємо, чи селект уже активний
+            const isActive = dropdown.classList.contains('select__dropdown--active');
+            dropdown.classList.toggle('select__dropdown--active', !isActive); // Тогл активстану
+    
+            // Обробка вибору опції
+            if (e.target.classList.contains('select__option')) {
+                button.textContent = e.target.textContent; // Оновлюємо текст кнопки
+                dropdown.classList.remove('select__dropdown--active'); // Закриваємо список пвибору
+            }
+        }
+    });
+}
+                </code>
+            </pre>
+            <p class="content__text">Стилізація кастомного селект меню</p>
+            <pre class="code">
+                <code>
+    .select {
+        position: relative;
+        width: 200px;
+        font-family: Arial, sans-serif;
+    }
 
-        <h2 class="content__subtitle">Основні особливості:</h2>
-        <ul class="content__list">
-          <li class="content__list-item">
-            <strong>Організована структура файлів:</strong> Всі компоненти розділені за функціональними групами, що
-            полегшує пошук і редагування коду.
-          </li>
-          <li class="content__list-item">
-            <strong>Адаптивність і масштабованість:</strong> Використання сучасних підходів до верстання забезпечує
-            підтримку різних роздільностей екрана та пристроїв.
-          </li>
-          <li class="content__list-item">
-            <strong>Готові функціональні модулі:</strong> Тема включає попередньо налаштований JavaScript і SCSS, що
-            дозволяє швидко реалізовувати поширені функції, такі як анімації, аккордеони, таби тощо.
-          </li>
-          
-        </ul>
+    .select__button {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        text-align: left;
+    }
 
-        <h2 class="content__subtitle">Для кого призначена ця тема:</h2>
-        <ul class="content__list">
-          <li class="content__list-item">
-            <strong>Верстальники та фронтенд-розробники:</strong> Для прискорення створення прототипів і остаточних
-            версій сайтів.
-          </li>
-          <li class="content__list-item">
-            <strong>Новачки:</strong> Як навчальний інструмент, що демонструє структуру організованого проєкту.
-          </li>
-          <li class="content__list-item">
-            <strong>Досвідчені розробники:</strong> Як база для кастомізації та розширення відповідно до потреб клієнтів
-            або власних проєктів.
-          </li>
-        </ul>
+    .select__dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 0;
+        overflow: auto;
+        background: #fff;
+        transition: max-height 0.3s ease;
+        z-index: 10;
+        list-style: none;
+        padding-left: 0;
+    }
 
-        <h2 class="content__subtitle">Як працювати з темою:</h2>
-        <ol class="content__list content__list--ordered">
-          <li class="content__list-item">
-            Визначте основні вимоги до сайту на основі наданого дизайну.
-          </li>
-          <li class="content__list-item">
-            Налаштуйте стартову тему відповідно до ваших потреб, змінивши стилі, компоненти або функціонал.
-          </li>
-          <li class="content__list-item">
-            Використовуйте попередньо налаштовані модулі для швидкої реалізації функцій.
-          </li>
-          <li class="content__list-item">
-            Оптимізуйте кінцевий продукт перед розгортанням у продакшн.
-          </li>
-        </ol>
+    .select__dropdown--active {
+        max-height: 150px;
+        border: 1px solid gray;
+    }
 
-        <p class="content__text">
-          Ця стартова тема є надійною основою для будь-якого типу проєктів — від простих лендингів до складних
-          корпоративних сайтів.
-        </p>
+    .select__option {
+        padding: 10px;
+        margin-left: 0;
+        cursor: pointer;
+    }
+
+    .select__option:hover {
+        background-color: #f0f0f0;
+    }
+                </code>
+            </pre>
+            
         <footer class="footer">
   <div class="footer__container">
       <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
@@ -141,3 +180,4 @@ tempLinks.forEach(link => {
       </main>
     </div>
   </div>
+

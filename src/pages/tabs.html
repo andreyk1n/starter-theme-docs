@@ -28,47 +28,49 @@
         &lt;/div&gt;
             </code>
           </pre>
-        
+          <p class="content__text">Клас <code>tabs</code> необхідний для контейнера з усіма табами. Клас <code>tabs__buttons</code> містить кнопки для кожного табу і відповідає за їх розташування в ряд, завдяки використанню <code>display: flex</code>. Клас <code>tabs__button</code> відповідає за кожну кнопку табу, з додатковим модифікатором <code>tabs__button--active</code>, який активує відповідний таб (змінює його стиль). Клас <code>tabs__content</code> містить контент для кожного табу. Клас <code>tabs__content--active</code> застосовується до контенту активного табу, що дозволяє відображати відповідний вміст.</p>
+
           <h2 class="content__subtitle">Приклад стилізації</h2>
           <pre class="code">
             <code>
-        .tabs {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            max-width: 500px;
-        
-            &__buttons {
-                display: flex;
-            }
-        
-            &__button {
-                padding: 8px 16px;
-                border: 1px solid #333;
-                background-color: transparent;
-                cursor: pointer;
-                margin-right: 4px;
-        
-                &--active {
-                    background-color: #333;
-                    color: #fff;
-                }
-            }
-        
-            &__content {
-                display: none;
-                padding: 16px;
-                border: 1px solid #ddd;
-                margin-top: 8px;
-                width: 100%;
-        
-                &--active {
-                    display: block;
-                }
-            }
-        }
+              .tabs {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  max-width: 500px;
+              }
+          
+              .tabs__buttons {
+                  display: flex;
+              }
+          
+              .tabs__button {
+                  padding: 8px 16px;
+                  border: 1px solid #333;
+                  background-color: transparent;
+                  cursor: pointer;
+                  margin-right: 4px;
+              }
+          
+              .tabs__button--active {
+                  background-color: #333;
+                  color: #fff;
+              }
+          
+              .tabs__content {
+                  display: none;
+                  padding: 16px;
+                  border: 1px solid #ddd;
+                  margin-top: 8px;
+                  width: 100%;
+              }
+          
+              .tabs__content--active {
+                  display: block;
+              }
             </code>
           </pre>
+          
         @@include('footer.html')
       </main>
     </div>
