@@ -1,0 +1,76 @@
+@@include('head.html')
+
+<body>
+
+  <div class="wrapper">
+    <div class="wrapper__container">
+      @@include('sidebar.html')
+        <main class="content">
+          <h1 class="content__title">Таби</h1>
+          <p class="content__text">
+            У цьому розділі описано принцип роботи табів, їх функції, стилі та приклади використання.
+          </p>
+        
+          <h2 class="content__subtitle">Приклад використання</h2>
+          <p class="content__text">Ось приклад структури HTML для табів:</p>
+          <pre class="code">
+            <code>
+        &lt;div class="tabs"&gt;
+            &lt;div class="tabs__buttons"&gt;
+                &lt;button class="tabs__button tabs__button--active"&gt;Tab 1&lt;/button&gt;
+                &lt;button class="tabs__button"&gt;Tab 2&lt;/button&gt;
+                &lt;button class="tabs__button"&gt;Tab 3&lt;/button&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="tabs__content tabs__content--active"&gt;Content for Tab 1&lt;/div&gt;
+            &lt;div class="tabs__content"&gt;Content for Tab 2&lt;/div&gt;
+            &lt;div class="tabs__content"&gt;Content for Tab 3&lt;/div&gt;
+        &lt;/div&gt;
+            </code>
+          </pre>
+        
+          <h2 class="content__subtitle">Приклад стилізації</h2>
+          <pre class="code">
+            <code>
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 500px;
+        
+            &__buttons {
+                display: flex;
+            }
+        
+            &__button {
+                padding: 8px 16px;
+                border: 1px solid #333;
+                background-color: transparent;
+                cursor: pointer;
+                margin-right: 4px;
+        
+                &--active {
+                    background-color: #333;
+                    color: #fff;
+                }
+            }
+        
+            &__content {
+                display: none;
+                padding: 16px;
+                border: 1px solid #ddd;
+                margin-top: 8px;
+                width: 100%;
+        
+                &--active {
+                    display: block;
+                }
+            }
+        }
+            </code>
+          </pre>
+        @@include('footer.html')
+      </main>
+    </div>
+  </div>
+
