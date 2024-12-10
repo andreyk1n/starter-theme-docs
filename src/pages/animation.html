@@ -11,6 +11,13 @@
             <p class="content__text">Щоб анімації коректно працювали потрібно підключити стилі <code>_animation.scss</code> у файлі <code>main.scss</code>, також у файлі <code>app.js</code> необхідно підключити функціонал <code>elementWatcher.js</code>.</p>
             <p class="content__text"><b>Як з цим працювати?</b></p>
             <p class="content__text">Після підключення файлів стилів і функціоналу, задаємо необхідному блоку <code>data-watch</code> і клас який відповідає за потрібну вам анімацію.</p>
+            <pre class="code">
+                <code>
+&lt;div class="anim-block"&gt;
+    &lt;div class="anim-block__content fadeIn" data-watch&gt;Анімація .fadeIn&lt;/div&gt;
+&lt;/div&gt;
+                </code>
+            </pre>
             <p class="content__text">Нижче будуть показані усі анміації, які заготовлені в шаблоні:</p>
             <div class="anim-block">
                 <div class="anim-block__content fadeIn" data-watch>Анімація .fadeIn</div>
