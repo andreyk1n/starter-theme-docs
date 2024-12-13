@@ -18,7 +18,6 @@
 </head>
 
 <body>
-
   <div class="wrapper">
     <div class="wrapper__container">
       <aside class="sidebar">
@@ -49,72 +48,105 @@
       <p>v.1.4.4</p>
     </nav>
   </aside>
-        <main class="content">
-          <h1 class="content__title">Таби</h1>
-          <p class="content__text">
-            У цьому розділі описано принцип роботи табів, їх функції, стилі та приклади використання.
-          </p>
+      <main class="content">
+        <h1 class="content__title">Функція для автоматичного відкриття модального вікна</h1>
+        <p class="content__text">
+          У цьому розділі описується функціонал функції <code class="code__inline">initializeModalTriggers</code>, яка відповідає за автоматичне відкриття модального вікна за певними умовами і знаходиться у файлі <code>modalTimer.js</code>.
+        </p>
         
-          <h2 class="content__subtitle">Приклад використання</h2>
-          <p class="content__text">Ось приклад структури HTML для табів:</p>
-          <pre class="code">
+        <h2 class="content__subtitle">Призначення</h2>
+        <p class="content__text">
+          Функція <code class="code__inline">initializeModalTriggers</code> реалізує кілька тригерів для відкриття модального вікна: через час, через інтервал та за виходом курсора миші за межі екрана.
+        </p>
+      
+        <h2 class="content__subtitle">Реалізація</h2>
+        <p class="content__text">
+          Основний код функції:
+        </p>
+        <pre class="code">
+          <code>
+export function initializeModalTriggers() {
+    let modalOpenedByMouseLeave = false;
+    setTimeout(() => location = '#open-modal', 30000); // 30 sec
+    setInterval(() => location = '#open-modal', 300000); // 300 sec
+    document.addEventListener('mouseleave', e => {
+        if (!modalOpenedByMouseLeave && 
+            (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= innerWidth || e.clientY >= innerHeight)) {
+            location = '#open-modal';
+            modalOpenedByMouseLeave = true;
+        }
+    });
+};
+          </code>
+        </pre>
+        <h2 class="content__subtitle">Верстка модального вікна</h2>
+        <p class="content__text">Приклад HTML-коду для модального вікна:</p>
+        <pre class="code">
             <code>
-        &lt;div class="tabs"&gt;
-            &lt;div class="tabs__buttons"&gt;
-                &lt;button class="tabs__button tabs__button--active"&gt;Tab 1&lt;/button&gt;
-                &lt;button class="tabs__button"&gt;Tab 2&lt;/button&gt;
-                &lt;button class="tabs__button"&gt;Tab 3&lt;/button&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="tabs__content tabs__content--active"&gt;Content for Tab 1&lt;/div&gt;
-            &lt;div class="tabs__content"&gt;Content for Tab 2&lt;/div&gt;
-            &lt;div class="tabs__content"&gt;Content for Tab 3&lt;/div&gt;
-        &lt;/div&gt;
-            </code>
-          </pre>
-          <p class="content__text">Клас <code>tabs</code> необхідний для контейнера з усіма табами. Клас <code>tabs__buttons</code> містить кнопки для кожного табу і відповідає за їх розташування в ряд, завдяки використанню <code>display: flex</code>. Клас <code>tabs__button</code> відповідає за кожну кнопку табу, з додатковим модифікатором <code>tabs__button--active</code>, який активує відповідний таб (змінює його стиль). Клас <code>tabs__content</code> містить контент для кожного табу. Клас <code>tabs__content--active</code> застосовується до контенту активного табу, що дозволяє відображати відповідний вміст.</p>
+&lt;span onclick=&quot;document.location='#open-modal'; return false;&quot; class=&quot;open-modal&quot;&gt;Відкрити модалку&lt;/span&gt;
 
-          <h2 class="content__subtitle">Приклад стилізації</h2>
-          <pre class="code">
-            <code>
-              .tabs {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: flex-start;
-                  max-width: 500px;
-              }
-          
-              .tabs__buttons {
-                  display: flex;
-              }
-          
-              .tabs__button {
-                  padding: 8px 16px;
-                  border: 1px solid #333;
-                  background-color: transparent;
-                  cursor: pointer;
-                  margin-right: 4px;
-              }
-          
-              .tabs__button--active {
-                  background-color: #333;
-                  color: #fff;
-              }
-          
-              .tabs__content {
-                  display: none;
-                  padding: 16px;
-                  border: 1px solid #ddd;
-                  margin-top: 8px;
-                  width: 100%;
-              }
-          
-              .tabs__content--active {
-                  display: block;
-              }
+&lt;div id=&quot;open-modal&quot; class=&quot;modal&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+        &lt;span onclick=&quot;document.location='#close'; return false;&quot; class=&quot;close&quot;&gt;✖&lt;/span&gt;
+        &lt;h2&gt;Модальне вікно&lt;/h2&gt;
+        &lt;p&gt;Це модальне вікно без JavaScript.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span onclick=&quot;document.location='#close'; return false;&quot; class=&quot;close-overlay&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
             </code>
           </pre>
           
+        <h2 class="content__subtitle">Стилізація модального вікна</h2>
+        <p class="content__text">Основні стилі для модального вікна:</p>
+        <pre class="code">
+          <code>
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+:target.modal {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 24px;
+}
+
+.close-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+}
+          </code>
+        </pre>
         <footer class="footer">
   <div class="footer__container">
       <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
@@ -146,4 +178,3 @@ tempLinks.forEach(link => {
       </main>
     </div>
   </div>
-
