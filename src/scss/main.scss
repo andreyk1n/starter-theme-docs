@@ -170,3 +170,23 @@ blockquote {
     padding-left: 20px;
     border-left: 3px solid $fontColor;
 }
+
+.contact {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.contact__button {
+    color: #fff;
+    background-color: #444;
+    width: fit-content;
+    padding: 6px 20px;
+    transition-duration: $transitionDuration;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact__button:hover {
+    opacity: .5;
+}
