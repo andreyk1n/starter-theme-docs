@@ -78,15 +78,13 @@ gulp
           </li>
           <li class="content__list-item">
             <strong>Створіть гілку <code>gh-pages</code>:</strong> Для розгортання тільки з папки <code>dist</code>,
-            створіть нову гілку <code>gh-pages</code> та завантажте туди лише вміст цієї папки:
+            створіть нову гілку <code>gh-pages</code> та завантажте туди лише вміст цієї папки: 
             <pre class="code">
                 <code>
-git checkout --orphan gh-pages
-git --work-tree dist add --all
-git --work-tree dist commit -m "Deploy to GitHub Pages"
-git push origin gh-pages --force
+git subtree push --prefix dist origin gh-pages
                 </code>
               </pre>
+              <blockquote>Цю команду потрібно писати кожного разу після того як ми запушили зміни на основну гілку, тоді вони будуть підтягуватись з неї, і за декілька хвилин задеплоються на Githu Pages</blockquote>
           </li>
           <li class="content__list-item">
             <strong>Налаштуйте GitHub Pages:</strong> Вкажіть GitHub використовувати гілку <code>gh-pages</code> для
