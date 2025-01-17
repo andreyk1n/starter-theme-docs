@@ -28,9 +28,9 @@ initializeElementWatcher();
 // Інструкція знаходиться тут --> ./js_components/initBurgerMenu.js
 // ---------------------------------------------------------------------------------------------------------------
 
-// import { initBurgerMenu } from './functions/initBurgerMenu.js';
+import { initBurgerMenu } from './functions/initBurgerMenu.js';
 // Викликаємо функцію initBurgerMenu
-// initBurgerMenu();
+initBurgerMenu();
 
 // ---------------------------------------------------------------------------------------------------------------
 // Підключення функціоналу аккордіону
