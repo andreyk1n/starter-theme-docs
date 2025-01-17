@@ -22,6 +22,22 @@
             background-color: #484848;
         }
     }
+}
 
-    
+@media (max-width: 1200px) {
+    .sidebar {
+        z-index: 10;
+        transition-duration: .5s;
+        left: -200%;
+        &.active {
+            left: 0%;
+        }
+
+        &__nav {
+            margin-top: 80px;
+            svg {
+                display: none;
+            }
+        }
+    }
 }
