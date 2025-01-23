@@ -1,28 +1,33 @@
-// ---------------------------------------------------------------------------------------------------------------
-// Стилізація модального вікна
-// ---------------------------------------------------------------------------------------------------------------
+/* ============================================================================================== */
+/* Стилізація модального вікна */
+/* ============================================================================================== */
+
+@use 'variables' as *;
+@use 'mixins' as *;
 
 .modal {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s $transitionDuration, opacity $transitionDuration ease, transform $transitionDuration ease;
 }
 
-// ---------------------------------------------------------------------------------------------------------------
-/* Стилі для модального вікна, коли воно активно */
-// ---------------------------------------------------------------------------------------------------------------
-
-:target.modal {
-    display: flex;
+/* Активний стан модального вікна */
+.modal:target {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity $transitionDuration ease, transform $transitionDuration ease;
 }
 
+/* Модальне вікно */
 .modal-content {
     background: #fff;
     padding: 20px;
@@ -30,24 +35,21 @@
     position: relative;
     max-width: 500px;
     width: 100%;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity $transitionDuration ease, transform $transitionDuration ease;
 }
 
-// ---------------------------------------------------------------------------------------------------------------
-/* Стилі для кнопки закриття */
-// ---------------------------------------------------------------------------------------------------------------
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    text-decoration: none;
-    color: #000;
-    font-size: 24px;
+/* Активний стан контенту модалки */
+.modal:target .modal-content {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-// ---------------------------------------------------------------------------------------------------------------
-/* Стилі для кнопки закриття overlay */
-// ---------------------------------------------------------------------------------------------------------------
+/* ============================================================================================== */
+/* Фоновий оверлей */
+/* ============================================================================================== */
 
 .close-overlay {
     position: absolute;
@@ -55,25 +57,50 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
+    background: rgba(0, 0, 0, 0);
     cursor: pointer;
     text-decoration: none;
+    z-index: 1;
+    transition: background $transitionDuration ease;
 }
 
-// ---------------------------------------------------------------------------------------------------------------
-// Приклад html коду для модального вікна
-// ---------------------------------------------------------------------------------------------------------------
+/* Активний стан оверлею */
+.modal:target .close-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
 
-// <span onclick="document.location='#open-modal'; return false;" class="open-modal">Відкрити модалку</span>
+/* ============================================================================================== */
+/* Стилі кнопки закриття */
+/* ============================================================================================== */
 
-//                 <!-- Модальне вікно -->
-//                 <div id="open-modal" class="modal">
-//                     <div class="modal-content">
-//                         <span onclick="document.location='#close'; return false;" class="close">✖</span>
-//                         <h2>Модальне вікно</h2>
-//                         <p>Це модальне вікно без JavaScript.</p>
-//                     </div>
-//                     <span onclick="document.location='#close'; return false;"  class="close-overlay"></span>
-//                 </div>
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
 
-// ---------------------------------------------------------------------------------------------------------------
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 2px;
+        background-color: #000;
+        transform-origin: center;
+    }
+
+    &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+}

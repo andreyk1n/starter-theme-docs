@@ -12,6 +12,15 @@
                 На цій сторінці ви знайдете приклади різних модальних вікон і попапів із різноманітними анімаціями появи та унікальною структурою.
             </p>            
             <h2>Звичайне модальне вікно без анімацій</h2>
+            <button class="contact__button" onclick="document.location='#open-modal'; return false;" class="open-modal">Виклик модалки</button>
+            <div id="open-modal" class="modal">
+                <div class="modal-content">
+                    <span onclick="document.location='#close'; return false;" class="close"></span>
+                    <h2>Модальне вікно</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
+                </div>
+                <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
+            </div>
             <!-- кнопка для виклику модалки -->
              <!-- код ыз кнопками для копіювання коду -->
             <p class="content__text"></p>

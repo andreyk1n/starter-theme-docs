@@ -12,7 +12,7 @@
 // @use 'tabs';
 
 // Підключення стилізації модальних вікон та поп-апів
-// @use 'modal';
+@use 'modal';
 
 // Підключення базової стилізації кастомного селекту
 // @use 'customSelect';
@@ -201,6 +201,9 @@ blockquote {
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
 }
 
 .contact__button:hover {
