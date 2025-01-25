@@ -13,10 +13,26 @@
                     появи та унікальною структурою.
                 </p>
                 <div class="modal-simple">
+                    <h2>Базова верстка для усіх модальних вікно (на цій сторінці)</h2>
+                    <button class="contact__button" onclick="copyCode('modal-html')">Копіювати код</button>
+                    <pre class="code" id="modal-html">
+                        <code>
+&lt;div class="modal"&gt;
+    &lt;div class="modal-content"&gt;
+        &lt;span onclick="document.location='#close'; return false;" class="close"&gt;&lt;/span&gt;
+        &lt;h2&gt;Модальне вікно&lt;/h2&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
+            sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
+            architecto. Nesciunt aspernatur tempora minima sint quae eligendi.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span onclick="document.location='#close'; return false;" class="close-overlay"&gt;&lt;/span&gt;
+&lt;/div&gt;
+                        </code>
+                    </pre>
                     <h2>Звичайне модальне вікно без анімацій</h2>
                     <button class="contact__button" onclick="document.location='#open-modal'; return false;"
                         class="open-modal">Виклик модалки</button>
-                    <div id="open-modal" class="modal">
+                    <div class="modal">
                         <div class="modal-content">
                             <span onclick="document.location='#close'; return false;" class="close"></span>
                             <h2>Модальне вікно</h2>
@@ -34,3 +50,4 @@
             </main>
         </div>
     </div>
+

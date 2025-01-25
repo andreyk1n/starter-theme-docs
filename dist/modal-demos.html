@@ -61,10 +61,26 @@
                     появи та унікальною структурою.
                 </p>
                 <div class="modal-simple">
+                    <h2>Базова верстка для усіх модальних вікно (на цій сторінці)</h2>
+                    <button class="contact__button" onclick="copyCode('modal-html')">Копіювати код</button>
+                    <pre class="code" id="modal-html">
+                        <code>
+&lt;div class="modal"&gt;
+    &lt;div class="modal-content"&gt;
+        &lt;span onclick="document.location='#close'; return false;" class="close"&gt;&lt;/span&gt;
+        &lt;h2&gt;Модальне вікно&lt;/h2&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
+            sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
+            architecto. Nesciunt aspernatur tempora minima sint quae eligendi.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span onclick="document.location='#close'; return false;" class="close-overlay"&gt;&lt;/span&gt;
+&lt;/div&gt;
+                        </code>
+                    </pre>
                     <h2>Звичайне модальне вікно без анімацій</h2>
                     <button class="contact__button" onclick="document.location='#open-modal'; return false;"
                         class="open-modal">Виклик модалки</button>
-                    <div id="open-modal" class="modal">
+                    <div class="modal">
                         <div class="modal-content">
                             <span onclick="document.location='#close'; return false;" class="close"></span>
                             <h2>Модальне вікно</h2>
@@ -80,8 +96,8 @@
                 <p class="content__text"></p>
                 <footer class="footer">
   <div class="footer__container">
-      <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
-      <a href="mailto:andrii.panasiuk2002@gmail.com">Gmail</a>
+    <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
+    <a href="mailto:andrii.panasiuk2002@gmail.com">Gmail</a>
   </div>
 </footer>
 
@@ -90,30 +106,51 @@
 <script src="js/functions/lazyImg.js" defer></script>
 <script type="module" src="js/app.js"></script>
 <script>
-const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.sidebar__link').forEach(link => {
-  if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
-});
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.sidebar__link').forEach(link => {
+    if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
+  });
 
-const tempLinks = document.querySelectorAll('.temp');
-tempLinks.forEach(link => {
+  const tempLinks = document.querySelectorAll('.temp');
+  tempLinks.forEach(link => {
     link.addEventListener('click', event => {
-        event.preventDefault(); 
-        window.location.href = 'temp.html';  
+      event.preventDefault();
+      window.location.href = 'temp.html';
     });
-});
+  });
 
-// // Знаходимо елемент з ID sidebar__trigger
-// const sidebarTrigger = document.getElementById('sidebar__trigger');
+  // // Знаходимо елемент з ID sidebar__trigger
+  // const sidebarTrigger = document.getElementById('sidebar__trigger');
 
-// // Знаходимо елемент з ID sidebar
-// const sidebar = document.getElementById('sidebar');
+  // // Знаходимо елемент з ID sidebar
+  // const sidebar = document.getElementById('sidebar');
 
-// // Додаємо обробник події "click" до тригера
-// sidebarTrigger.addEventListener('click', () => {
-//   // Тоглимо клас "active" на елементі sidebar
-//   sidebar.classList.toggle('active');
-// });
+  // // Додаємо обробник події "click" до тригера
+  // sidebarTrigger.addEventListener('click', () => {
+  //   // Тоглимо клас "active" на елементі sidebar
+  //   sidebar.classList.toggle('active');
+  // });
+  // Функція для копіювання тексту з елемента code
+  function copyCode(targetId) {
+    const codeElement = document.getElementById(targetId);
+
+    if (codeElement) {
+      const codeText = codeElement.innerText; // Отримуємо текст з елемента
+      navigator.clipboard.writeText(codeText)
+        .then(() => {
+          console.log("Код скопійовано успішно!");
+          alert("Код скопійовано успішно!");
+        })
+        .catch((err) => {
+          console.error("Помилка копіювання: ", err);
+          alert("Не вдалося скопіювати код.");
+        });
+    } else {
+      console.warn("Елемент із заданим ID не знайдено.");
+      alert("Елемент із заданим ID не знайдено.");
+    }
+  }
+
 
 
 </script>
@@ -123,3 +160,4 @@ tempLinks.forEach(link => {
             </main>
         </div>
     </div>
+
