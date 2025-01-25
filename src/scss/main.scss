@@ -157,7 +157,6 @@ h1 {
         color: #f8f8f2;
         font-family: 'Courier New', Courier, monospace;
         padding: 0.25em 0.5em;
-        border-radius: 4px;
         overflow-y: auto;
     }
 
@@ -165,7 +164,6 @@ h1 {
         background-color: #272822;
         color: #f8f8f2;
         padding: 1rem;
-        border-radius: 4px;
         overflow-x: auto;
 
         code {
@@ -208,4 +206,28 @@ blockquote {
 
 .contact__button:hover {
     opacity: .5;
+}
+
+.copyButton {
+    color: #fff;
+    background-color: #272822;
+    width: fit-content;
+    padding: 6px 20px;
+    transition-duration: $transitionDuration;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.copyButton:hover {
+    opacity: .7;
+}
+
+.mt20 {
+    margin-top: 20px;
 }
