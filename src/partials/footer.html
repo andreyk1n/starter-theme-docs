@@ -54,8 +54,17 @@
       alert("Елемент із заданим ID не знайдено.");
     }
   }
-
   
+
+  document.querySelectorAll('.sidebar__dropdown-button').forEach(button => {
+  button.addEventListener('click', () => {
+    const dropdown = button.closest('.sidebar__dropdown'); // Знайти відповідний sidebar__dropdown
+    if (dropdown) {
+      dropdown.classList.toggle('active'); // Додати або забрати клас active
+    }
+  });
+});
+
 
 
 </script>
