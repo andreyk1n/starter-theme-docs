@@ -56,234 +56,143 @@
   </aside>
 
             <main class="content">
-                <h1 class="content__title">Приклади модальних вікон і попапів</h1>
+                <h1 class="content__title">Приклади валідації для форми без бек-енду.</h1>
                 <p class="content__text">
-                    На цій сторінці ви знайдете приклади різних модальних вікон і попапів із різноманітними анімаціями
-                    появи та унікальною структурою, які працюють без використання javascript коду, хіба для
-                    автоматичного виведення можемо використовувати заготований скрипт таймера.
+                    На цій сторінці, ви можете знайти усе необхідне, щоб зробити просту валідацію для форми.
                 </p>
-                <!-- --------------- -->
-                <h2>Базова верстка для усіх модальних вікно (на цій сторінці)</h2>
+                <p class="content__text">Приклад роботи валідації на формі. При кліку на кнопку відправки відбувається перевірка полів, і якщо вони некоректно заповнені, то висвічується помилка під полем.</p>
+
+                <div class="form__wrapper">
+                    <form class="form" id="validationForm">
+                        <div class="form__group">
+                            <label for="name" class="form__label">Ваше ім’я</label>
+                            <input type="text" id="name" class="form__input" placeholder="Введіть ваше ім’я">
+                            <span class="error error__name"
+                                style="display: none; color: red; font-size: 11px;">Неправильне ім'я</span>
+                        </div>
+                        <div class="form__group">
+                            <label for="phone" class="form__label">Ваш номер телефону</label>
+                            <input type="tel" id="phone" class="form__input" placeholder="Введіть ваш номер телефону">
+                            <span class="error error__number"
+                                style="display: none; color: red; font-size: 11px;">Неправильний номер</span>
+                        </div>
+                        <div class="form__group">
+                            <label for="email" class="form__label">Електронна пошта</label>
+                            <input type="email" id="email" class="form__input"
+                                placeholder="Введіть вашу електронну пошту">
+                            <span class="error error__email"
+                                style="display: none; color: red; font-size: 11px;">Неправильна пошта</span>
+                        </div>
+                        <button type="submit" class="form__button">Відправити</button>
+                    </form>
+                </div>
+                <h2>Необхідний джаваскрипт функціонал для валідації форми</h2>
+                <p class="content__text">
+                    Цей код реалізує валідацію форми перед її відправкою. Спочатку додається обробник події для форми з ID <code>validationForm</code>, що спрацьовує на подію <code>submit</code>. В обробнику події виконується метод <code>preventDefault()</code>, щоб запобігти стандартній поведінці браузера щодо відправлення форми, поки не буде перевірено всі поля. Потім визначаються поля вводу: ім’я, телефон і електронна пошта, а також відповідні елементи для відображення повідомлень про помилки.
+                </p>
+                <p class="content__text">
+                    Далі встановлюється змінна <code>isValid</code>, яка контролює загальну валідність форми. Для перевірки імені використовується регулярний вираз, який переконується, що значення складається щонайменше з двох символів і містить лише літери або пробіли. Якщо ім'я не відповідає умовам, відображається помилка, а змінна <code>isValid</code> встановлюється у <code>false</code>. Аналогічно перевіряється номер телефону за допомогою регулярного виразу, що приймає лише числа (з можливим знаком «+» на початку) у кількості від 10 до 13. Для електронної пошти перевіряється наявність символів до і після «@», а також домену з крапкою. У разі невідповідності будь-якому з цих правил помилки відображаються шляхом зміни стилю елементів із класами <code>error__name</code>, <code>error__number</code> та <code>error__email</code> на <b>block</b>.
+                </p>
+                <p class="content__text">
+                    Якщо всі поля відповідають умовам і <code>isValid</code> залишається <code>true</code>, з’являється сповіщення про успішну відправку форми через <code>alert</code>, і форма фактично відправляється за допомогою методу <code>submit()</code> на початковий <b>URL</b>, який був вказаний у атрибуті <code>action</code> форми. Таким чином, цей код забезпечує інтерактивну валідацію вводу даних, що дозволяє користувачам виправити помилки до надсилання форми.
+                </p>
                 <div>
-                    <button class="copyButton" onclick="copyCode('modal-html')">Копіювати код</button>
-                    <pre class="code" id="modal-html">
-                        <code>
-&lt;div class="modal"&gt;
-    &lt;div class="modal-content"&gt;
-        &lt;span onclick="document.location='#close'; return false;" class="close"&gt;&lt;/span&gt;
-        &lt;h2&gt;Модальне вікно&lt;/h2&gt;
-        &lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
-            sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
-            architecto. Nesciunt aspernatur tempora minima sint quae eligendi.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;span onclick="document.location='#close'; return false;" class="close-overlay"&gt;&lt;/span&gt;
-&lt;/div&gt;
-                        </code>
-                    </pre>
+                    <button class="copyButton" onclick="copyCode('form-validation-script')">Копіювати код</button>
+                    <pre class="code" id="form-validation-script">
+                    <code>
+document.getElementById('validationForm').addEventListener('submit', function (event) {
+event.preventDefault(); // Забороняємо відправку форми, якщо є помилки
+
+const nameInput = document.getElementById('name');
+const phoneInput = document.getElementById('phone');
+const emailInput = document.getElementById('email');
+
+const nameError = document.querySelector('.error__name');
+const phoneError = document.querySelector('.error__number');
+const emailError = document.querySelector('.error__email');
+
+let isValid = true;
+
+// Перевірка імені (має бути не менше 2 символів, лише букви)
+if (!/^[a-zA-ZА-Яа-яЁёЇїІіЄєҐґ\s]{2,}$/.test(nameInput.value.trim())) {
+    nameError.style.display = 'block';
+    isValid = false;
+} else {
+    nameError.style.display = 'none';
+}
+
+// Перевірка номера телефону (формат: 10-13 цифр)
+if (!/^\+?\d{10,13}$/.test(phoneInput.value.trim())) {
+    phoneError.style.display = 'block';
+    isValid = false;
+} else {
+    phoneError.style.display = 'none';
+}
+
+// Перевірка електронної пошти
+if (!/^\S+@\S+\.\S+$/.test(emailInput.value.trim())) {
+    emailError.style.display = 'block';
+    isValid = false;
+} else {
+    emailError.style.display = 'none';
+}
+
+// Якщо всі дані валідні, можна відправити форму
+if (isValid) {
+    alert('Форма успішно відправлена!');
+    // Тут можна виконати подальші дії, наприклад, відправку даних на сервер
+    this.submit();
+}
+});
+                    </code>
+                </pre>
                 </div>
-                <!-- --------------- -->
-                <div class="modal-simple">
-                    <h2>Звичайне модальне вікно без анімацій</h2>
-                    <button class="contact__button" onclick="document.location='#simple-modal'; return false;"
-                        class="open-modal">Виклик модалки</button>
-                    <div class="modal" id="simple-modal">
-                        <div class="modal-content">
-                            <span onclick="document.location='#close'; return false;" class="close"></span>
-                            <h2>Модальне вікно</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
-                                sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
-                                architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
-                        </div>
-                        <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
-                    </div>
-                    <button class="copyButton mt20" onclick="copyCode('modal-simple')">Копіювати код</button>
-                    <pre class="code" id="modal-simple">
-                        <code>
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
+                <script>
+                    document.getElementById('validationForm').addEventListener('submit', function (event) {
+                        event.preventDefault(); // Забороняємо відправку форми, якщо є помилки
 
-.modal:target {
-    display: flex;
-}
+                        const nameInput = document.getElementById('name');
+                        const phoneInput = document.getElementById('phone');
+                        const emailInput = document.getElementById('email');
 
-.modal-content {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    z-index: 2;
-}
+                        const nameError = document.querySelector('.error__name');
+                        const phoneError = document.querySelector('.error__number');
+                        const emailError = document.querySelector('.error__email');
 
-.modal .close-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1;
-}
+                        let isValid = true;
 
-.modal .close-overlay:target {
-    background: rgba(0, 0, 0, 0.5);
-}
+                        // Перевірка імені (має бути не менше 2 символів, лише букви)
+                        if (!/^[a-zA-ZА-Яа-яЁёЇїІіЄєҐґ\s]{2,}$/.test(nameInput.value.trim())) {
+                            nameError.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            nameError.style.display = 'none';
+                        }
 
-.modal .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 3;
-}
+                        // Перевірка номера телефону (формат: 10-13 цифр)
+                        if (!/^\+?\d{10,13}$/.test(phoneInput.value.trim())) {
+                            phoneError.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            phoneError.style.display = 'none';
+                        }
 
-.modal .close::before,
-.modal .close::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 30px;
-    height: 2px;
-    background-color: #000000;
-    transform-origin: center;
-}
+                        // Перевірка електронної пошти
+                        if (!/^\S+@\S+\.\S+$/.test(emailInput.value.trim())) {
+                            emailError.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            emailError.style.display = 'none';
+                        }
 
-.modal .close::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.modal .close::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
-}
-                        </code>
-                    </pre>
-                </div>
-                <!-- --------------- -->
-                <div class="modal-anim">
-                    <h2>Модальне вікно із плавною легкою анімацією появи</h2>
-                    <button class="contact__button" onclick="document.location='#anim-modal'; return false;"
-                    class="open-modal">Виклик модалки</button>
-                    <div class="modal" id="anim-modal">
-                        <div class="modal-content">
-                            <span onclick="document.location='#close'; return false;" class="close"></span>
-                            <h2>Модальне вікно</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
-                                sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
-                                architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
-                        </div>
-                        <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
-                    </div>
-                    <button class="copyButton mt20" onclick="copyCode('modal-anim')">Копіювати код</button>
-                    <pre class="code" id="modal-anim">
-                        <code>
-.modal {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s 0.3s, opacity 0.3s ease, transform 0.3s ease;
-}
-
-.modal:target {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.modal-content {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.modal:target .modal-content {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.close-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1;
-    transition: background 0.3s ease;
-}
-
-.modal:target .close-overlay {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 3;
-}
-
-.close::before,
-.close::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 30px;
-    height: 2px;
-    background-color: #000000;
-    transform-origin: center;
-}
-
-.close::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.close::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-                        </code>
-                    </pre>
-                </div>
+                        // Якщо всі дані валідні, можна відправити форму
+                        if (isValid) {
+                            alert('Форма успішно відправлена!');
+                            // Тут можна виконати подальші дії, наприклад, відправку даних на сервер
+                            this.submit();
+                        }
+                    });
+                </script>
                 <footer class="footer">
   <div class="footer__container">
     <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
