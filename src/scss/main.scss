@@ -318,7 +318,7 @@ blockquote {
         &.active {
             .sidebar__dropdown-button {
                 svg {
-                    transform: rotate(180deg);
+                    transform: rotate(-180deg);
                 }
             }
         }
