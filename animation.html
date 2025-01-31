@@ -177,70 +177,69 @@
       alert("Елемент із заданим ID не знайдено.");
     }
   }
-  
+
 
   document.querySelectorAll('.sidebar__dropdown-button').forEach(button => {
-  button.addEventListener('click', () => {
-    const dropdown = button.closest('.sidebar__dropdown'); // Знайти відповідний sidebar__dropdown
-    if (dropdown) {
-      dropdown.classList.toggle('active'); // Додати або забрати клас active
+    button.addEventListener('click', () => {
+      const dropdown = button.closest('.sidebar__dropdown'); // Знайти відповідний sidebar__dropdown
+      if (dropdown) {
+        dropdown.classList.toggle('active'); // Додати або забрати клас active
+      }
+    });
+  });
+
+  // пошук
+  // Слухаємо клік на кнопці пошуку
+  document.getElementById("searchButton")?.addEventListener("click", async function () {
+    // Перевіряємо наявність необхідних елементів
+    const searchInput = document.getElementById("search");
+    const resultsContainer = document.getElementById("results");
+
+    if (!searchInput || !resultsContainer) {
+      console.error("Елементи пошуку або результатів не знайдено на сторінці.");
+      return;
+    }
+
+    const query = searchInput.value.toLowerCase(); // Отримуємо введений текст
+    resultsContainer.innerHTML = ""; // Очищаємо результати перед новим пошуком
+
+    if (!query) {
+      resultsContainer.innerHTML = "<li>Введіть текст для пошуку!</li>";
+      return;
+    }
+
+    try {
+      // Завантажуємо дані про сторінки
+      const response = await fetch("/pages.json"); // Шлях до вашого JSON-файлу
+      if (!response.ok) {
+        resultsContainer.innerHTML = "<li>Помилка завантаження даних!</li>";
+        return;
+      }
+      const pages = await response.json();
+
+      // Пошук сторінок, які відповідають запиту
+      const results = pages.filter(page =>
+        page.title.toLowerCase().includes(query) ||
+        page.keywords.some(keyword => keyword.includes(query))
+      );
+
+      // Якщо результатів немає
+      if (results.length === 0) {
+        resultsContainer.innerHTML = "<li>Нічого не знайдено</li>";
+        return;
+      }
+
+      // Відображення результатів
+      results.forEach(result => {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${result.url}">${result.title}</a>`;
+        resultsContainer.appendChild(li);
+      });
+    } catch (error) {
+      console.error("Сталася помилка під час виконання пошуку:", error);
+      resultsContainer.innerHTML = "<li>Сталася помилка. Спробуйте пізніше.</li>";
     }
   });
-});
-
-// пошук
-// Слухаємо клік на кнопці пошуку
-document.getElementById("searchButton")?.addEventListener("click", async function () {
-  // Перевіряємо наявність необхідних елементів
-  const searchInput = document.getElementById("search");
-  const resultsContainer = document.getElementById("results");
-  
-  if (!searchInput || !resultsContainer) {
-    console.error("Елементи пошуку або результатів не знайдено на сторінці.");
-    return;
-  }
-
-  const query = searchInput.value.toLowerCase(); // Отримуємо введений текст
-  resultsContainer.innerHTML = ""; // Очищаємо результати перед новим пошуком
-
-  if (!query) {
-    resultsContainer.innerHTML = "<li>Введіть текст для пошуку!</li>";
-    return;
-  }
-
-  try {
-    // Завантажуємо дані про сторінки
-    const response = await fetch("/pages.json"); // Шлях до вашого JSON-файлу
-    if (!response.ok) {
-      resultsContainer.innerHTML = "<li>Помилка завантаження даних!</li>";
-      return;
-    }
-    const pages = await response.json();
-
-    // Пошук сторінок, які відповідають запиту
-    const results = pages.filter(page => 
-      page.title.toLowerCase().includes(query) || 
-      page.keywords.some(keyword => keyword.includes(query))
-    );
-
-    // Якщо результатів немає
-    if (results.length === 0) {
-      resultsContainer.innerHTML = "<li>Нічого не знайдено</li>";
-      return;
-    }
-
-    // Відображення результатів
-    results.forEach(result => {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${result.url}">${result.title}</a>`;
-      resultsContainer.appendChild(li);
-    });
-  } catch (error) {
-    console.error("Сталася помилка під час виконання пошуку:", error);
-    resultsContainer.innerHTML = "<li>Сталася помилка. Спробуйте пізніше.</li>";
-  }
-});
-
 
 
 </script>
