@@ -7,7 +7,11 @@
     background-color: #333;
     color: #fff;
     padding: 1rem;
-    max-height: 98svh;
+    max-height: 98vh;
+
+    @media (max-width: 768px) {
+        max-height: 100svh;
+    }
     overflow: auto;
 
     a, p {
