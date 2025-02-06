@@ -171,82 +171,19 @@
   });
 
   // Функція для копіювання тексту з елемента code
-  // function copyCode(targetId) {
-  //   const codeElement = document.getElementById(targetId);
-
-  //   if (codeElement) {
-  //     const codeText = codeElement.innerText; // Отримуємо текст з елемента
-  //     navigator.clipboard.writeText(codeText)
-  //       .then(() => {
-  //         console.log("Код скопійовано успішно!");
-  //         alert("Код скопійовано успішно!");
-  //       })
-  //       .catch((err) => {
-  //         console.error("Помилка копіювання: ", err);
-  //         alert("Не вдалося скопіювати код.");
-  //       });
-  //   } else {
-  //     console.warn("Елемент із заданим ID не знайдено.");
-  //     alert("Елемент із заданим ID не знайдено.");
-  //   }
-  // }
-
   function copyCode(targetId) {
   const codeElement = document.getElementById(targetId);
+  if (!codeElement) return showCopyMessage("Елемент із заданим ID не знайдено.", true);
 
-  if (codeElement) {
-    const codeText = codeElement.innerText;
-    navigator.clipboard.writeText(codeText)
-      .then(() => {
-        showCopyMessage("Код скопійовано успішно!");
-      })
-      .catch((err) => {
-        console.error("Помилка копіювання: ", err);
-        showCopyMessage("Не вдалося скопіювати код.", true);
-      });
-  } else {
-    console.warn("Елемент із заданим ID не знайдено.");
-    showCopyMessage("Елемент із заданим ID не знайдено.", true);
-  }
+  navigator.clipboard.writeText(codeElement.innerText)
+    .then(() => showCopyMessage("Код скопійовано успішно!"))
+    .catch(() => showCopyMessage("Не вдалося скопіювати код.", true));
 }
 
 function showCopyMessage(message, isError = false) {
-  let messageDiv = document.createElement("div");
+  const messageDiv = document.createElement("div");
   messageDiv.innerText = message;
-  messageDiv.classList.add("copy-message");
-  if (isError) messageDiv.classList.add("error");
-
-  document.body.appendChild(messageDiv);
-
-  setTimeout(() => {
-    messageDiv.classList.add("fade-out");
-    setTimeout(() => messageDiv.remove(), 500);
-  }, 2000);
-}
-function copyCode(targetId) {
-  const codeElement = document.getElementById(targetId);
-
-  if (codeElement) {
-    const codeText = codeElement.innerText;
-    navigator.clipboard.writeText(codeText)
-      .then(() => {
-        showCopyMessage("Код скопійовано успішно!");
-      })
-      .catch((err) => {
-        console.error("Помилка копіювання: ", err);
-        showCopyMessage("Не вдалося скопіювати код.", true);
-      });
-  } else {
-    console.warn("Елемент із заданим ID не знайдено.");
-    showCopyMessage("Елемент із заданим ID не знайдено.", true);
-  }
-}
-
-function showCopyMessage(message, isError = false) {
-  let messageDiv = document.createElement("div");
-  messageDiv.innerText = message;
-  messageDiv.classList.add("copy-message");
-  if (isError) messageDiv.classList.add("error");
+  messageDiv.classList.add("copy-message", isError ? "error" : "success");
 
   document.body.appendChild(messageDiv);
 
