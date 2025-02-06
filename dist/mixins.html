@@ -96,37 +96,40 @@
           <p class="content__text">
             Міксин <code>adaptiveValue</code> автоматично генерує адаптивні значення для вказаної CSS-властивості залежно від ширини екрану. Це корисно для таких властивостей, як шрифти, відступи або розміри елементів, забезпечуючи плавні переходи між різними роздільними здатностями.
           </p>
-          <pre class="code">
-            <code>
-@mixin adaptiveValue($property, $maxValue, $minValue) {
-    // Стандартні брекпоїнти
-    $breakpoints: (
-        1200px,
-        992px,
-        768px,
-        576px,
-        480px,
-        360px,
-        320px
-    );
-
-    // Обчислюємо кількість кроків на основі кількості breakpoints
-    $steps: list.length($breakpoints);
-    $step-size: math.div(($maxValue - $minValue), $steps);
-
-    #{$property}: #{$maxValue};
-
-    @for $i from 1 through $steps {
-        $breakpoint: list.nth($breakpoints, $i);
-        $current-value: $maxValue - ($step-size * $i);
-
-        @media (max-width: $breakpoint) {
-            #{$property}: $current-value;
-        }
-    }
-}
-            </code>
-          </pre>
+          <div class="copy">
+            <button class="copyButton" onclick="copyCode('mixins')">Копіювати код</button>
+            <pre class="code" id="mixins">
+              <code>
+  @mixin adaptiveValue($property, $maxValue, $minValue) {
+      // Стандартні брекпоїнти
+      $breakpoints: (
+          1200px,
+          992px,
+          768px,
+          576px,
+          480px,
+          360px,
+          320px
+      );
+  
+      // Обчислюємо кількість кроків на основі кількості breakpoints
+      $steps: list.length($breakpoints);
+      $step-size: math.div(($maxValue - $minValue), $steps);
+  
+      #{$property}: #{$maxValue};
+  
+      @for $i from 1 through $steps {
+          $breakpoint: list.nth($breakpoints, $i);
+          $current-value: $maxValue - ($step-size * $i);
+  
+          @media (max-width: $breakpoint) {
+              #{$property}: $current-value;
+          }
+      }
+  }
+              </code>
+            </pre>
+          </div>
         
           <h2 class="content__subtitle">Функції</h2>
           <p class="content__text">
@@ -137,25 +140,31 @@
           <p class="content__text">
             Функція <code>toRem</code> перетворює значення в пікселях у <code>rem</code>, що дозволяє забезпечити адаптивність тексту та елементів відносно кореневого розміру шрифту.
           </p>
-          <pre class="code">
-            <code>
-@function toRem($px, $current: 16) {
-    @return ($px / $current) * 1rem;
-}
-            </code>
-          </pre>
+          <div class="copy">
+            <button class="copyButton" onclick="copyCode('toRem')">Копіювати код</button>
+            <pre class="code" id="toRem">
+              <code>
+  @function toRem($px, $current: 16) {
+      @return ($px / $current) * 1rem;
+  }
+              </code>
+            </pre>
+          </div>
         
           <h3 class="content__subtitle">Функція <code>toEm</code></h3>
           <p class="content__text">
             Функція <code>toEm</code> перетворює значення в пікселях у <code>em</code>, що дозволяє більш гнучко керувати розмірами елементів у відношенні до їх батьківських елементів.
           </p>
-          <pre class="code">
-            <code>
-@function toEm($px, $current: 16) {
-    @return ($px / $current) * 1em;
-}
-            </code>
-          </pre>
+          <div class="copy">
+            <button class="copyButton" onclick="copyCode('toEm')">Копіювати код</button>
+            <pre class="code" id="toEm">
+              <code>
+  @function toEm($px, $current: 16) {
+      @return ($px / $current) * 1em;
+  }
+              </code>
+            </pre>
+          </div>
         <footer class="footer">
   <div class="footer__container">
     <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>

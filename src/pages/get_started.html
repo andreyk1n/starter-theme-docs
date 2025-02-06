@@ -37,11 +37,14 @@ gulp
           <li class="content__list-item">
             <strong>Створіть гілку <code>gh-pages</code>:</strong> Для розгортання тільки з папки <code>dist</code>,
             створіть нову гілку <code>gh-pages</code> та завантажте туди лише вміст цієї папки: 
-            <pre class="code">
+            <div class="copy">
+              <button class="copyButton" onclick="copyCode('gh-pages')">Копіювати код</button>
+              <pre class="code" id="gh-pages">
                 <code>
 git subtree push --prefix dist origin gh-pages
                 </code>
               </pre>
+            </div>
               <blockquote>Цю команду потрібно писати кожного разу після того як ми запушили зміни на основну гілку, тоді вони будуть підтягуватись з неї, і за декілька хвилин задеплоються на Githu Pages</blockquote>
           </li>
           <li class="content__list-item">
