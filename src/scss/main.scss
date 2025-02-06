@@ -349,3 +349,32 @@ blockquote {
     }
 
 }
+
+.copy-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 14px;
+    white-space: nowrap;
+    width: fit-content;
+    max-width: none;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+  
+  .copy-message.error {
+    background-color: #ff4d4d;
+  }
+  
+  .copy-message.fade-out {
+    opacity: 0;
+  }
+  
