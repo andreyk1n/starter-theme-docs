@@ -18,39 +18,37 @@
             </p>
             <pre class="code">
               <code>
-          export function initAccordion() {
-              const accordions = document.querySelectorAll(".accordion__header");
-              const allItems = document.querySelectorAll(".accordion__item");
-          
-              const toggleAccordion = (accordion) => {
-                  const currentItem = accordion.parentElement;
-                  const isActive = currentItem.classList.contains("accordion__item--active");
-          
-                  allItems.forEach((item) => {
-                      if (item !== currentItem) {
-                          item.classList.remove("accordion__item--active");
-                          item.querySelector(".accordion__content").style.maxHeight = null;
-                      }
-                  });
-          
-                  if (!isActive) {
-                      currentItem.classList.add("accordion__item--active");
-                      const content = currentItem.querySelector(".accordion__content");
-                      content.style.maxHeight = `${content.scrollHeight}px`;
-                  }
-              };
-          
-              accordions.forEach((accordion) => {
-                  accordion.addEventListener("click", () => toggleAccordion(accordion));
-              });
-          
-              if (allItems.length > 0) {
-                  const firstAccordion = allItems[0];
-                  firstAccordion.classList.add("accordion__item--active");
-                  const firstContent = firstAccordion.querySelector(".accordion__content");
-                  firstContent.style.maxHeight = `${firstContent.scrollHeight}px`;
-              }
-          }
+const accordions = document.querySelectorAll(".accordion__header");
+const allItems = document.querySelectorAll(".accordion__item");
+            
+const toggleAccordion = (accordion) => {
+    const currentItem = accordion.parentElement;
+    const isActive = currentItem.classList.contains("accordion__item--active");
+            
+    allItems.forEach((item) => {
+        if (item !== currentItem) {
+            item.classList.remove("accordion__item--active");
+            item.querySelector(".accordion__content").style.maxHeight = null;
+        }
+    });
+            
+    if (!isActive) {
+        currentItem.classList.add("accordion__item--active");
+        const content = currentItem.querySelector(".accordion__content");
+        content.style.maxHeight = `${content.scrollHeight}px`;
+    }
+};
+            
+accordions.forEach((accordion) => {
+    accordion.addEventListener("click", () => toggleAccordion(accordion));
+});
+            
+if (allItems.length > 0) {
+    const firstAccordion = allItems[0];
+    firstAccordion.classList.add("accordion__item--active");
+    const firstContent = firstAccordion.querySelector(".accordion__content");
+    firstContent.style.maxHeight = `${firstContent.scrollHeight}px`;
+}
               </code>
             </pre>
           
@@ -60,26 +58,40 @@
             </p>
             <pre class="code">
               <code>
-          .accordion {
-              max-width: 600px;
-              margin: 0 auto;
-          }
-          .accordion__header {
-              background-color: transparent;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              cursor: pointer;
-              transition: background-color 0.5s ease;
-          }
-          .accordion__content {
-              max-height: 0;
-              overflow: hidden;
-              transition: max-height 0.5s ease;
-          }
-          .accordion__item--active .accordion__content {
-              max-height: initial;
-          }
+.accordion {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.accordion__item {
+    border-top: none;
+}
+.accordion__header {
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+.accordion__arrow {
+    transition: transform 0.3s ease;
+    font-size: 30px;
+    font-weight: bold;
+}
+.accordion__item--active .accordion__arrow {
+    transform: rotate(180deg);
+}
+.accordion__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    padding-top: 0;
+    padding-bottom: 0;
+}
               </code>
             </pre>
           
@@ -87,26 +99,44 @@
             <p class="content__text">Ось приклад структури HTML для аккордеона:</p>
             <pre class="code">
                 <code>
-            &lt;div class="accordion"&gt;
-                &lt;div class="accordion__item accordion__item--active"&gt;
-                    &lt;div class="accordion__header"&gt;Заголовок 1&lt;/div&gt;
-                    &lt;div class="accordion__content"&gt;
-                        &lt;p&gt;Контент для заголовка 1.&lt;/p&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class="accordion__item"&gt;
-                    &lt;div class="accordion__header"&gt;Заголовок 2&lt;/div&gt;
-                    &lt;div class="accordion__content"&gt;
-                        &lt;p&gt;Контент для заголовка 2.&lt;/p&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div class="accordion__item"&gt;
-                    &lt;div class="accordion__header"&gt;Заголовок 3&lt;/div&gt;
-                    &lt;div class="accordion__content"&gt;
-                        &lt;p&gt;Контент для заголовка 3.&lt;/p&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
+  &lt;div class="accordion"&gt; 
+  &lt;div class="accordion__item accordion__item--active"&gt; 
+    &lt;button class="accordion__header"&gt;
+      &lt;span class="accordion__title"&gt;Accordion 1&lt;/span&gt;
+      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="accordion__content"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
+        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
+        asperiores aut.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+ 
+  &lt;div class="accordion__item"&gt;
+    &lt;button class="accordion__header"&gt;
+      &lt;span class="accordion__title"&gt;Accordion 2&lt;/span&gt;
+      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="accordion__content"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
+        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
+        asperiores aut.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="accordion__item"&gt;
+    &lt;button class="accordion__header"&gt;
+      &lt;span class="accordion__title"&gt;Accordion 3&lt;/span&gt;
+      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="accordion__content"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
+        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
+        asperiores aut.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+                  
                 </code>
               </pre>
               <p class="content__text">Класс <code>accordion</code> необхідний для контейнера з усіма аккордіонами. Класс <code>accordion__item</code> необхідний для елементу самого аккордіону. Класс <code>accordion__item--active</code> визначає який аккордіон по замовчуванню буде активний (матиме клас active тощо.). Класс <code>accordion__header</code> це видна частина аккордіону (тобто його заговолок). Класс <code>accordion__content</code> власне прихований контент аккордіону, який показується коли аккордіон має активний стан.</p>
