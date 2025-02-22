@@ -140,26 +140,31 @@
 
   // Функція для копіювання тексту з елемента code
   function copyCode(targetId) {
-  const codeElement = document.getElementById(targetId);
-  if (!codeElement) return showCopyMessage("Елемент із заданим ID не знайдено.", true);
+    const codeElement = document.getElementById(targetId);
+    if (!codeElement) return showCopyMessage("Елемент із заданим ID не знайдено.", true);
 
-  navigator.clipboard.writeText(codeElement.innerText)
-    .then(() => showCopyMessage("Код скопійовано успішно!"))
-    .catch(() => showCopyMessage("Не вдалося скопіювати код.", true));
-}
+    const codeText = codeElement.textContent
+      .replace(/\n\s+/g, "\n") 
+      .trim(); 
 
-function showCopyMessage(message, isError = false) {
-  const messageDiv = document.createElement("div");
-  messageDiv.innerText = message;
-  messageDiv.classList.add("copy-message", isError ? "error" : "success");
+    navigator.clipboard.writeText(codeText)
+      .then(() => showCopyMessage("Код скопійовано успішно!"))
+      .catch(() => showCopyMessage("Не вдалося скопіювати код.", true));
+  }
 
-  document.body.appendChild(messageDiv);
 
-  setTimeout(() => {
-    messageDiv.classList.add("fade-out");
-    setTimeout(() => messageDiv.remove(), 500);
-  }, 2000);
-}
+  function showCopyMessage(message, isError = false) {
+    const messageDiv = document.createElement("div");
+    messageDiv.innerText = message;
+    messageDiv.classList.add("copy-message", isError ? "error" : "success");
+
+    document.body.appendChild(messageDiv);
+
+    setTimeout(() => {
+      messageDiv.classList.add("fade-out");
+      setTimeout(() => messageDiv.remove(), 500);
+    }, 2000);
+  }
 
 
 
