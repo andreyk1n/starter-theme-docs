@@ -21,14 +21,17 @@
         <p class="content__text">
           Основна логіка знаходиться у файлі <code class="code__inline">currentPage.js</code>, який розташований у папці <code class="code__inline">functions</code>. Цей файл підключається через <code class="code__inline">app.js</code>.
         </p>
-        <pre class="code">
-          <code>
-      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.nav__link').forEach(link => {
-          if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
-      });
-          </code>
-        </pre>
+        <div>
+          <button class="copyButton" onclick="copyCode('currentPage')">Копіювати код</button>
+          <pre class="code" id="currentPage">
+            <code>
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav__link').forEach(link => {
+    if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
+});
+            </code>
+          </pre>
+        </div>
         <h3 class="content__subtitle">Підключення</h3>
         <p class="content__text">
           У файлі <code class="code__inline">app.js</code> підключається скрипт <code class="code__inline">currentPage.js</code>, щоб функція додавання класу працювала коректно.
@@ -38,14 +41,17 @@
         <p class="content__text">
           Для стилізації активного пункту меню використовується клас <code class="code__inline">currentPage</code>, який можна визначити у CSS, наприклад:
         </p>
-        <pre class="code">
-          <code>
-      .currentPage {
-          font-weight: bold;
-          text-decoration: underline;
-      }
-          </code>
-        </pre>
+        <div>
+          <button class="copyButton" onclick="copyCode('currentPageCss')">Копіювати код</button>
+          <pre class="code" id="currentPageCss">
+            <code>
+.currentPage {
+    font-weight: bold;
+    text-decoration: underline;
+}
+            </code>
+          </pre>
+        </div>
       
         @@include('footer.html')
       </main>
