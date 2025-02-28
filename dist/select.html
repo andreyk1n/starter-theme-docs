@@ -19,8 +19,8 @@
 
 <body>
 
-  <div class="wrapper">
-    <header class="header">
+    <div class="wrapper">
+        <header class="header">
   <div class="header__container">
     <a href="index.html" class="header__logo">
       <img src="./images/logo/logo-white.svg" alt="Header logo">
@@ -30,8 +30,8 @@
     </div>
   </div>
 </header>
-    <div class="wrapper__container">
-      <aside class="sidebar">
+        <div class="wrapper__container">
+            <aside class="sidebar">
   <nav class="sidebar__nav">
     <a href="index.html"><svg width="262" height="81" viewBox="0 0 297 81" fill="none"
         xmlns="http://www.w3.org/2000/svg">
@@ -81,13 +81,19 @@
     <p>v.1.4.4</p>
   </nav>
 </aside>
-        <main class="content">
-            <h1 class="content__title">Кастомний селект</h1>
-            <p class="content__text">
-                Клас <code>select</code> використовується для контейнера самого елементу селекту. Він містить кнопку для відображення вибору та список варіантів, які можна вибрати. Клас <code>select__button</code> є кнопкою, яка показує поточний вибір і відкриває/закриває список. Клас <code>select__dropdown</code> відповідає за відображення списку варіантів, а клас <code>select__option</code> описує кожен варіант у списку. Клас <code>select__dropdown--active</code> додається до списку, коли він відкритий.
-            </p>
-            
-            <pre class="code">
+            <main class="content">
+                <h1 class="content__title">Кастомний селект</h1>
+                <p class="content__text">
+                    Клас <code>select</code> використовується для контейнера самого елементу селекту. Він містить кнопку
+                    для відображення вибору та список варіантів, які можна вибрати. Клас <code>select__button</code> є
+                    кнопкою, яка показує поточний вибір і відкриває/закриває список. Клас <code>select__dropdown</code>
+                    відповідає за відображення списку варіантів, а клас <code>select__option</code> описує кожен варіант
+                    у списку. Клас <code>select__dropdown--active</code> додається до списку, коли він відкритий.
+                </p>
+
+                <div>
+                    <button class="copyButton" onclick="copyCode('selectHtml')">Копіювати код</button>
+                    <pre class="code" id="selectHtml">
                 <code>
  &lt;div class="select"&gt;
      &lt;button class="select__button" type="button"&gt;Оберіть варіант&lt;/button&gt;
@@ -99,41 +105,48 @@
  &lt;/div&gt;
                 </code>
             </pre>
-            <p class="content__text">Функція selectMenu (яка знаходиться в <code>app.js</code>) підключає функціонал кастомного селект меню. Також потрібно підключати стилі в <code>main.scss</code></p>
-            <pre class="code">
-                <code>
-export function selectMenu() {
-    document.addEventListener('click', (e) => {
-        // Закриваємо всі відкриті списки, окрім поточного
-        document.querySelectorAll('.select__dropdown').forEach(dropdown => {
-            const parentSelect = dropdown.closest('.select');
-            if (!parentSelect.contains(e.target)) {
-                dropdown.classList.remove('select__dropdown--active');
-            }
-        });
-    
-        // Обробка кліку по селекту
-        const select = e.target.closest('.select');
-        if (select) {
-            const dropdown = select.querySelector('.select__dropdown');
-            const button = select.querySelector('.select__button');
-    
-            // Перевіряємо, чи селект уже активний
-            const isActive = dropdown.classList.contains('select__dropdown--active');
-            dropdown.classList.toggle('select__dropdown--active', !isActive); // Тогл активстану
-    
-            // Обробка вибору опції
-            if (e.target.classList.contains('select__option')) {
-                button.textContent = e.target.textContent; // Оновлюємо текст кнопки
-                dropdown.classList.remove('select__dropdown--active'); // Закриваємо список пвибору
-            }
+                </div>
+                <p class="content__text">Функція selectMenu (яка знаходиться в <code>app.js</code>) підключає функціонал
+                    кастомного селект меню. Також потрібно підключати стилі в <code>main.scss</code></p>
+
+                <div>
+                    <button class="copyButton" onclick="copyCode('selectJs')">Копіювати код</button>
+                    <pre class="code" id="selectJs">
+                    <code>
+document.addEventListener('click', (e) => {
+    // Закриваємо всі відкриті списки, окрім поточного
+    document.querySelectorAll('.select__dropdown').forEach(dropdown => {
+        const parentSelect = dropdown.closest('.select');
+        if (!parentSelect.contains(e.target)) {
+            dropdown.classList.remove('select__dropdown--active');
         }
     });
-}
-                </code>
-            </pre>
-            <p class="content__text">Стилізація кастомного селект меню</p>
-            <pre class="code">
+
+    // Обробка кліку по селекту
+    const select = e.target.closest('.select');
+    if (select) {
+        const dropdown = select.querySelector('.select__dropdown');
+        const button = select.querySelector('.select__button');
+
+        // Перевіряємо, чи селект уже активний
+        const isActive = dropdown.classList.contains('select__dropdown--active');
+        dropdown.classList.toggle('select__dropdown--active', !isActive); // Тогл активстану
+
+        // Обробка вибору опції
+        if (e.target.classList.contains('select__option')) {
+            button.textContent = e.target.textContent; // Оновлюємо текст кнопки
+            dropdown.classList.remove('select__dropdown--active'); // Закриваємо список пвибору
+        }
+    }
+});
+                    </code>
+                </pre>
+                </div>
+                <p class="content__text">Стилізація кастомного селект меню</p>
+
+                <div>
+                    <button class="copyButton" onclick="copyCode('selectCss')">Копіювати код</button>
+                    <pre class="code" id="selectCss">
                 <code>
     .select {
         position: relative;
@@ -180,8 +193,9 @@ export function selectMenu() {
     }
                 </code>
             </pre>
-            
-        <footer class="footer">
+                </div>
+
+                <footer class="footer">
   <div class="footer__container">
     <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
     <a href="mailto:andrii.panasiuk2002@gmail.com">Gmail</a>
@@ -303,7 +317,8 @@ export function selectMenu() {
 </body>
 
 </html>
-      </main>
+            </main>
+        </div>
     </div>
-  </div>
 
+    
