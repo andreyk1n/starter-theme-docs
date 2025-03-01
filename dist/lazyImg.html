@@ -83,176 +83,78 @@
   </nav>
 </aside>
             <main class="content">
-                <h1 class="content__title">Скрипт та стилі для бургер-меню</h1>
-                <p class="content__text">
-                    У цьому розділі описується функціонал бургер-меню, яке використовується для адаптивної навігації, а
-                    також стилі, що забезпечують його коректну роботу.
-                </p>
-
-                <h2 class="content__subtitle">Призначення</h2>
-                <p class="content__text">
-                    Бургер-меню дозволяє відкривати та закривати навігаційне меню на мобільних пристроях. Користувач
-                    може взаємодіяти з меню за допомогою кліку на іконку бургера.
-                </p>
-
-                <h2 class="content__subtitle">Реалізація</h2>
-                <p class="content__text">
-                    Функціонал меню реалізований у скрипті <code class="code__inline">initBurgerMenu.js</code>, який
-                    підключається через <code class="code__inline">app.js</code>. Код дозволяє відкривати меню при
-                    натисканні на бургер та закривати його при кліку за межами меню.
-                </p>
+                <h1 class="content__title">Функція для відкладеного завантаження картинок</h1>
+                <p class="content__text">Цей скрипт дозволяє відкладене завантаження зображень та фонових зображень для
+                    покращення продуктивності сторінки.</p>
+                <h2>Використання</h2>
+                <h3>1. Для зображень</h3>
+                <p>Додайте клас <code>lazy</code> до елемента <code>&lt;img&gt;</code> та використовуйте атрибут
+                    <code>data-src</code>:</p>
                 <div>
-                    <button class="copyButton" onclick="copyCode('burgerJs')">Копіювати код</button>
-                    <pre class="code" id="burgerJs">
-          <code>
-document.addEventListener('DOMContentLoaded', () => {
-    const burger = document.querySelector('.header__burger');
-    const nav = document.querySelector('.header__nav');
-    const body = document.body;
-
-    const toggleMenu = () => {
-        const isActive = burger.classList.toggle('active');
-        nav.classList.toggle('active', isActive);
-        body.classList.toggle('no-scroll', isActive);
-    };
-
-    burger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!nav.contains(e.target) && !burger.contains(e.target)) {
-            burger.classList.remove('active');
-            nav.classList.remove('active');
-            body.classList.remove('no-scroll');
-        }
-    });
-});
-          </code>
-        </pre>
+                    <button class="copyButton" onclick="copyCode('lazyImg')">Копіювати код</button>
+                    <pre
+                        id="lazyImg"><code>&lt;img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="real-image.jpg" alt="Опис зображення"&gt;</code></pre>
                 </div>
-
-                <h2 class="content__subtitle">Структура проекту</h2>
-                <pre class="code">
-          <code>
-      project-folder/
-      ├── src/
-      │   ├── js/
-      │   │   ├── functions/
-      │   │   │   └── initBurgerMenu.js
-      │   │   └── app.js
-      │   ├── scss/
-      │   │   └── components/
-      │   │       └── _header.scss
-          </code>
-        </pre>
-
-                <h2 class="content__subtitle">CSS-стилі</h2>
-                <p class="content__text">
-                    Стилі оформлюють бургер-меню та забезпечують його коректну анімацію під час відкриття та закриття.
-                </p>
+                <h3>2. Для фонових зображень</h3>
+                <p>Додайте клас <code>lazy-bg</code> до елемента та використовуйте атрибут <code>data-bg</code>:</p>
                 <div>
-                    <button class="copyButton" onclick="copyCode('burgerCss')">Копіювати код</button>
-                    <pre class="code" id="burgerCss">
-                    <code>
-.header {
-    z-index: 100;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: top 0.3s ease;
-}
+                    <button class="copyButton" onclick="copyCode('lazyBg')">Копіювати код</button>
+                    <pre
+                        id="lazyBg"><code>&lt;div class="lazy-bg" data-bg="real-background.jpg"&gt;&lt;/div&gt;</code></pre>
+                </div>
+                <h2>Додаткові налаштування</h2>
+                <ul>
+                    <li>Можна змінити змінну <code>placeholderImage</code>, якщо потрібно інше зображення-заглушка.</li>
+                    <li>Зображення завантажуються лише при вході у видиму зону.</li>
+                </ul>
 
-.header__nav {
-    width: 100%;
-    max-width: 715px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-}
+                <h2>Сумісність</h2>
+                <p>Скрипт працює у всіх сучасних браузерах, що підтримують <code>Intersection Observer</code>. Для
+                    старих браузерів можна додати поліфіл.</p>
 
-@media (max-width: 768px) {
-    .header__nav {
-        position: absolute;
-        right: -100%;
-        top: 0;
-        flex-direction: column;
-        gap: 25px;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        min-height: 100vh;
-        background-color: #ffffff;
-        transition: right 0.3s ease;
-    }
+                <h2>JavaScript код</h2>
+                <div>
+                    <button class="copyButton" onclick="copyCode('lazyJs')">Копіювати код</button>
+                    <pre id="lazyJs"><code>document.addEventListener("DOMContentLoaded", () => {
+    const lazyImages = document.querySelectorAll('img.lazy');
+    const lazyBackgrounds = document.querySelectorAll('.lazy-bg');
+    const placeholderImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
 
-    .header__nav.active {
-        right: 0;
-    }
-}
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                if (target.tagName === 'IMG') {
+                    const realSrc = target.getAttribute('data-src');
+                    if (realSrc) {
+                        target.src = realSrc;
+                        target.removeAttribute('data-src');
+                        target.classList.remove('lazy');
+                    }
+                } else if (target.classList.contains('lazy-bg')) {
+                    const realBg = target.getAttribute('data-bg');
+                    if (realBg) {
+                        target.style.backgroundImage = `url(${realBg})`;
+                        target.removeAttribute('data-bg');
+                        target.classList.remove('lazy-bg');
+                    }
+                }
+                observer.unobserve(target);
+            }
+        });
+    });
 
-.header__burger {
-    display: none;
-}
+    lazyImages.forEach(image => {
+        if (!image.hasAttribute('src')) {
+            image.src = placeholderImage;
+        }
+        imageObserver.observe(image);
+    });
 
-@media (max-width: 768px) {
-    .header__burger {
-        width: 40px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        position: relative;
-        z-index: 11;
-    }
-    
-    .header__burger span {
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: #333;
-        position: relative;
-        transition: all 0.3s ease;
-    }
-    
-    .header__burger span::before,
-    .header__burger span::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background-color: #333;
-        transition: all 0.3s ease;
-    }
-    
-    .header__burger span::before {
-        top: -10px;
-    }
-    
-    .header__burger span::after {
-        top: 10px;
-    }
-    
-    .header__burger.active span {
-        background-color: transparent;
-    }
-    
-    .header__burger.active span::before {
-        top: 0;
-        transform: rotate(45deg);
-    }
-    
-    .header__burger.active span::after {
-        top: 0;
-        transform: rotate(-45deg);
-    }
-}                        
-                    </code>
-                  </pre>
+    lazyBackgrounds.forEach(background => {
+        imageObserver.observe(background);
+    });
+});</code></pre>
                 </div>
                 <footer class="footer">
   <div class="footer__container">
