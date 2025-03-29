@@ -65,7 +65,6 @@ body {
     margin: 30px 0;
 }
 
-// Обмежуючий контейнер - цей контейнер часто зустрічається в проектах, якщо сайт має певну геометрію.
 [class*='__container'] {
     max-width: $maxWidthContainer;
     width: 100%;
@@ -73,8 +72,6 @@ body {
     padding: 0 15px
 }
 
-
-// Застосування стилів для посилання: колір, час анімації, активний стан.
 .content__link {
     text-decoration: underline;
     color: #484848;
@@ -86,7 +83,6 @@ body {
     text-decoration: none;
 }
 
-// Застосування стилів для кнопкки з класом .button
 .button {
     width: fit-content;
     display: flex;
@@ -115,7 +111,6 @@ a {
     text-decoration: none;
 }
 
-// Загальні стилі для списків
 ol,
 ul {
     padding-left: 20px;
@@ -237,7 +232,7 @@ blockquote {
     margin-top: 20px;
 }
 
-// form
+
 .form__wrapper {
     margin: 0 15px;
     width: 100%;
