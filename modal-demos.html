@@ -206,7 +206,7 @@
                 <div class="modal-anim">
                     <h2>Модальне вікно із плавною легкою анімацією появи</h2>
                     <button class="contact__button" onclick="document.location='#anim-modal'; return false;"
-                    class="open-modal">Виклик модалки</button>
+                        class="open-modal">Виклик модалки</button>
                     <div class="modal" id="anim-modal">
                         <div class="modal-content">
                             <span onclick="document.location='#close'; return false;" class="close"></span>
@@ -311,7 +311,122 @@
                         </code>
                     </pre>
                 </div>
-                <footer class="footer">
+
+                <div class="modal-scaled">
+                    <h2>Модальне вікно із анімацією маштабування</h2>
+                    <button class="contact__button open-modal"
+                        onclick="document.location='#scale-modal'; return false;">Виклик модалки</button>
+                    <div class="modal" id="scale-modal">
+                        <div class="modal-content">
+                            <span onclick="document.location='#close'; return false;" class="close"></span>
+                            <h2>Модальне вікно</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
+                                sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
+                                architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
+                        </div>
+                        <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="copyButton mt20" onclick="copyCode('modal-scale')">Копіювати код</button>
+                    <pre class="code" id="modal-scale">
+                        <code>
+    .modal {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: visibility 0s 0.3s, opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .modal:target {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: scale(0);
+    }
+    
+    .modal:target .modal-content {
+      opacity: 1;
+      transform: translateY(0);
+      transform: scale(1);
+    }
+    
+    .close-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 1;
+      transition: background 0.3s ease;
+    }
+    
+    .modal:target .close-overlay {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 3;
+    }
+    
+    .close::before,
+    .close::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 2px;
+      background-color: #000;
+      transform-origin: center;
+    }
+    
+    .close::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    
+    .close::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+                              
+                        </code>
+                    </pre>
+                </div>
+
+        <footer class="footer">
   <div class="footer__container">
     <a href="https://github.com/andreyk1n/starter-theme" target="_blank">Стартова тема</a>
     <a href="mailto:andrii.panasiuk2002@gmail.com">Gmail</a>
@@ -433,6 +548,6 @@
 </body>
 
 </html>
-            </main>
-        </div>
+        </main>
+    </div>
     </div>
