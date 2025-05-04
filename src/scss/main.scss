@@ -54,14 +54,31 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: $fontFamily;
-    font-size: $fontSize;
-    color: $fontColor;
-    background-color: $bgColor;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-}
+// змінні для колір теми
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+  }
+  
+  :root.dark {
+    --bg: #000000;
+    --text: #ffffff;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  
+
+// body {
+//     font-family: $fontFamily;
+//     font-size: $fontSize;
+//     color: $fontColor;
+//     background-color: $bgColor;
+//     overflow-x: hidden;
+//     scroll-behavior: smooth;
+// }
 
 .wrapper {
     display: flex;
@@ -122,8 +139,10 @@ a:active {
 }
 
 // Загальні стилі для списків
-ol, ul {
+ol,
+ul {
     padding-left: 20px;
+
     li:not(:last-child) {
         padding-bottom: 15px;
     }

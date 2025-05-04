@@ -3,15 +3,44 @@
 
 <div class="wrapper">
   @@include('partials/header.html')
-  
-  <!-- Перед початком роботи видаляємо цей рядок, по бажанню можна і сам компонент intro.html в папці partials -->
-  @@include('partials/intro.html')
-  <!-- Перед початком роботи видаляємо цей рядок, по бажанню можна і сам компонент intro.html в папці partials -->
 
-  <!-- Якщо потрібна модалка - розкоментуйте -->
-  <!-- @@include('modal.html') -->
-  <!-- Якщо потрібна модалка - розкоментуйте -->
+
 </div>
 </div>
+
+<script>
+//   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+// const root = document.documentElement;
+// const btnLight = document.getElementById('theme-light');
+// const btnDark = document.getElementById('theme-dark');
+
+// // Встановлення теми
+// function setTheme(theme) {
+//   if (theme === 'dark') {
+//     root.classList.add('dark');
+//     localStorage.setItem('theme', 'dark');
+//     btnDark.style.display = 'none';
+//     btnLight.style.display = 'inline-block';
+//   } else {
+//     root.classList.remove('dark');
+//     localStorage.setItem('theme', 'light');
+//     btnLight.style.display = 'none';
+//     btnDark.style.display = 'inline-block';
+//   }
+// }
+
+// // Перевірка локального сховища або системної теми
+// const savedTheme = localStorage.getItem('theme');
+// if (savedTheme) {
+//   setTheme(savedTheme);
+// } else {
+//   setTheme(prefersDark ? 'dark' : 'light');
+// }
+
+// // Обробники
+// btnLight.addEventListener('click', () => setTheme('light'));
+// btnDark.addEventListener('click', () => setTheme('dark'));
+
+</script>
 
 @@include('partials/footer.html')
