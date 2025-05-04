@@ -1,17 +1,1 @@
-// ---------------------------------------------------------------------------------------------------------------
-// Для коректної роботи хедер має мати клас .header, position: fixed, і решту стилів які прописані в темі 
-// саме для хедера
-// ---------------------------------------------------------------------------------------------------------------
-export function initScrollControlledHeader() {
-  let lastScrollTop = 0;
-  const header = document.querySelector('.header');
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset;
-    header.classList.toggle('scroll-header', scrollTop > 10);
-    header.style.top = (scrollTop <= 10 || scrollTop < lastScrollTop) ? '0' : '-100px';
-    lastScrollTop = scrollTop;
-  });
-}
-// ---------------------------------------------------------------------------------------------------------------
-
-
+function initScrollControlledHeader(){let l=0,o=document.querySelector(".header");window.addEventListener("scroll",()=>{var e=window.pageYOffset;o.classList.toggle("scroll-header",10<e),o.style.top=e<=10||e<l?"0":"-100px",l=e})}export{initScrollControlledHeader};
