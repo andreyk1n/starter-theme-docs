@@ -1,24 +1,72 @@
-Головна
+<!-- Головна
 
 Стартовий шаблон - дропдаун
 --Можливості шаблону-галпфайл
 --Базова структура
---Папка src/scss - дропдаун
+--Папка src/scss - вкладений дропдаун
 ----main/variables/mixins
 ----папка components/partials
---Папка html - дропдаун
+--Папка html - вкладений дропдаун
 ----components/partials/components
 --Папка js / app.js
-----functions.... - дропдаун
+----functions.... - вкладений дропдаун
 ------item1 ...
 --Папка images
 --Готові рішення
 
-WordPress
+WordPress - дропдаун
 --Шаблон для сторінки з ацф полями
 --Пагінація
 --Вивід постів
 --Кастомний посттайп
---Готові рішення
+--Готові рішення вкладений дропдаун
+----рішення 1
 
-phpmailer
+phpmailer -->
+
+<div class="sidebar">
+    <a href="" class="sidebar__link">Головна</a>
+  
+    <div class="dropdown">
+      <p class="dropdown__title">Стартовий шаблон</p>
+      <div class="dropdown__content">
+        <a href="#" class="dropdown__link">test 1</a>
+        <a href="#" class="dropdown__link">test 2</a>
+  
+        <div class="dropdown">
+          <p class="dropdown__title">test 3</p>
+          <div class="dropdown__content">
+            <a href="#" class="dropdown__link">test 11</a>
+            <a href="#" class="dropdown__link">test 21</a>
+            <a href="#" class="dropdown__link">test 31</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="dropdown">
+      <p class="dropdown__title">wordpress</p>
+      <div class="dropdown__content">
+        <a href="#" class="dropdown__link">test 1</a>
+        <a href="#" class="dropdown__link">test 2</a>
+        <a href="#" class="dropdown__link">test 3</a>
+      </div>
+    </div>
+  
+    <a href="" class="sidebar__link">phpmailer</a>
+  </div>
+  
+  
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('.dropdown__title').forEach(title => {
+        title.addEventListener('click', e => {
+          e.stopPropagation(); // важливо: не дозволяємо події піднятись догори
+          const dropdown = title.closest('.dropdown');
+          dropdown.classList.toggle('active');
+        });
+      });
+    });
+  </script>
+  
