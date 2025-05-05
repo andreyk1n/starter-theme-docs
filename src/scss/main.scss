@@ -58,13 +58,13 @@
 // змінні для колір теми
 :root {
     --bg: #ffffff;
-    --text: #000000;
-    --sidebarBg: #EDF2FC;
+    --text: #080808;
+    --sidebarBg: #edf2fc;
 }
 
 :root.dark {
-    --bg: #000000;
-    --text: #ffffff;
+    --bg: #232528;
+    --text: #E0E0E0;
     --sidebarBg: #2C2E30;
 }
 
@@ -213,3 +213,46 @@ input {
     scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
   }
   
+
+//   text content
+
+.code {
+    position: relative;
+    background-color: #f9fafb;
+    border: 1px solid #e0e0e0;
+    border-left: 6px solid #d0d0ff;
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    font-family: 'Fira Code', monospace;
+    overflow-x: auto;
+  }
+  
+  .code pre {
+    margin: 0;
+    white-space: pre;
+    color: #333;
+    font-size: 0.95rem;
+  }
+  
+  .copy-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: background-color 0.2s ease;
+  }
+  
+  .copy-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+
+// text content
