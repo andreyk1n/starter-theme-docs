@@ -59,26 +59,27 @@
 :root {
     --bg: #ffffff;
     --text: #000000;
-  }
-  
-  :root.dark {
+    --sidebarBg: #EDF2FC;
+}
+
+:root.dark {
     --bg: #000000;
     --text: #ffffff;
-  }
+    --sidebarBg: #2C2E30;
+}
 
-  body {
+body {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
     background-color: var(--bg);
     color: var(--text);
-  }
-  
+}
+
 
 // body {
-//     font-family: $fontFamily;
-//     font-size: $fontSize;
-//     color: $fontColor;
-//     background-color: $bgColor;
-//     overflow-x: hidden;
-//     scroll-behavior: smooth;
+
 // }
 
 .wrapper {
@@ -86,6 +87,15 @@
     flex-direction: column;
     width: 100%;
     justify-content: center;
+
+    &__container {
+        position: relative;
+        display: grid;
+    }
+}
+
+main {
+    margin-left: 420px;
 }
 
 .no-scroll {
@@ -174,3 +184,32 @@ input {
 :-webkit-autofill::first-line {
     font-size: 16px;
 }
+
+// scroll
+
+/* Для Chrome, Edge, Opera */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1); 
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Для Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  }
+  
