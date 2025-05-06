@@ -55,18 +55,7 @@
     box-sizing: border-box;
 }
 
-// змінні для колір теми
-:root {
-    --bg: #ffffff;
-    --text: #080808;
-    --sidebarBg: #edf2fc;
-}
 
-:root.dark {
-    --bg: #232528;
-    --text: #E0E0E0;
-    --sidebarBg: #2C2E30;
-}
 
 body {
     font-family: $fontFamily;
@@ -95,7 +84,7 @@ body {
 }
 
 main {
-    margin-left: 420px;
+    margin-left: 370px;
 }
 
 .no-scroll {

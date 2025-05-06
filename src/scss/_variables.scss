@@ -34,7 +34,7 @@ $buttonHover: lightBlue;
 $buttonActive: rgb(16, 77, 97);
 
 // Обмеження контейнера
-$maxWidthContainer: 1400px;
+$maxWidthContainer: 1170px;
 $paddingContainer: 15px;
 
 // Адаптив
@@ -49,3 +49,19 @@ $desktopBig: 1400px;
 
 // Перехід
 $transitionDuration: .5s;
+
+
+// змінні для колір теми
+:root {
+    --bg: #ffffff;
+    --text: #080808;
+    --logo: #000000;
+    --sidebarBg: #edf2fc;
+}
+
+:root.dark {
+    --bg: #232528;
+    --text: #E0E0E0;
+    --logo: #fff;
+    --sidebarBg: #2C2E30;
+}
