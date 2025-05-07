@@ -57,6 +57,8 @@ $transitionDuration: .5s;
     --text: #080808;
     --logo: #000000;
     --sidebarBg: #edf2fc;
+    --tableHead: #edf2fc;
+    --tableBg: #transparent;
 }
 
 :root.dark {
@@ -64,4 +66,6 @@ $transitionDuration: .5s;
     --text: #E0E0E0;
     --logo: #fff;
     --sidebarBg: #2C2E30;
+    --tableHead: #35373A;
+    --tableBg: #2C2E30;
 }
