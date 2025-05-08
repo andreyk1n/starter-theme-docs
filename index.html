@@ -21,18 +21,18 @@
 
 
 <div class="wrapper">
-  <!-- <header class="header">
+  <header class="header">
   <div class="header__container">
     <a href="index.html" class="header__logo">
-      <span><img src="./images/icons/key.svg" alt="Header logo"></span>
-      Starter Theme
+      <img src="./images/header/logo.svg" alt="Header logo">
     </a>
+    <button class="header__button" id="theme-light"><img src="./images/icons/sun.svg" alt="Light theme"></button>
+    <button class="header__button" id="theme-dark"><img src="./images/icons/moon.svg" alt="Dark theme"></button>
     <div class="header__burger">
       <span></span>
     </div>
   </div>
-</header> -->
-
+</header>
 
   <div class="wrapper__container">
     <div class="sidebar">
@@ -239,37 +239,37 @@
 
 
 <script>
-  //   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  // const root = document.documentElement;
-  // const btnLight = document.getElementById('theme-light');
-  // const btnDark = document.getElementById('theme-dark');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const root = document.documentElement;
+  const btnLight = document.getElementById('theme-light');
+  const btnDark = document.getElementById('theme-dark');
 
-  // // Встановлення теми
-  // function setTheme(theme) {
-  //   if (theme === 'dark') {
-  //     root.classList.add('dark');
-  //     localStorage.setItem('theme', 'dark');
-  //     btnDark.style.display = 'none';
-  //     btnLight.style.display = 'inline-block';
-  //   } else {
-  //     root.classList.remove('dark');
-  //     localStorage.setItem('theme', 'light');
-  //     btnLight.style.display = 'none';
-  //     btnDark.style.display = 'inline-block';
-  //   }
-  // }
+  // Встановлення теми
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      btnDark.style.display = 'none';
+      btnLight.style.display = 'inline-block';
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      btnLight.style.display = 'none';
+      btnDark.style.display = 'inline-block';
+    }
+  }
 
-  // // Перевірка локального сховища або системної теми
-  // const savedTheme = localStorage.getItem('theme');
-  // if (savedTheme) {
-  //   setTheme(savedTheme);
-  // } else {
-  //   setTheme(prefersDark ? 'dark' : 'light');
-  // }
+  // Перевірка локального сховища або системної теми
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    setTheme(savedTheme);
+  } else {
+    setTheme(prefersDark ? 'dark' : 'light');
+  }
 
-  // // Обробники
-  // btnLight.addEventListener('click', () => setTheme('light'));
-  // btnDark.addEventListener('click', () => setTheme('dark'));
+  // Обробники
+  btnLight.addEventListener('click', () => setTheme('light'));
+  btnDark.addEventListener('click', () => setTheme('dark'));
 
 
 </script>
