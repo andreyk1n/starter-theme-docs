@@ -52,7 +52,7 @@ function replaceAliases() {
       content = content.replace(/@img\//g, './images/');
 
       // Заміна @bgimg/filename.jpg → background-image: url('images/filename.jpg');
-      content = content.replace(/@bgimg\/([^)'" ]+)/g, "background-image: url('images/$1')");
+      content = content.replace(/@bgimg\/([^)'" ]+)/g, "background-image: url('./images/$1')");
 
       file.contents = Buffer.from(content);
     }
