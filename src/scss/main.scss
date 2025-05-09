@@ -81,7 +81,8 @@ body {
 
     &__container {
         position: relative;
-        display: grid;
+        display: flex;
+        gap: 40px;
     }
 }
 
@@ -211,7 +212,8 @@ input {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 500px 0;
+    width: calc(100% - (370px + 150px));
+    padding: 100px 0 100px 0;
 }
 
 table {
@@ -288,11 +290,14 @@ table {
 
 
 .anchors {
-  list-style: none;
-  padding: 0;
-  position: fixed;
-  right: 0;
-  z-index: 100;
+    list-style: none;
+    padding: 0;
+    position: sticky;
+    right: 0;
+    top: 50px;
+    z-index: 100;
+    max-width: 200px;
+    height: 100%;
 }
 
 .anchors__item {
