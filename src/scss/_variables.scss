@@ -59,6 +59,7 @@ $transitionDuration: .5s;
     --sidebarBg: #edf2fc;
     --tableHead: #edf2fc;
     --tableBg: #transparent;
+    --border: #ECECEC
 }
 
 :root.dark {
@@ -68,4 +69,5 @@ $transitionDuration: .5s;
     --sidebarBg: #2C2E30;
     --tableHead: #35373A;
     --tableBg: #2C2E30;
+    --border: #2C2E30;
 }

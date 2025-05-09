@@ -298,16 +298,29 @@ table {
     z-index: 100;
     max-width: 200px;
     height: 100%;
+    padding-left: 30px;
+    border-left: 2px solid var(--border);
 }
 
 .anchors__item {
   display: block;
   margin: 10px 0;
   text-decoration: none;
-  color: #000;
+  color: var(--text);
+  transition-duration: $transitionDuration;
+  font-weight: 300;
+  font-size: 15px;
+  opacity: .8;
+
+  &:hover {
+    opacity: 1;
+    color: var(--text);
+  }
 }
 
 .anchors__item--active {
-  font-weight: bold;
-  color: #007bff;
+  font-weight: 700;
+  color: var(--logo);
+  font-size: 16px;
+  opacity: 1;
 }
