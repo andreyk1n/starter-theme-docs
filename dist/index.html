@@ -108,21 +108,18 @@
     });
   });
 </script>
-
     <main class="content">
-      <h1 class="content__title">Technical documentation</h1>
+      <h1>Technical documentation</h1>
 
-      <h2 class="content__section" data-anchords="general-information">General information</h2>
-      <p class="content__text">Passwork is not resource-intensive. The amount of resources (RAM, CPU, HDD) and the
-        number of servers required
+      <h2 data-anchords="general-information">General information</h2>
+      <p>Passwork is not resource-intensive. The amount of resources (RAM, CPU, HDD) and the number of servers required
         depend on the number of active users.</p>
       <blockquote>💡 The IOPS value is very important for the speed of the database, so it is advisable to use SSD
         disks.</blockquote>
 
-      <h2 class="content__section" data-anchords="single-server">1. Single server</h2>
-      <p class="content__text">Usually suitable for editions up to 500 users, with no special data storage requirements:
-      </p>
-      <table class="content__table">
+      <h2 data-anchords="single-server">1. Single server</h2>
+      <p>Usually suitable for editions up to 500 users, with no special data storage requirements:</p>
+      <table>
         <thead>
           <tr>
             <th>Number of users</th>
@@ -153,37 +150,36 @@
         </tbody>
       </table>
 
-      <h2 class="content__section" data-anchords="manual-installation">Manual installation</h2>
-      <span class="content__text">Manual installation does not use Docker or Windows installer. It is suitable for
-        complex cases where you
-        need to fine-tune all components.</span>
-      <p class="content__text">Path to the current configuration file —
-        <span>C:\inetpub\wwwroot\app\config\config.ini</span></p>
+      <h2 data-anchords="manual-installation">Manual installation</h2>
+      <span>Manual installation does not use Docker or Windows installer. It is suitable for
+        complex cases where you need to fine-tune all components.</span>
+      <p>Path to the current configuration file —
+        <span>C:\inetpub\wwwroot\app\config\config.ini</span>
+      </p>
 
-      <h2 class="content__section" data-anchords="different-servers">2. Different servers for application and database
+      <h2 data-anchords="different-servers">2. Different servers for application and database
       </h2>
-      <p class="content__text">The database and the application server are distributed to different servers.</p>
-      <ul class="content__list">
+      <p>The database and the application server are distributed to different servers.</p>
+      <ul>
         <li>RAM-1, CPU-1, HDD-1 — application server.</li>
         <li>RAM-2, CPU-2, HDD-2 — database.</li>
       </ul>
-      <p class="content__text">The MongoDB database can operate in a "cluster" mode.</p>
-      <ol class="content__list">
+      <p>The MongoDB database can operate in a "cluster" mode.</p>
+      <ol>
         <li>Master — the main server;</li>
         <li>Replica — a server with a copy of the data;</li>
         <li>Arbiter — a special server that ensures the correctness of the voting process, when selecting the master
           base.</li>
       </ol>
 
-      <h2 class="content__section" data-anchords="general-requirements">General description and requirements</h2>
-      <p class="content__text">The Passwork Setup installer helps you install Passwork on Windows and then keep it up to
-        date.</p>
-      <ul class="content__list">
+      <h2 data-anchords="general-requirements">General description and requirements</h2>
+      <p>The Passwork Setup installer helps you install Passwork on Windows and then keep it up to date.</p>
+      <ul>
         <li>Operating systems — Windows Server 2016, 2019, 2022</li>
         <li><a href="#">Microsoft .Net Framework 4.8</a> (download and install)</li>
       </ul>
 
-      <h2 class="content__section" data-anchords="main-features">Main features</h2>
+      <h2 data-anchords="main-features">Main features</h2>
       <a href="#">Installation on a new server</a>
       <a href="#">Migration (if Passwork is already installed on your server)</a>
     </main>
@@ -233,75 +229,75 @@
 
 
   // -----------------
-document.addEventListener('DOMContentLoaded', () => {
-  const anchorsContainer = document.getElementById('anchors'); // Контейнер для якорів
-  const headings = document.querySelectorAll('[data-anchords]'); // Заголовки з атрибутом data-anchords
+  document.addEventListener('DOMContentLoaded', () => {
+    const anchorsContainer = document.getElementById('anchors'); // Контейнер для якорів
+    const headings = document.querySelectorAll('[data-anchords]'); // Заголовки з атрибутом data-anchords
 
-  // Додаємо кожен якор до контейнера
-  headings.forEach(heading => {
-    // Присвоюємо id для кожного заголовка
-    const anchorId = heading.getAttribute('data-anchords');
-    heading.id = anchorId;
-
-    const anchorLink = document.createElement('a');
-    anchorLink.classList.add('anchors__item'); // Додаємо клас за методологією BEM
-    anchorLink.href = `#${anchorId}`;
-    anchorLink.textContent = heading.textContent;
-
-    // Додаємо клікабельний елемент до контейнера
-    anchorsContainer.appendChild(anchorLink);
-  });
-
-  // Обробник події для активації якорів при натисканні
-  anchorsContainer.addEventListener('click', (e) => {
-    if (e.target && e.target.tagName === 'A') {
-      // Видаляємо активний клас з усіх якорів
-      const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
-      allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
-
-      // Додаємо активний клас для поточного елемента
-      e.target.classList.add('anchors__item--active');
-
-      // Перешкоджаємо стандартній поведінці переходу за хешем
-      e.preventDefault();
-
-      // Зміна хешу в URL (не відбувається автоматичний перехід)
-      const targetId = e.target.getAttribute('href').substring(1); // Отримуємо id цільового елемента
-      const targetElement = document.getElementById(targetId);
-      
-      if (targetElement) {
-        // Виконати плавний скролінг до елемента
-        window.scrollTo({
-          top: targetElement.offsetTop - 50, // Для компенсації висоти заголовку
-          behavior: 'smooth'
-        });
-
-        // Оновлюємо хеш в URL вручну (це не викликає перезавантаження)
-        history.pushState(null, null, `#${targetId}`);
-      }
-    }
-  });
-
-  // Задаємо активний клас для якоря, що відповідає поточній видимій секції
-  window.addEventListener('scroll', () => {
-    let currentSection = null;
+    // Додаємо кожен якор до контейнера
     headings.forEach(heading => {
-      const sectionTop = heading.offsetTop;
-      const sectionHeight = heading.offsetHeight;
-      if (window.scrollY >= sectionTop - 50 && window.scrollY < sectionTop + sectionHeight) {
-        currentSection = heading.getAttribute('data-anchords');
+      // Присвоюємо id для кожного заголовка
+      const anchorId = heading.getAttribute('data-anchords');
+      heading.id = anchorId;
+
+      const anchorLink = document.createElement('a');
+      anchorLink.classList.add('anchors__item'); // Додаємо клас за методологією BEM
+      anchorLink.href = `#${anchorId}`;
+      anchorLink.textContent = heading.textContent;
+
+      // Додаємо клікабельний елемент до контейнера
+      anchorsContainer.appendChild(anchorLink);
+    });
+
+    // Обробник події для активації якорів при натисканні
+    anchorsContainer.addEventListener('click', (e) => {
+      if (e.target && e.target.tagName === 'A') {
+        // Видаляємо активний клас з усіх якорів
+        const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
+        allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
+
+        // Додаємо активний клас для поточного елемента
+        e.target.classList.add('anchors__item--active');
+
+        // Перешкоджаємо стандартній поведінці переходу за хешем
+        e.preventDefault();
+
+        // Зміна хешу в URL (не відбувається автоматичний перехід)
+        const targetId = e.target.getAttribute('href').substring(1); // Отримуємо id цільового елемента
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // Виконати плавний скролінг до елемента
+          window.scrollTo({
+            top: targetElement.offsetTop - 50, // Для компенсації висоти заголовку
+            behavior: 'smooth'
+          });
+
+          // Оновлюємо хеш в URL вручну (це не викликає перезавантаження)
+          history.pushState(null, null, `#${targetId}`);
+        }
       }
     });
 
-    // Оновлюємо активний клас у контейнері
-    const activeLink = anchorsContainer.querySelector(`a[href="#${currentSection}"]`);
-    if (activeLink) {
-      const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
-      allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
-      activeLink.classList.add('anchors__item--active');
-    }
+    // Задаємо активний клас для якоря, що відповідає поточній видимій секції
+    window.addEventListener('scroll', () => {
+      let currentSection = null;
+      headings.forEach(heading => {
+        const sectionTop = heading.offsetTop;
+        const sectionHeight = heading.offsetHeight;
+        if (window.scrollY >= sectionTop - 50 && window.scrollY < sectionTop + sectionHeight) {
+          currentSection = heading.getAttribute('data-anchords');
+        }
+      });
+
+      // Оновлюємо активний клас у контейнері
+      const activeLink = anchorsContainer.querySelector(`a[href="#${currentSection}"]`);
+      if (activeLink) {
+        const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
+        allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
+        activeLink.classList.add('anchors__item--active');
+      }
+    });
   });
-});
 
 
 
