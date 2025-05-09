@@ -55,7 +55,9 @@
     box-sizing: border-box;
 }
 
-
+html {
+  scroll-behavior: smooth;
+}
 
 body {
     font-family: $fontFamily;
@@ -209,6 +211,7 @@ input {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 500px 0;
 }
 
 table {
@@ -282,3 +285,24 @@ table {
   
 
 // text content
+
+
+.anchors {
+  list-style: none;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  z-index: 100;
+}
+
+.anchors__item {
+  display: block;
+  margin: 10px 0;
+  text-decoration: none;
+  color: #000;
+}
+
+.anchors__item--active {
+  font-weight: bold;
+  color: #007bff;
+}
