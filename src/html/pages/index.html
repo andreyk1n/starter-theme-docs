@@ -13,7 +13,6 @@
 const greet = (name) => {
   console.log(`Hello, ${name}!`);
 };
-
 greet('Світ');
   </code></pre>
       </div>
@@ -22,7 +21,6 @@ greet('Світ');
         depend on the number of active users.</p>
       <blockquote>💡 The IOPS value is very important for the speed of the database, so it is advisable to use SSD
         disks.</blockquote>
-
       <h2 data-anchors="single-server">1. Single server</h2>
       <p>Usually suitable for editions up to 500 users, with no special data storage requirements:</p>
       <table>
@@ -219,6 +217,50 @@ greet('Світ');
     // Встановлюємо активний якір одразу після завантаження
     updateActiveAnchor();
   });
+
+  // ----------------------------------------
+
+  function copyCode(button) {
+    const codeBlock = button.closest('.code');
+    const codeElement = codeBlock.querySelector('code');
+
+    if (!codeElement) return;
+
+    // Отримуємо текст з елемента <code>
+    let codeText = codeElement.textContent;
+
+    // Видаляємо зайві відступи (враховуємо всі рядки)
+    const lines = codeText.split('\n');
+
+    // Видаляємо порожні рядки з початку та кінця
+    while (lines.length && lines[0].trim() === '') lines.shift();
+    while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
+
+    // Знаходимо мінімальний відступ
+    const minIndent = lines.reduce((min, line) => {
+      const match = line.match(/^(\s*)\S/);
+      if (!match) return min;
+      return Math.min(min, match[1].length);
+    }, Infinity);
+
+    // Видаляємо відступи
+    const trimmedLines = lines.map(line => line.slice(minIndent));
+    const finalCode = trimmedLines.join('\n');
+
+    // Копіюємо у буфер
+    navigator.clipboard.writeText(finalCode).then(() => {
+      button.textContent = 'Скопійовано!';
+      button.classList.add('success');
+
+      // Повертаємо початковий стан через 2 секунди
+      setTimeout(() => {
+        button.textContent = 'Скопіювати';
+        button.classList.remove('success');
+      }, 2000);
+    }).catch(err => {
+      console.error('Помилка копіювання:', err);
+    });
+  }
 
 
 
