@@ -9,7 +9,7 @@ export function initBurgerMenu() {
         // Класи до яких ми будемо доступатись
         // ---------------------------------------------------------------------------------------------------------------
         const burger = document.querySelector('.header__burger');
-        const nav = document.querySelector('.header__nav');
+        const nav = document.querySelector('.sidebar');
         const body = document.body; // Доступ до body
 
         // ---------------------------------------------------------------------------------------------------------------

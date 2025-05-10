@@ -27,6 +27,8 @@ export function moveElements() {
             const targetSelector = element.getAttribute('data-move');
             // Отримуємо значення брейкпойнта з атрибута 'data-breakpoint'
             const breakpoint = parseInt(element.getAttribute('data-breakpoint'), 10);
+            // Отримуємо порядок переміщення елемента з атрибута 'data-move-order' (за замовчуванням 0)
+            const moveOrder = parseInt(element.getAttribute('data-move-order'), 10) || 0;
 
             // Перевіряємо наявність коректного селектора цільового контейнера
             if (!targetSelector) {
@@ -53,8 +55,19 @@ export function moveElements() {
                     // Знаходимо цільовий контейнер
                     const targetContainer = document.querySelector(targetSelector);
                     if (targetContainer) {
-                        targetContainer.appendChild(element);
-                        console.log(`Елемент (${element.className}) переміщено в (${targetContainer.className})`);
+                        // Визначаємо порядок переміщення
+                        const children = Array.from(targetContainer.children);
+                        if (moveOrder === 0) {
+                            // Переміщуємо на перше місце
+                            targetContainer.insertBefore(element, children[0] || null);
+                        } else if (moveOrder > 0 && moveOrder < children.length) {
+                            // Переміщуємо на вказану позицію (за індексом)
+                            targetContainer.insertBefore(element, children[moveOrder]);
+                        } else {
+                            // Переміщуємо в кінець
+                            targetContainer.appendChild(element);
+                        }
+                        console.log(`Елемент (${element.className}) переміщено в (${targetContainer.className}) на позицію ${moveOrder}`);
                     } else {
                         console.log(`Цільовий контейнер не знайдено для селектора (${targetSelector})`);
                     }
@@ -83,7 +96,6 @@ export function moveElements() {
     });
 }
 // ---------------------------------------------------------------------------------------------------------------
-
 
 // ---------------------------------------------------------------------------------------------------------------
 export default moveElements;
