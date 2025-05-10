@@ -15,16 +15,16 @@
 // **Адаптивне переміщення елементів**
 // Використовується для динамічного переміщення елементів DOM залежно від ширини екрану.
 // Інструкція: https://andreyk1n.github.io/starter-theme-docs/move_to.html
-// import moveElements from './functions/moveTo.js';
-// moveElements(); // Виклик функції для переміщення
+import moveElements from './functions/moveTo.js';
+moveElements(); // Виклик функції для переміщення
 // ==============================================================================================
 
 // ==============================================================================================
 // **Бургер-меню**
 // Додає клас .active для елементів .header__burger і .header__nav при кліку.
 // Інструкція: https://andreyk1n.github.io/starter-theme-docs/burger_menu.html
-// import { initBurgerMenu } from './functions/initBurgerMenu.js';
-// initBurgerMenu(); // Ініціалізація бургер-меню
+import { initBurgerMenu } from './functions/initBurgerMenu.js';
+initBurgerMenu(); // Ініціалізація бургер-меню
 // ==============================================================================================
 
 // ==============================================================================================
