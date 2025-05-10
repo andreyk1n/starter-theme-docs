@@ -112,6 +112,11 @@
         border: 0;
         cursor: pointer;
         justify-self: flex-end;
+        transition-duration: $transitionDuration;
+
+        &:hover {
+            opacity: .5;
+        }
 
         img {
             width: 100%;

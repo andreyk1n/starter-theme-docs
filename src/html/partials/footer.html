@@ -2,8 +2,38 @@
 </footer>
 <script src="js/functions/lazyImg.js" defer></script>
 <script type="module" src="js/app.js"></script>
+<script type="module" src="js/functions/additional.js" defer></script>
 
 <script>
+
+
+  function copyCode(button) {
+    const codeBlock = button.closest('.code');
+    const codeElement = codeBlock.querySelector('code');
+    if (!codeElement) return;
+    let codeText = codeElement.textContent;
+    const lines = codeText.split('\n');
+    while (lines.length && lines[0].trim() === '') lines.shift();
+    while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
+    const minIndent = lines.reduce((min, line) => {
+      const match = line.match(/^(\s*)\S/);
+      if (!match) return min;
+      return Math.min(min, match[1].length);
+    }, Infinity);
+    const trimmedLines = lines.map(line => line.slice(minIndent));
+    const finalCode = trimmedLines.join('\n');
+    navigator.clipboard.writeText(finalCode).then(() => {
+      button.textContent = 'Скопійовано!';
+      button.classList.add('success');
+      setTimeout(() => {
+        button.textContent = 'Скопіювати';
+        button.classList.remove('success');
+      }, 2000);
+    }).catch(err => {
+      console.error('Помилка копіювання:', err);
+    });
+  }
+
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.querySelector('.wrapper').classList.add('loaded');

@@ -101,17 +101,17 @@ body {
 
 // Застосування стилів для посилання: колір, час анімації, активний стан.
 a {
-  color: $linkColor;
+  color: var(--link);
   text-decoration: none;
   transition-duration: $transitionDuration;
 }
 
 a:hover {
-  color: $linkHoverColor;
+  opacity: .5;
 }
 
 a:active {
-  color: $activeColor;
+  opacity: .5;
 }
 
 // Застосування стилів для кнопкки з класом .button
@@ -261,8 +261,7 @@ table {
   margin: 1.5rem 0;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   font-family: "Courier New",Courier,monospace;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow-x: auto;
   max-width: 100%;
 }
 
@@ -272,7 +271,7 @@ table {
   color: var(--text);
   font-size: 0.95rem;
   max-width: 100%;
-  overflow: scroll;
+  overflow: auto;
   width: 100%;
 }
 
@@ -342,4 +341,17 @@ table {
 .copy-button.success {
   background-color: #4caf50;
   color: white;
+}
+
+blockquote {
+  padding: 14px;
+  border: 2px solid #ddd;
+    border-left: 6px solid #ddd;
+  border-radius: 6px;
+}
+
+p span {
+  padding: 6px;
+  border-radius: 6px;
+  background-color: var(--sidebarBg);
 }
