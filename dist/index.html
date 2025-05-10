@@ -232,75 +232,90 @@
 
 
   // -----------------
-  document.addEventListener('DOMContentLoaded', () => {
-    const anchorsContainer = document.getElementById('anchors'); // Контейнер для якорів
-    const headings = document.querySelectorAll('[data-anchords]'); // Заголовки з атрибутом data-anchords
 
-    // Додаємо кожен якор до контейнера
+document.addEventListener('DOMContentLoaded', () => {
+  const anchorsContainer = document.getElementById('anchors');
+  const headings = document.querySelectorAll('[data-anchords]');
+
+  // Створення якорів
+  headings.forEach(heading => {
+    const anchorId = heading.getAttribute('data-anchords');
+    heading.id = anchorId;
+
+    const anchorLink = document.createElement('a');
+    anchorLink.classList.add('anchors__item');
+    anchorLink.href = `#${anchorId}`;
+    anchorLink.textContent = heading.textContent;
+
+    anchorsContainer.appendChild(anchorLink);
+  });
+
+  // Оновлення активного якоря
+  function updateActiveAnchor() {
+    const scrollY = window.scrollY;
+    let currentSection = null;
+
+    // Перевірка, чи scrollY знаходиться всередині якоїсь секції
     headings.forEach(heading => {
-      // Присвоюємо id для кожного заголовка
-      const anchorId = heading.getAttribute('data-anchords');
-      heading.id = anchorId;
-
-      const anchorLink = document.createElement('a');
-      anchorLink.classList.add('anchors__item'); // Додаємо клас за методологією BEM
-      anchorLink.href = `#${anchorId}`;
-      anchorLink.textContent = heading.textContent;
-
-      // Додаємо клікабельний елемент до контейнера
-      anchorsContainer.appendChild(anchorLink);
-    });
-
-    // Обробник події для активації якорів при натисканні
-    anchorsContainer.addEventListener('click', (e) => {
-      if (e.target && e.target.tagName === 'A') {
-        // Видаляємо активний клас з усіх якорів
-        const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
-        allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
-
-        // Додаємо активний клас для поточного елемента
-        e.target.classList.add('anchors__item--active');
-
-        // Перешкоджаємо стандартній поведінці переходу за хешем
-        e.preventDefault();
-
-        // Зміна хешу в URL (не відбувається автоматичний перехід)
-        const targetId = e.target.getAttribute('href').substring(1); // Отримуємо id цільового елемента
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-          // Виконати плавний скролінг до елемента
-          window.scrollTo({
-            top: targetElement.offsetTop - 50, // Для компенсації висоти заголовку
-            behavior: 'smooth'
-          });
-
-          // Оновлюємо хеш в URL вручну (це не викликає перезавантаження)
-          history.pushState(null, null, `#${targetId}`);
-        }
+      const sectionTop = heading.offsetTop;
+      const sectionHeight = heading.offsetHeight;
+      if (scrollY >= sectionTop - 50 && scrollY < sectionTop + sectionHeight) {
+        currentSection = heading.getAttribute('data-anchords');
       }
     });
 
-    // Задаємо активний клас для якоря, що відповідає поточній видимій секції
-    window.addEventListener('scroll', () => {
-      let currentSection = null;
+    // Якщо не знайшли активну — шукаємо найближчу
+    if (!currentSection) {
+      let closest = null;
+      let minDistance = Infinity;
+
       headings.forEach(heading => {
-        const sectionTop = heading.offsetTop;
-        const sectionHeight = heading.offsetHeight;
-        if (window.scrollY >= sectionTop - 50 && window.scrollY < sectionTop + sectionHeight) {
-          currentSection = heading.getAttribute('data-anchords');
+        const distance = Math.abs(heading.offsetTop - scrollY);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = heading.getAttribute('data-anchords');
         }
       });
 
-      // Оновлюємо активний клас у контейнері
-      const activeLink = anchorsContainer.querySelector(`a[href="#${currentSection}"]`);
-      if (activeLink) {
-        const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
-        allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
-        activeLink.classList.add('anchors__item--active');
+      currentSection = closest;
+    }
+
+    // Застосування активного класу
+    const activeLink = anchorsContainer.querySelector(`a[href="#${currentSection}"]`);
+    if (activeLink) {
+      const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
+      allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
+      activeLink.classList.add('anchors__item--active');
+    }
+  }
+
+  // Клік по якірному посиланню
+  anchorsContainer.addEventListener('click', (e) => {
+    if (e.target && e.target.tagName === 'A') {
+      e.preventDefault();
+
+      const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
+      allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
+      e.target.classList.add('anchors__item--active');
+
+      const targetId = e.target.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 50,
+          behavior: 'smooth'
+        });
+        history.pushState(null, null, `#${targetId}`);
       }
-    });
+    }
   });
+
+  // Прив'язка скролу
+  window.addEventListener('scroll', updateActiveAnchor);
+
+  // Встановлюємо активний якір одразу після завантаження
+  updateActiveAnchor();
+});
 
 
 
