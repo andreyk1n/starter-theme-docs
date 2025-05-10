@@ -50,9 +50,9 @@
 
 // Для стартових налаштувнань теми
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
@@ -60,12 +60,12 @@ html {
 }
 
 body {
-    font-family: $fontFamily;
-    font-size: $fontSize;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    background-color: var(--bg);
-    color: var(--text);
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 
@@ -74,252 +74,253 @@ body {
 // }
 
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
 
-    &__container {
-        position: relative;
-        display: flex;
-        gap: 40px;
-    }
+  &__container {
+    position: relative;
+    display: flex;
+    gap: 40px;
+  }
 }
 
 
 .no-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 // Обмежуючий контейнер - цей контейнер часто зустрічається в проектах, якщо сайт має певну геометрію.
 [class*='__container'] {
-    max-width: $maxWidthContainer;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 15px
+  max-width: $maxWidthContainer;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px
 }
 
 // Застосування стилів для посилання: колір, час анімації, активний стан.
 a {
-    color: $linkColor;
-    text-decoration: none;
-    transition-duration: $transitionDuration;
+  color: $linkColor;
+  text-decoration: none;
+  transition-duration: $transitionDuration;
 }
 
 a:hover {
-    color: $linkHoverColor;
+  color: $linkHoverColor;
 }
 
 a:active {
-    color: $activeColor;
+  color: $activeColor;
 }
 
 // Застосування стилів для кнопкки з класом .button
 .button {
-    width: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $buttonBgColor;
-    transition-duration: $transitionDuration;
-    color: $buttonFontColor;
-    padding: $buttonPaddings;
-    border-radius: $buttonBorderRadius;
-    cursor: pointer;
-    border: 0;
-    outline: 0;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $buttonBgColor;
+  transition-duration: $transitionDuration;
+  color: $buttonFontColor;
+  padding: $buttonPaddings;
+  border-radius: $buttonBorderRadius;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
 }
 
 .button:hover {
-    background-color: $buttonHover;
+  background-color: $buttonHover;
 }
 
 .button:active {
-    background-color: $buttonActive;
+  background-color: $buttonActive;
 }
 
 // Загальні стилі для списків
 ol,
 ul {
-    padding-left: 20px;
+  padding-left: 20px;
 
-    li:not(:last-child) {
-        padding-bottom: 15px;
-    }
+  li:not(:last-child) {
+    padding-bottom: 15px;
+  }
 }
 
 h1 {
-    @include adaptiveValue('font-size', 60px, 24px);
+  @include adaptiveValue('font-size', 60px, 24px);
 }
 
 // Cтилізація ектів статусу для поточної сторінки
 .currentPage {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 // Обнулення стилів автозаповнення форми
 input {
-    background: #fff !important;
+  background: #fff !important;
 }
 
 :-webkit-autofill,
 :-webkit-autofill:hover,
 :-webkit-autofill:focus {
-    filter: none;
-    -webkit-text-fill-color: #333;
-    -webkit-box-shadow: 0 0 0px 40rem #fff inset;
+  filter: none;
+  -webkit-text-fill-color: #333;
+  -webkit-box-shadow: 0 0 0px 40rem #fff inset;
 }
 
 :-webkit-autofill::first-line {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 // scroll
 
 /* Для Chrome, Edge, Opera */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1); 
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Для Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-  }
-  
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Для Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
 
 //   text content
 
 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 50px 0 100px 0;
-    margin-left: 370px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 50px 0 100px 0;
+  margin-left: 370px;
 
-    @media (max-width: 992px) {
-      margin-left: 0;
-      padding: 100px 0 50px 0;
-    }
+  @media (max-width: 992px) {
+    margin-left: 0;
+    padding: 100px 0 50px 0;
+  }
 }
 
 table {
-    width: 100%;
-    border-spacing: 0; 
-    font-family: sans-serif;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background-color: var(--tableBg);
-    thead {
-      th {
-        padding: 12px;
-        font-weight: bold;
-        text-align: left;
-        border: 1px solid #ddd;
-        background-color: var(--tableHead); 
-      }
-    }
-  
-    tbody {
-      td {
-        padding: 12px;
-        border: 1px solid #ddd;
-      }
-  
-      tr:not(:last-child) {
-        border-bottom: 1px solid #eee;
-      }
+  width: 100%;
+  border-spacing: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: var(--tableBg);
+
+  thead {
+    th {
+      padding: 12px;
+      font-weight: bold;
+      text-align: left;
+      border: 1px solid #ddd;
+      background-color: var(--tableHead);
     }
   }
-  
+
+  tbody {
+    td {
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    tr:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+
 
 .code {
-    position: relative;
-    background-color: #f9fafb;
-    border: 1px solid #e0e0e0;
-    border-left: 6px solid #d0d0ff;
-    border-radius: 6px;
-    padding: 1rem 1.5rem;
-    margin: 1.5rem 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    font-family: 'Fira Code', monospace;
-    overflow-x: auto;
-  }
-  
-  .code pre {
-    margin: 0;
-    white-space: pre;
-    color: #333;
-    font-size: 0.95rem;
-  }
-  
-  .copy-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.75rem;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    transition: background-color 0.2s ease;
-  }
-  
-  .copy-button:hover {
-    background-color: #f0f0f0;
-  }
-  
+  position: relative;
+  background-color: transparent;
+  border: 2px solid var(--sidebarBg);
+  border-left: 6px solid var(--sidebarBg);
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  font-family: 'Fira Code', monospace;
+  overflow-x: auto;
+}
+
+.code pre {
+  margin: 0;
+  white-space: pre;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background-color: var(--sidebarBg);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--text);
+  padding: 7px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition-duration: $transitionDuration;
+}
+
+.copy-button:hover {
+  opacity: .5;
+}
+
 
 // text content
 
 
 .anchors {
-    list-style: none;
-    padding: 0;
-    position: sticky;
-    right: 0;
-    top: 50px;
-    z-index: 100;
-    max-width: 200px;
-    height: 100%;
-    padding-left: 30px;
-    border-left: 2px solid var(--border);
+  list-style: none;
+  padding: 0;
+  position: sticky;
+  right: 0;
+  top: 50px;
+  z-index: 100;
+  max-width: 200px;
+  height: 100%;
 
-    @media (max-width: 1100px) {
-      display: none;
-    }
+  @media (max-width: 1100px) {
+    display: none;
+  }
 }
 
 .anchors__item {
   display: block;
-  margin: 10px 0;
   text-decoration: none;
   color: var(--text);
   transition-duration: $transitionDuration;
   font-weight: 300;
   font-size: 15px;
   opacity: .8;
+  padding: 10px 0 10px 30px;
+  border-left: 2px solid var(--border);
 
   &:hover {
-    opacity: 1;
+    opacity: .5;
     color: var(--text);
   }
 }
@@ -328,4 +329,5 @@ table {
   color: var(--logo);
   font-size: 16px;
   opacity: 1;
+  border-left: 2px solid var(--text);
 }

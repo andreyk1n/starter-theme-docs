@@ -113,14 +113,23 @@
 </script>
     <main class="content">
       <h1>Technical documentation</h1>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
+const greet = (name) => {
+  console.log(`Hello, ${name}!`);
+};
 
-      <h2 data-anchords="general-information">General information</h2>
+greet('Світ');
+  </code></pre>
+      </div>
+      <h2 data-anchors="general-information">General information</h2>
       <p>Passwork is not resource-intensive. The amount of resources (RAM, CPU, HDD) and the number of servers required
         depend on the number of active users.</p>
       <blockquote>💡 The IOPS value is very important for the speed of the database, so it is advisable to use SSD
         disks.</blockquote>
 
-      <h2 data-anchords="single-server">1. Single server</h2>
+      <h2 data-anchors="single-server">1. Single server</h2>
       <p>Usually suitable for editions up to 500 users, with no special data storage requirements:</p>
       <table>
         <thead>
@@ -153,14 +162,14 @@
         </tbody>
       </table>
 
-      <h2 data-anchords="manual-installation">Manual installation</h2>
+      <h2 data-anchors="manual-installation">Manual installation</h2>
       <span>Manual installation does not use Docker or Windows installer. It is suitable for
         complex cases where you need to fine-tune all components.</span>
       <p>Path to the current configuration file —
         <span>C:\inetpub\wwwroot\app\config\config.ini</span>
       </p>
 
-      <h2 data-anchords="different-servers">2. Different servers for application and database
+      <h2 data-anchors="different-servers">2. Different servers for application and database
       </h2>
       <p>The database and the application server are distributed to different servers.</p>
       <ul>
@@ -175,14 +184,14 @@
           base.</li>
       </ol>
 
-      <h2 data-anchords="general-requirements">General description and requirements</h2>
+      <h2 data-anchors="general-requirements">General description and requirements</h2>
       <p>The Passwork Setup installer helps you install Passwork on Windows and then keep it up to date.</p>
       <ul>
         <li>Operating systems — Windows Server 2016, 2019, 2022</li>
         <li><a href="#">Microsoft .Net Framework 4.8</a> (download and install)</li>
       </ul>
 
-      <h2 data-anchords="main-features">Main features</h2>
+      <h2 data-anchors="main-features">Main features</h2>
       <a href="#">Installation on a new server</a>
       <a href="#">Migration (if Passwork is already installed on your server)</a>
     </main>
@@ -233,89 +242,89 @@
 
   // -----------------
 
-document.addEventListener('DOMContentLoaded', () => {
-  const anchorsContainer = document.getElementById('anchors');
-  const headings = document.querySelectorAll('[data-anchords]');
+  document.addEventListener('DOMContentLoaded', () => {
+    const anchorsContainer = document.getElementById('anchors');
+    const headings = document.querySelectorAll('[data-anchors]');
 
-  // Створення якорів
-  headings.forEach(heading => {
-    const anchorId = heading.getAttribute('data-anchords');
-    heading.id = anchorId;
-
-    const anchorLink = document.createElement('a');
-    anchorLink.classList.add('anchors__item');
-    anchorLink.href = `#${anchorId}`;
-    anchorLink.textContent = heading.textContent;
-
-    anchorsContainer.appendChild(anchorLink);
-  });
-
-  // Оновлення активного якоря
-  function updateActiveAnchor() {
-    const scrollY = window.scrollY;
-    let currentSection = null;
-
-    // Перевірка, чи scrollY знаходиться всередині якоїсь секції
+    // Створення якорів
     headings.forEach(heading => {
-      const sectionTop = heading.offsetTop;
-      const sectionHeight = heading.offsetHeight;
-      if (scrollY >= sectionTop - 50 && scrollY < sectionTop + sectionHeight) {
-        currentSection = heading.getAttribute('data-anchords');
-      }
+      const anchorId = heading.getAttribute('data-anchors');
+      heading.id = anchorId;
+
+      const anchorLink = document.createElement('a');
+      anchorLink.classList.add('anchors__item');
+      anchorLink.href = `#${anchorId}`;
+      anchorLink.textContent = heading.textContent;
+
+      anchorsContainer.appendChild(anchorLink);
     });
 
-    // Якщо не знайшли активну — шукаємо найближчу
-    if (!currentSection) {
-      let closest = null;
-      let minDistance = Infinity;
+    // Оновлення активного якоря
+    function updateActiveAnchor() {
+      const scrollY = window.scrollY;
+      let currentSection = null;
 
+      // Перевірка, чи scrollY знаходиться всередині якоїсь секції
       headings.forEach(heading => {
-        const distance = Math.abs(heading.offsetTop - scrollY);
-        if (distance < minDistance) {
-          minDistance = distance;
-          closest = heading.getAttribute('data-anchords');
+        const sectionTop = heading.offsetTop;
+        const sectionHeight = heading.offsetHeight;
+        if (scrollY >= sectionTop - 50 && scrollY < sectionTop + sectionHeight) {
+          currentSection = heading.getAttribute('data-anchors');
         }
       });
 
-      currentSection = closest;
-    }
+      // Якщо не знайшли активну — шукаємо найближчу
+      if (!currentSection) {
+        let closest = null;
+        let minDistance = Infinity;
 
-    // Застосування активного класу
-    const activeLink = anchorsContainer.querySelector(`a[href="#${currentSection}"]`);
-    if (activeLink) {
-      const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
-      allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
-      activeLink.classList.add('anchors__item--active');
-    }
-  }
-
-  // Клік по якірному посиланню
-  anchorsContainer.addEventListener('click', (e) => {
-    if (e.target && e.target.tagName === 'A') {
-      e.preventDefault();
-
-      const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
-      allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
-      e.target.classList.add('anchors__item--active');
-
-      const targetId = e.target.getAttribute('href').substring(1);
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 50,
-          behavior: 'smooth'
+        headings.forEach(heading => {
+          const distance = Math.abs(heading.offsetTop - scrollY);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closest = heading.getAttribute('data-anchors');
+          }
         });
-        history.pushState(null, null, `#${targetId}`);
+
+        currentSection = closest;
+      }
+
+      // Застосування активного класу
+      const activeLink = anchorsContainer.querySelector(`a[href="#${currentSection}"]`);
+      if (activeLink) {
+        const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
+        allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
+        activeLink.classList.add('anchors__item--active');
       }
     }
+
+    // Клік по якірному посиланню
+    anchorsContainer.addEventListener('click', (e) => {
+      if (e.target && e.target.tagName === 'A') {
+        e.preventDefault();
+
+        const allAnchors = anchorsContainer.querySelectorAll('.anchors__item');
+        allAnchors.forEach(anchor => anchor.classList.remove('anchors__item--active'));
+        e.target.classList.add('anchors__item--active');
+
+        const targetId = e.target.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 50,
+            behavior: 'smooth'
+          });
+          history.pushState(null, null, `#${targetId}`);
+        }
+      }
+    });
+
+    // Прив'язка скролу
+    window.addEventListener('scroll', updateActiveAnchor);
+
+    // Встановлюємо активний якір одразу після завантаження
+    updateActiveAnchor();
   });
-
-  // Прив'язка скролу
-  window.addEventListener('scroll', updateActiveAnchor);
-
-  // Встановлюємо активний якір одразу після завантаження
-  updateActiveAnchor();
-});
 
 
 

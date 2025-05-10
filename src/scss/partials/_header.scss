@@ -99,6 +99,7 @@
         svg {
             width: 100%;
             fill: var(--text);
+            transition-duration: $transitionDuration;
         }
     }
 
