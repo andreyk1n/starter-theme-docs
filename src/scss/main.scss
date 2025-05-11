@@ -149,12 +149,11 @@ ul {
 }
 
 h1 {
-  @include adaptiveValue('font-size', 60px, 24px);
+  font-size: clamp(28px, 5vw, 60px);
 }
 
-// Cтилізація ектів статусу для поточної сторінки
-.currentPage {
-  text-decoration: underline;
+p {
+  line-height: 140%;
 }
 
 // Обнулення стилів автозаповнення форми

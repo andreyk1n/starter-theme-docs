@@ -34,6 +34,10 @@
     text-decoration: none;
     transition-duration: $transitionDuration;
 
+    &--active {
+      font-weight: bold;
+    }
+
     &:hover {
       opacity: .5;
       color: var(--text);

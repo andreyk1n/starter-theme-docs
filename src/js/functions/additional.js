@@ -32,10 +32,14 @@ btnDark.addEventListener('click', () => setTheme('dark'));
 
 
 // -----------------
-
 document.addEventListener('DOMContentLoaded', () => {
     const anchorsContainer = document.getElementById('anchors');
     const headings = document.querySelectorAll('[data-anchors]');
+
+    // Якщо на сторінці немає елементів з якорями, припиняємо виконання
+    if (headings.length === 0 || !anchorsContainer) {
+        return;
+    }
 
     // Створення якорів
     headings.forEach(heading => {
@@ -116,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Встановлюємо активний якір одразу після завантаження
     updateActiveAnchor();
 });
+
 
 // ----------------------------------------
 
