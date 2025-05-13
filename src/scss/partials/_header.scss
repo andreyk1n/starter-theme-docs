@@ -39,7 +39,7 @@
 
         @media (max-width: 992px) {
             width: 40px;
-            height: 30px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -51,27 +51,27 @@
             span {
                 display: block;
                 width: 100%;
-                height: 2px;
+                height: 4px;
                 background-color: var(--text);
                 position: relative;
-                transition: all 0.3s ease;
+                transition: all 0.5s ease;
 
                 &::before,
                 &::after {
                     content: "";
                     position: absolute;
                     width: 100%;
-                    height: 2px;
+                    height: 4px;
                     background-color: var(--text);
-                    transition: all 0.3s ease;
+                    transition: all 0.5s ease;
                 }
 
                 &::before {
-                    top: -10px;
+                    top: -12px;
                 }
 
                 &::after {
-                    top: 10px;
+                    top: 12px;
                 }
             }
 
