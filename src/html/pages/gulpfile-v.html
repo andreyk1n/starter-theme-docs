@@ -76,9 +76,15 @@
             <p>
                 Щоб розпочати роботу, достатньо виконати команду:
             </p>
-            <pre><code>gulp</code></pre>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+gulp
+  </code></pre>
+            </div>
             <p>
-                Вона очищує фінальну папку, обробляє HTML, CSS, JavaScript та зображення, генерує карту сайту, запускає
+                Вона очищує фінальну папку, обробляє HTML, CSS, JavaScript та зображення, генерує карту сайту,
+                запускає
                 сервер і слідкує за всіма змінами в реальному часі.
             </p>
 
@@ -86,7 +92,8 @@
             <p>
                 Цей сценарій Gulp допомагає швидко стартувати новий фронтенд-проєкт, забезпечуючи зручну структуру з
                 компонентним HTML-підходом. Він дозволяє працювати у live-режимі, автоматично оновлюючи сторінку,
-                оптимізує всі ресурси через мініфікацію та автоматично керує зображеннями та карткою сайту. Це значно
+                оптимізує всі ресурси через мініфікацію та автоматично керує зображеннями та карткою сайту. Це
+                значно
                 скорочує час на рутинні задачі та покращує загальний workflow.
             </p>
 
@@ -277,21 +284,21 @@ exports.default = gulp.series(
 </div>
 
 <script>
-  function sanitizeAllCodeBlocks() {
-    const codeBlocks = document.querySelectorAll('pre code');
+    function sanitizeAllCodeBlocks() {
+        const codeBlocks = document.querySelectorAll('pre code');
 
-    codeBlocks.forEach(function(codeBlock) {
-      let codeContent = codeBlock.innerHTML;
+        codeBlocks.forEach(function (codeBlock) {
+            let codeContent = codeBlock.innerHTML;
 
-      // Замінюємо < на &lt; і > на &gt;
-      codeContent = codeContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            // Замінюємо < на &lt; і > на &gt;
+            codeContent = codeContent.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-      // Оновлюємо вміст кожного блоку <code>
-      codeBlock.innerHTML = codeContent;
-    });
-  }
+            // Оновлюємо вміст кожного блоку <code>
+            codeBlock.innerHTML = codeContent;
+        });
+    }
 
-  window.onload = sanitizeAllCodeBlocks;
+    window.onload = sanitizeAllCodeBlocks;
 </script>
 
 @@include('partials/footer.html')
