@@ -1,0 +1,62 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Скрипт приховування/показу заголовка при прокручуванні</h1>
+            <p>Цей модуль забезпечує динамічне керування відображенням заголовка сторінки залежно від дій користувача.
+                При прокручуванні сторінки вниз заголовок автоматично приховується, звільняючи більше простору для
+                контенту. При прокручуванні вгору або при поверненні у верхню частину сторінки — заголовок знову
+                з’являється.</p>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <p>Модуль підключається як окрема функція <span>initScrollControlledHeader</span>, яку необхідно викликати
+                під час ініціалізації застосунку. В основі реалізації — слухач події scroll, який:</p>
+            <ul>
+                <li>додає клас <span>scroll-header</span>, коли сторінка прокручена більше ніж на 10 пікселів (можна
+                    використати для зміни стилю заголовка після скролу);</li>
+                <li>змінює значення <span>top</span> у стилі заголовка для його приховування або показу залежно від
+                    напрямку прокрутки.</li>
+            </ul>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+  let lastScrollTop = 0;
+  const header = document.querySelector('.header');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset;
+    header.classList.toggle('scroll-header', scrollTop > 10);
+    header.style.top = (scrollTop <= 10 || scrollTop < lastScrollTop) ? '0' : '-100px';
+    lastScrollTop = scrollTop;
+  });
+  </code></pre>
+            </div>
+            <h2 data-anchors="needful-styles">Необхідні стилі</h2>
+            <p>Щоб скрипт працював коректно, для заголовка необхідно задати такі стилі:</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.header {
+  z-index: 100;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: top 0.3s ease;
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <ul>
+                <li>Змінюйте значення <span>-100px</span> у стилі <span>top</span>, якщо висота вашого заголовка відрізняється.</li>
+                <li>Перевірте адаптивність поведінки заголовка на різних пристроях.</li>
+                <li>За потреби додайте throttle/debounce для оптимізації частоти викликів scroll-події.</li>
+            </ul>
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
