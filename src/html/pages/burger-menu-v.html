@@ -1,0 +1,221 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Бургер меню</h1>
+
+            <p>
+                Для інтеграції бургер-меню у свій проєкт, вам необхідно мати як HTML-структуру, так і відповідну логіку
+                JavaScript разом зі стилями. Нижче детально описано, як усе працює і як правильно його підключити.
+            </p>
+
+            <h2 data-anchors="html">HTML-розмітка</h2>
+
+            <p>
+                У вашому <span>header</span> має бути структура з логотипом, навігаційним меню та самим бургером.
+                Основні класи, з якими взаємодіє скрипт: <span>.header__burger</span> для кнопки-бургера,
+                <span>.header__nav</span> для навігаційного меню, а також <span>body</span> для блокування скролу.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;header class="header"&gt;
+  &lt;div class="header__container"&gt;
+    &lt;a href="index.html" class="header__logo"&gt;
+      &lt;img src="" alt="Header logo"&gt;
+    &lt;/a&gt;
+    &lt;nav class="header__nav"&gt;
+      &lt;!-- Навігаційні посилання тут --&gt;
+    &lt;/nav&gt;
+    &lt;div class="header__burger"&gt;
+      &lt;span&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="js">JavaScript-логіка</h2>
+
+            <p>
+                Після того як DOM повністю завантажився, відбувається ініціалізація модуля. Коли користувач натискає на
+                <span>.header__burger</span>, до нього та до навігації додається клас <span>.active</span>, що
+                візуалізує меню. Також додається клас <span>.no-scroll</span> до <span>&lt;body&gt;</span> для
+                блокування скролу сторінки.
+            </p>
+
+            <p>
+                Якщо користувач клацає будь-де поза бургером або навігацією, меню автоматично закривається — всі активні
+                класи прибираються, і скрол сторінки розблоковується.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+document.addEventListener('DOMContentLoaded', () =&gt; {
+    const burger = document.querySelector('.header__burger');
+    const nav = document.querySelector('.header__nav');
+    const body = document.body;
+
+    burger.addEventListener('click', (event) =&gt; {
+        event.stopPropagation();
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+
+        if (burger.classList.contains('active')) {
+            body.classList.add('no-scroll');
+        } else {
+            body.classList.remove('no-scroll');
+        }
+    });
+
+    document.addEventListener('click', (event) =&gt; {
+        if (!nav.contains(event.target) &amp;&amp; !burger.contains(event.target)) {
+            if (nav.classList.contains('active')) {
+                burger.classList.remove('active');
+                nav.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        }
+    });
+});
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="css">CSS-стилі</h2>
+
+            <p>
+                Нижче наведено базові стилі, які забезпечують коректну роботу бургер-меню та його анімацію. При ширині
+                вікна до <span>768px</span> бургер активується, навігація перекриває весь екран, а сам бургер
+                перетворюється на хрестик за допомогою псевдоелементів <span>::before</span> та <span>::after</span>.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.header {
+  z-index: 100;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: top 0.3s;
+}
+
+.header__nav {
+  width: 100%;
+  max-width: 715px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .header__nav {
+    position: absolute;
+    right: -100%;
+    top: 0;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+    transition: right 0.3s;
+  }
+
+  .header__nav.active {
+    right: 0;
+  }
+
+  .header__burger {
+    min-width: 20px;
+    width: 40px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 11;
+  }
+
+  .header__burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .header__burger span::before,
+  .header__burger span::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    transition: all 0.3s;
+  }
+
+  .header__burger span::before {
+    top: -10px;
+  }
+
+  .header__burger span::after {
+    top: 10px;
+  }
+
+  .header__burger.active span {
+    background-color: transparent;
+  }
+
+  .header__burger.active span::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .header__burger.active span::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+}
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="recomendation">Загальні рекомендації</h2>
+
+            <p>
+                Бургер-меню найкраще працює на мобільних пристроях. Ви можете приховувати його для більших екранів за
+                допомогою медіа-запитів. Для анімацій бажано встановлювати змінну <span>$transitionDuration</span> у
+                SCSS, наприклад <span>0.3s</span>, або ж замінити її у CSS напряму, як показано вище.
+            </p>
+
+            <p>
+                Для кращої доступності не забудьте додати <span>aria-label</span> до <span>.header__burger</span> або
+                додати <span>button</span> замість <span>div</span> та позначити ролі вручну.
+            </p>
+
+            <h2>Підсумок</h2>
+
+            <p>
+                Щоб використати цей функціональний модуль бургер-меню, достатньо вставити наведений HTML у свій
+                <span>&lt;header&gt;</span>, підключити стилі й скрипт після DOM, і все буде працювати "з коробки".
+                Важливо дотримуватись імен класів, бо логіка скрипта зав’язана саме на них. При потребі легко можна
+                змінити кольори, розміри або поведінку через CSS або JS відповідно.
+            </p>
+
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')

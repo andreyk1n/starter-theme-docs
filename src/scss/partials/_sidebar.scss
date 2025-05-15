@@ -79,12 +79,11 @@
   &__content {
     max-height: 0;
     overflow: hidden;
-    transition-duration: $transitionDuration;
     padding-left: 10px;
   }
 
   &.dropdown--active>.dropdown__content {
-    max-height: max-content;
+    max-height: 100%;
   }
 
   &.dropdown--active>.dropdown__title::before {
