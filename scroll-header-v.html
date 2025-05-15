@@ -122,85 +122,54 @@
   });
 </script>
         <main class="content">
-            <h1>Technical documentation</h1>
+            <h1>Скрипт приховування/показу заголовка при прокручуванні</h1>
+            <p>Цей модуль забезпечує динамічне керування відображенням заголовка сторінки залежно від дій користувача.
+                При прокручуванні сторінки вниз заголовок автоматично приховується, звільняючи більше простору для
+                контенту. При прокручуванні вгору або при поверненні у верхню частину сторінки — заголовок знову
+                з’являється.</p>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <p>Модуль підключається як окрема функція <span>initScrollControlledHeader</span>, яку необхідно викликати
+                під час ініціалізації застосунку. В основі реалізації — слухач події scroll, який:</p>
+            <ul>
+                <li>додає клас <span>scroll-header</span>, коли сторінка прокручена більше ніж на 10 пікселів (можна
+                    використати для зміни стилю заголовка після скролу);</li>
+                <li>змінює значення <span>top</span> у стилі заголовка для його приховування або показу залежно від
+                    напрямку прокрутки.</li>
+            </ul>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-code
+  let lastScrollTop = 0;
+  const header = document.querySelector('.header');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset;
+    header.classList.toggle('scroll-header', scrollTop > 10);
+    header.style.top = (scrollTop <= 10 || scrollTop < lastScrollTop) ? '0' : '-100px';
+    lastScrollTop = scrollTop;
+  });
   </code></pre>
             </div>
-            <h2 data-anchors="general-information">General information</h2>
-            <p>Passwork is not resource-intensive. The amount of resources (RAM, CPU, HDD) and the number of servers
-                required
-                depend on the number of active users.</p>
-            <blockquote>💡 The IOPS value is very important for the speed of the database, so it is advisable to use SSD
-                disks.</blockquote>
-            <h2 data-anchors="single-server">1. Single server</h2>
-            <p>Usually suitable for editions up to 500 users, with no special data storage requirements:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Number of users</th>
-                        <th>RAM</th>
-                        <th>CPU</th>
-                        <th>HDD</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>up to 50</td>
-                        <td>2–4 GB</td>
-                        <td>4</td>
-                        <td>100 GB</td>
-                    </tr>
-                    <tr>
-                        <td>up to 100</td>
-                        <td>4–8 GB</td>
-                        <td>8</td>
-                        <td>150 GB</td>
-                    </tr>
-                    <tr>
-                        <td>up to 500</td>
-                        <td>8–16 GB</td>
-                        <td>8</td>
-                        <td>200 GB</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2 data-anchors="manual-installation">Manual installation</h2>
-            <span>Manual installation does not use Docker or Windows installer. It is suitable for
-                complex cases where you need to fine-tune all components.</span>
-            <p>Path to the current configuration file —
-                <span>C:\inetpub\wwwroot\app\config\config.ini</span>
-            </p>
-
-            <h2 data-anchors="different-servers">2. Different servers for application and database
-            </h2>
-            <p>The database and the application server are distributed to different servers.</p>
+            <h2 data-anchors="needful-styles">Необхідні стилі</h2>
+            <p>Щоб скрипт працював коректно, для заголовка необхідно задати такі стилі:</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.header {
+  z-index: 100;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: top 0.3s ease;
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="recomendation">Рекомендації</h2>
             <ul>
-                <li>RAM-1, CPU-1, HDD-1 — application server.</li>
-                <li>RAM-2, CPU-2, HDD-2 — database.</li>
+                <li>Змінюйте значення <span>-100px</span> у стилі <span>top</span>, якщо висота вашого заголовка відрізняється.</li>
+                <li>Перевірте адаптивність поведінки заголовка на різних пристроях.</li>
+                <li>За потреби додайте throttle/debounce для оптимізації частоти викликів scroll-події.</li>
             </ul>
-            <p>The MongoDB database can operate in a "cluster" mode.</p>
-            <ol>
-                <li>Master — the main server;</li>
-                <li>Replica — a server with a copy of the data;</li>
-                <li>Arbiter — a special server that ensures the correctness of the voting process, when selecting the
-                    master
-                    base.</li>
-            </ol>
-
-            <h2 data-anchors="general-requirements">General description and requirements</h2>
-            <p>The Passwork Setup installer helps you install Passwork on Windows and then keep it up to date.</p>
-            <ul>
-                <li>Operating systems — Windows Server 2016, 2019, 2022</li>
-                <li><a href="#">Microsoft .Net Framework 4.8</a> (download and install)</li>
-            </ul>
-
-            <h2 data-anchors="main-features">Main features</h2>
-            <a href="#">Installation on a new server</a>
-            <a href="#">Migration (if Passwork is already installed on your server)</a>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>
