@@ -122,213 +122,147 @@
   });
 </script>
         <main class="content">
-            <h1>Бургер меню</h1>
-
-            <p>
-                Для інтеграції бургер-меню у свій проєкт, вам необхідно мати як HTML-структуру, так і відповідну логіку
-                JavaScript разом зі стилями. Нижче детально описано, як усе працює і як правильно його підключити.
-            </p>
-
-            <h2 data-anchors="html">HTML-розмітка</h2>
-
-            <p>
-                У вашому <span>header</span> має бути структура з логотипом, навігаційним меню та самим бургером.
-                Основні класи, з якими взаємодіє скрипт: <span>.header__burger</span> для кнопки-бургера,
-                <span>.header__nav</span> для навігаційного меню, а також <span>body</span> для блокування скролу.
-            </p>
-
+            <h1>Аккордіон</h1>
+            <p>Цей модуль реалізує інтерфейс акордеона — коли натискаєш на заголовок, розкривається відповідний контент,
+                а решта блоків автоматично закриваються. Це покращує UX, дозволяючи користувачу зосередитися лише на
+                одному фрагменті контенту за раз.</p>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <p>Модуль запускається автоматично при завантаженні сторінки. В основі реалізації — обробка кліків по
+                заголовках акордеонів:</p>
+            <ul>
+                <li>Кожен заголовок знаходиться всередині блоку акордеона, який також містить прихований контент.</li>
+                <li>При натисканні на заголовок:
+                    <ul>
+                        <li>Закриваються всі інші блоки (приховується їхній контент, видаляється активний стан).</li>
+                        <li>Якщо натиснутий блок був закритим — він відкривається, а його контент розгортається на повну
+                            висоту (визначену динамічно).</li>
+                    </ul>
+                </li>
+                <li>Перший блок автоматично відкривається при завантаженні сторінки.</li>
+                <li>Стрілка праворуч візуально обертається при відкритті блоку (CSS-трансформація).</li>
+            </ul>
+            <p><strong>Ключові етапи:</strong></p>
+            <ul>
+                <li>Визначення всіх заголовків та блоків акордеона.</li>
+                <li>Призначення обробника події <span>click</span> для кожного заголовка.</li>
+                <li>Встановлення <span>max-height</span> для відкритого контенту, щоб забезпечити плавну анімацію.</li>
+                <li>Скидання <span>max-height</span> до <span>null</span> для закритих блоків.</li>
+            </ul>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-&lt;header class="header"&gt;
-  &lt;div class="header__container"&gt;
-    &lt;a href="index.html" class="header__logo"&gt;
-      &lt;img src="" alt="Header logo"&gt;
-    &lt;/a&gt;
-    &lt;nav class="header__nav"&gt;
-      &lt;!-- Навігаційні посилання тут --&gt;
-    &lt;/nav&gt;
-    &lt;div class="header__burger"&gt;
-      &lt;span&gt;&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/header&gt;
-  </code></pre>
-            </div>
+const accordions = document.querySelectorAll(".accordion__header");
+const allItems = document.querySelectorAll(".accordion__item");
 
-            <h2 data-anchors="js">JavaScript-логіка</h2>
+const toggleAccordion = (accordion) => {
+  const currentItem = accordion.parentElement;
+  const isActive = currentItem.classList.contains("accordion__item--active");
 
-            <p>
-                Після того як DOM повністю завантажився, відбувається ініціалізація модуля. Коли користувач натискає на
-                <span>.header__burger</span>, до нього та до навігації додається клас <span>.active</span>, що
-                візуалізує меню. Також додається клас <span>.no-scroll</span> до <span>&lt;body&gt;</span> для
-                блокування скролу сторінки.
-            </p>
+  allItems.forEach((item) => {
+    if (item !== currentItem) {
+      item.classList.remove("accordion__item--active");
+      item.querySelector(".accordion__content").style.maxHeight = null;
+    }
+  });
 
-            <p>
-                Якщо користувач клацає будь-де поза бургером або навігацією, меню автоматично закривається — всі активні
-                класи прибираються, і скрол сторінки розблоковується.
-            </p>
+  if (!isActive) {
+    currentItem.classList.add("accordion__item--active");
+    const content = currentItem.querySelector(".accordion__content");
+    content.style.maxHeight = `${content.scrollHeight}px`;
+  }
+};
 
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-document.addEventListener('DOMContentLoaded', () =&gt; {
-    const burger = document.querySelector('.header__burger');
-    const nav = document.querySelector('.header__nav');
-    const body = document.body;
-
-    burger.addEventListener('click', (event) =&gt; {
-        event.stopPropagation();
-        burger.classList.toggle('active');
-        nav.classList.toggle('active');
-
-        if (burger.classList.contains('active')) {
-            body.classList.add('no-scroll');
-        } else {
-            body.classList.remove('no-scroll');
-        }
-    });
-
-    document.addEventListener('click', (event) =&gt; {
-        if (!nav.contains(event.target) &amp;&amp; !burger.contains(event.target)) {
-            if (nav.classList.contains('active')) {
-                burger.classList.remove('active');
-                nav.classList.remove('active');
-                body.classList.remove('no-scroll');
-            }
-        }
-    });
+accordions.forEach((accordion) => {
+  accordion.addEventListener("click", () => toggleAccordion(accordion));
 });
+
+if (allItems.length > 0) {
+  const firstAccordion = allItems[0];
+  firstAccordion.classList.add("accordion__item--active");
+  const firstContent = firstAccordion.querySelector(".accordion__content");
+  firstContent.style.maxHeight = `${firstContent.scrollHeight}px`;
+}
   </code></pre>
             </div>
-
-            <h2 data-anchors="css">CSS-стилі</h2>
-
-            <p>
-                Нижче наведено базові стилі, які забезпечують коректну роботу бургер-меню та його анімацію. При ширині
-                вікна до <span>768px</span> бургер активується, навігація перекриває весь екран, а сам бургер
-                перетворюється на хрестик за допомогою псевдоелементів <span>::before</span> та <span>::after</span>.
-            </p>
-
-            <div class="code">
+            <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
+                        <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-.header {
-  z-index: 100;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  transition: top 0.3s;
+.accordion {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.header__nav {
-  width: 100%;
-  max-width: 715px;
+.accordion__header {
+  background-color: transparent;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 15px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
 }
 
-@media (max-width: 768px) {
-  .header__nav {
-    position: absolute;
-    right: -100%;
-    top: 0;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #ffffff;
-    transition: right 0.3s;
-  }
+.accordion__arrow {
+  transition: transform 0.3s ease;
+  font-size: 30px;
+  font-weight: bold;
+}
 
-  .header__nav.active {
-    right: 0;
-  }
+.accordion__item--active .accordion__arrow {
+  transform: rotate(180deg);
+}
 
-  .header__burger {
-    min-width: 20px;
-    width: 40px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-    z-index: 11;
-  }
-
-  .header__burger span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #000000;
-    position: relative;
-    transition: all 0.3s;
-  }
-
-  .header__burger span::before,
-  .header__burger span::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: #000000;
-    transition: all 0.3s;
-  }
-
-  .header__burger span::before {
-    top: -10px;
-  }
-
-  .header__burger span::after {
-    top: 10px;
-  }
-
-  .header__burger.active span {
-    background-color: transparent;
-  }
-
-  .header__burger.active span::before {
-    top: 0;
-    transform: rotate(45deg);
-  }
-
-  .header__burger.active span::after {
-    top: 0;
-    transform: rotate(-45deg);
-  }
+.accordion__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
 }
   </code></pre>
             </div>
+            <h2 data-anchors="html">Використання в розмітці</h2>
+                        <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;div class="accordion"&gt; 
+  &lt;div class="accordion__item accordion__item--active"&gt; 
+    &lt;button class="accordion__header"&gt;
+      &lt;span class="accordion__title"&gt;Accordion 1&lt;/span&gt;
+      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="accordion__content"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
+        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
+        asperiores aut.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
 
-            <h2 data-anchors="recomendation">Загальні рекомендації</h2>
+  &lt;div class="accordion__item"&gt;
+    &lt;button class="accordion__header"&gt;
+      &lt;span class="accordion__title"&gt;Accordion 2&lt;/span&gt;
+      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="accordion__content"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
+        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
+        asperiores aut.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
 
-            <p>
-                Бургер-меню найкраще працює на мобільних пристроях. Ви можете приховувати його для більших екранів за
-                допомогою медіа-запитів. Для анімацій бажано встановлювати змінну <span>$transitionDuration</span> у
-                SCSS, наприклад <span>0.3s</span>, або ж замінити її у CSS напряму, як показано вище.
-            </p>
-
-            <p>
-                Для кращої доступності не забудьте додати <span>aria-label</span> до <span>.header__burger</span> або
-                додати <span>button</span> замість <span>div</span> та позначити ролі вручну.
-            </p>
-
-            <h2>Підсумок</h2>
-
-            <p>
-                Щоб використати цей функціональний модуль бургер-меню, достатньо вставити наведений HTML у свій
-                <span>&lt;header&gt;</span>, підключити стилі й скрипт після DOM, і все буде працювати "з коробки".
-                Важливо дотримуватись імен класів, бо логіка скрипта зав’язана саме на них. При потребі легко можна
-                змінити кольори, розміри або поведінку через CSS або JS відповідно.
-            </p>
-
+  &lt;div class="accordion__item"&gt;
+    &lt;button class="accordion__header"&gt;
+      &lt;span class="accordion__title"&gt;Accordion 3&lt;/span&gt;
+      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="accordion__content"&gt;
+      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
+        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
+        asperiores aut.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+  </code></pre>
+            </div>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>
