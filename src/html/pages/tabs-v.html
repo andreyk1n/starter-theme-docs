@@ -1,0 +1,100 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Таби</h1>
+            <p>Цей модуль реалізує класичну поведінку табів — перемикання видимого вмісту залежно від активної кнопки.
+                Він дозволяє користувачеві переглядати різні блоки контенту, натискаючи на відповідні вкладки.</p>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <p>Модуль працює на основі двох колекцій елементів: кнопок табів та вмісту кожної вкладки. Основна
+                функціональність досягається через перебір усіх кнопок та призначення обробника події click. Під час
+                кліку:</p>
+            <ul>
+                <li>У всіх кнопок забирається клас активного стану <span>tabs__button--active</span>;</li>
+                <li>У всього вмісту видаляється клас активного стану <span>tabs__content--active</span>;</li>
+                <li>Поточній кнопці та відповідному блоку контенту призначається активний клас.</li>
+            </ul>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+const buttons = document.querySelectorAll('.tabs__button');
+const contents = document.querySelectorAll('.tabs__content');
+  
+buttons.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    buttons.forEach(btn => btn.classList.remove('tabs__button--active'));
+    contents.forEach(content => content.classList.remove('tabs__content--active'));
+  
+    button.classList.add('tabs__button--active');
+    contents[index].classList.add('tabs__content--active');
+  });
+});
+  </code></pre>
+            </div>
+            <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 500px;
+}
+
+.tabs__buttons {
+  display: flex;
+}
+
+.tabs__button {
+  padding: 8px 16px;
+  border: 1px solid #333;
+  background-color: transparent;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.tabs__button--active {
+  background-color: #333;
+  color: #fff;
+}
+
+.tabs__content {
+  display: none;
+  padding: 16px;
+  border: 1px solid #ddd;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.tabs__content--active {
+  display: block;
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="usage">Використання</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;div class="tabs"&gt;
+  &lt;div class="tabs__buttons"&gt;
+    &lt;button class="tabs__button tabs__button--active"&gt;Tab 1&lt;/button&gt;
+    &lt;button class="tabs__button"&gt;Tab 2&lt;/button&gt;
+    &lt;button class="tabs__button"&gt;Tab 3&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="tabs__content tabs__content--active"&gt;Content for Tab 1&lt;/div&gt;
+  &lt;div class="tabs__content"&gt;Content for Tab 2&lt;/div&gt;
+  &lt;div class="tabs__content"&gt;Content for Tab 3&lt;/div&gt;
+&lt;/div&gt;
+  </code></pre>
+            </div>
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
