@@ -1,0 +1,119 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Кастомний селект</h1>
+            <p>Цей модуль реалізує інтерактивну поведінку для кастомного випадаючого списку. Він дозволяє відкривати
+                список опцій при натисканні на кнопку, обирати значення, а також автоматично закривати відкриті селекти
+                при кліку поза межами активного елемента.</p>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <p>Модуль активується один раз при завантаженні сторінки через слухач <span>click</span> на документі.
+                Основна логіка виконує:</p>
+            <ul>
+                <li>Закриття всіх відкритих списків, крім того, який містить клікнутий елемент.</li>
+                <li>Перемикання активності поточного списку при кліку на <span>.select__button</span>.</li>
+                <li>Оновлення тексту кнопки після вибору опції з класом <span>.select__option</span>.</li>
+                <li>Автоматичне закриття списку після вибору.</li>
+            </ul>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+document.addEventListener('click', (e) => {
+  // Закриваємо всі відкриті списки, окрім поточного
+  document.querySelectorAll('.select__dropdown').forEach(dropdown => {
+    const parentSelect = dropdown.closest('.select');
+    if (!parentSelect.contains(e.target)) {
+      dropdown.classList.remove('select__dropdown--active');
+    }
+  });
+
+  // Обробка кліку по селекту
+  const select = e.target.closest('.select');
+  if (select) {
+    const dropdown = select.querySelector('.select__dropdown');
+    const button = select.querySelector('.select__button');
+    const isActive = dropdown.classList.contains('select__dropdown--active');
+    dropdown.classList.toggle('select__dropdown--active', !isActive);
+
+    // Обробка вибору опції
+    if (e.target.classList.contains('select__option')) {
+      button.textContent = e.target.textContent;
+      dropdown.classList.remove('select__dropdown--active');
+    }
+  }
+});
+  </code></pre>
+            </div>
+            <h2 data-anchors="needful-styles">Необхідні стилі</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.select {
+  position: relative;
+  width: 200px;
+  font-family: Arial, sans-serif;
+}
+
+.select__button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.select__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 0;
+  overflow: auto;
+  background: #fff;
+  transition: max-height 0.3s ease;
+  z-index: 10;
+  list-style: none;
+  padding-left: 0;
+}
+
+.select__dropdown--active {
+  max-height: 150px;
+  border: 1px solid gray;
+}
+
+.select__option {
+  padding: 10px;
+  margin-left: 0;
+  cursor: pointer;
+}
+
+.select__option:hover {
+  background-color: #f0f0f0;
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="usage">Використання</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;div class="select"&gt;
+  &lt;button class="select__button" type="button"&gt;Оберіть варіант&lt;/button&gt;
+  &lt;ul class="select__dropdown"&gt;
+    &lt;li class="select__option" data-value="1"&gt;Варіант 1&lt;/li&gt;
+    &lt;li class="select__option" data-value="2"&gt;Варіант 2&lt;/li&gt;
+    &lt;li class="select__option" data-value="3"&gt;Варіант 3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+  </code></pre>
+            </div>
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
