@@ -1,0 +1,71 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Інструкція з ініціалізації та розгортання проєкту</h1>
+            <p>Ця сторінка містить покрокову інструкцію для запуску та розгортання вашого фронтенд-проєкту, що базується
+                на Gulp. Ви дізнаєтесь, як ініціалізувати тему локально та як задеплоїти готову версію сайту на GitHub
+                Pages.</p>
+            <h2>Ініціалізація теми</h2>
+            <p>Після завантаження репозиторію з темою, виконайте наступні дії для початку роботи з проєктом:</p>
+            <h3 data-anchors="initialization">Крок 1: Встановіть залежності</h3>
+            <p>Відкрийте термінал у кореневій папці проєкту та виконайте команду:</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+npm install
+  </code></pre>
+            </div>
+            <p>Це встановить усі необхідні залежності, вказані у файлі <span>package.json</span>, включно з Gulp та
+                плагінами, які використовуються в проєкті.</p>
+            <h3 data-anchors="gulp-start">Крок 2: Запустіть Gulp</h3>
+            <p>Після завершення встановлення залежностей, запустіть Gulp для компіляції файлів та запуску локального
+                сервера:</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+gulp
+  </code></pre>
+            </div>
+            <p>У результаті запуститься середовище розробки з автоматичним оновленням сторінки при зміні файлів (Live
+                Reload). Зазвичай воно буде доступне за адресою <span>http://localhost:3000/</span>.</p>
+            <h2 data-anchors="subtree">Крок 3: Розгорніть через Git Subtree</h2>
+            <p>Щоб розгорнути ваш проєкт, використовуйте команду <span>git subtree</span>, яка дозволяє пушити підкаталог <span>(dist)</span> як окрему гілку:</p>
+                        <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+git subtree push --prefix dist origin gh-pages
+  </code></pre>
+            </div>
+            <blockquote>Цю команду слід виконувати кожного разу після внесення змін, щоб оновити сайт на GitHub Pages. Вона автоматично витягує вміст папки dist і пушить його у гілку gh-pages.</blockquote>
+            <h2 data-anchors="setting-gh-pages">Крок 4: Налаштуйте GitHub Pages</h2>
+            <ol>
+                <li>Відкрийте ваш репозиторій на GitHub.</li>
+                <li>Перейдіть у розділ Settings → Pages.</li>
+                <li>У полі Source оберіть гілку <span>gh-pages</span> і підтвердьте вибір.</li>
+                <li>Після збереження налаштувань GitHub почне процес публікації.</li>
+            </ol>
+            <h2 data-anchors="check-res">Крок 5: Перевірте результат</h2>
+            <p>Зазвичай через 1–2 хвилини ваш сайт буде доступний за адресою:</p>
+                        <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+https://<ваше_ім’я_користувача>.github.io/<назва_репозиторію>/
+  </code></pre>
+            </div>
+            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <ul>
+                <li>Якщо ви регулярно оновлюєте сайт, створіть alias або npm-скрипт для команди <span>git subtree push</span>.</li>
+                <li>Завжди перевіряйте вміст папки <span>dist</span> перед публікацією — уникайте випадкових файлів, що можуть туди потрапити.</li>
+                <li>Уникайте ручного редагування гілки <span>gh-pages</span>, щоб уникнути конфліктів — усі зміни мають йти лише через автоматизовану збірку.</li>
+            </ul>
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
