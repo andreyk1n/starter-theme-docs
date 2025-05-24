@@ -121,85 +121,155 @@
   });
 </script>
         <main class="content">
-            <h1>Technical documentation</h1>
+            <h1>Таймер для модального вікна</h1>
+            <p>Цей JavaScript-модуль відповідає за автоматичне відкриття модального вікна у трьох випадках:</p>
+            <ul>
+                <li>Через 30 секунд після завантаження сторінки.</li>
+                <li>Кожні 5 хвилин (300 секунд) після першого показу.</li>
+                <li>При спробі користувача залишити сторінку (exit intent), тобто коли курсор миші покидає межі вікна браузера.</li>
+            </ul>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-code
+let modalOpenedByMouseLeave = false;
+
+// 1. Відкриває модалку через 30 секунд
+setTimeout(() => location = '#open-modal', 30000);
+
+// 2. Відкриває модалку кожні 5 хвилин (300 000 мс)
+setInterval(() => location = '#open-modal', 300000);
+
+// 3. Відкриває модалку при виході мишки за межі вікна
+document.addEventListener('mouseleave', e => {
+  const mouseLeftViewport =
+    e.clientY <= 0 || e.clientX <= 0 ||
+    e.clientX >= innerWidth || e.clientY >= innerHeight;
+
+  if (!modalOpenedByMouseLeave && mouseLeftViewport) {
+    location = '#open-modal'; // Прокручує до елемента з ID open-modal
+    modalOpenedByMouseLeave = true; // Не дозволяє повторно відкривати при наступному виході
+  }
+});
   </code></pre>
             </div>
-            <h2 data-anchors="general-information">General information</h2>
-            <p>Passwork is not resource-intensive. The amount of resources (RAM, CPU, HDD) and the number of servers
-                required
-                depend on the number of active users.</p>
-            <blockquote>💡 The IOPS value is very important for the speed of the database, so it is advisable to use SSD
-                disks.</blockquote>
-            <h2 data-anchors="single-server">1. Single server</h2>
-            <p>Usually suitable for editions up to 500 users, with no special data storage requirements:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Number of users</th>
-                        <th>RAM</th>
-                        <th>CPU</th>
-                        <th>HDD</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>up to 50</td>
-                        <td>2–4 GB</td>
-                        <td>4</td>
-                        <td>100 GB</td>
-                    </tr>
-                    <tr>
-                        <td>up to 100</td>
-                        <td>4–8 GB</td>
-                        <td>8</td>
-                        <td>150 GB</td>
-                    </tr>
-                    <tr>
-                        <td>up to 500</td>
-                        <td>8–16 GB</td>
-                        <td>8</td>
-                        <td>200 GB</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2 data-anchors="manual-installation">Manual installation</h2>
-            <span>Manual installation does not use Docker or Windows installer. It is suitable for
-                complex cases where you need to fine-tune all components.</span>
-            <p>Path to the current configuration file —
-                <span>C:\inetpub\wwwroot\app\config\config.ini</span>
-            </p>
-
-            <h2 data-anchors="different-servers">2. Different servers for application and database
-            </h2>
-            <p>The database and the application server are distributed to different servers.</p>
+            <h2 data-anchors="how-it-works">Як це працює</h2>
             <ul>
-                <li>RAM-1, CPU-1, HDD-1 — application server.</li>
-                <li>RAM-2, CPU-2, HDD-2 — database.</li>
+                <li>location = <span>'#open-modal'</span> — змінює хеш URL, що викликає прокручування до елемента з <span>id="open-modal"</span>. Найчастіше це використовується з CSS або JavaScript, щоб відкривати модальне вікно.</li>
+                <li><span>modalOpenedByMouseLeave</span> — прапорець, що запобігає повторному відкриттю модалки при наступних подіях <span>mouseleave</span>.</li>
+                <li><span>setTimeout</span> та <span>setInterval</span> — забезпечують відкриття модального вікна з часом:</li>
+                <li><span>setTimeout(...)</span> — одноразовий запуск через 30 секунд.</li>
+                <li><span>setInterval(...)</span> — періодичне повторення кожні 5 хвилин</li>
             </ul>
-            <p>The MongoDB database can operate in a "cluster" mode.</p>
-            <ol>
-                <li>Master — the main server;</li>
-                <li>Replica — a server with a copy of the data;</li>
-                <li>Arbiter — a special server that ensures the correctness of the voting process, when selecting the
-                    master
-                    base.</li>
-            </ol>
+            <h2 data-anchors="usage">Як використовувати</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;span onclick="document.location='#open-modal'; return false;" class="open-modal"&gt;Відкрити модалку&lt;/span&gt;
 
-            <h2 data-anchors="general-requirements">General description and requirements</h2>
-            <p>The Passwork Setup installer helps you install Passwork on Windows and then keep it up to date.</p>
-            <ul>
-                <li>Operating systems — Windows Server 2016, 2019, 2022</li>
-                <li><a href="#">Microsoft .Net Framework 4.8</a> (download and install)</li>
-            </ul>
+&lt;div id="open-modal" class="modal"&gt;
+    &lt;div class="modal-content"&gt;
+        &lt;span onclick="document.location='#close'; return false;" class="close"&gt;&lt;/span&gt;
+        &lt;h2&gt;Модальне вікно&lt;/h2&gt;
+        &lt;p&gt;Це модальне вікно без JavaScript.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span onclick="document.location='#close'; return false;" class="close-overlay"&gt;&lt;/span&gt;
+&lt;/div&gt;
+  </code></pre>
+            </div>
+            <h2 data-anchors="base-styles">Базова стилізація</h2>
+                        <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s .5s, opacity .5s ease, transform .5s ease;
+}
 
-            <h2 data-anchors="main-features">Main features</h2>
-            <a href="#">Installation on a new server</a>
-            <a href="#">Migration (if Passwork is already installed on your server)</a>
+.modal:target {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .5s ease, transform .5s ease;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .5s ease, transform .5s ease;
+}
+
+.modal:target .modal-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.close-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1;
+    transition: background .5s ease;
+}
+
+.modal:target .close-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.close::before,
+.close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 2px;
+    background-color: #000;
+    transform-origin: center;
+}
+
+.close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+  </code></pre>
+            </div>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>
