@@ -121,147 +121,51 @@
   });
 </script>
         <main class="content">
-            <h1>Аккордіон</h1>
-            <p>Цей модуль реалізує інтерфейс акордеона — коли натискаєш на заголовок, розкривається відповідний контент,
-                а решта блоків автоматично закриваються. Це покращує UX, дозволяючи користувачу зосередитися лише на
-                одному фрагменті контенту за раз.</p>
+            <h1>Визначення поточної сторінки</h1>
+            <p>Цей функціонал призначений для автоматичного визначення, яка саме сторінка зараз відкрита, і
+                підсвічування відповідного пункту меню в навігації. Коли користувач переходить на будь-яку сторінку
+                сайту, скрипт спочатку отримує поточний шлях сторінки за допомогою
+                <span>window.location.pathname</span>. Цей шлях може виглядати, наприклад, як /about.html. Метод
+                <span>split('/')</span> розбиває цей шлях на частини, а <span>.pop()</span> бере останній елемент —
+                тобто назву файлу сторінки. Якщо ж ім’я файлу відсутнє, як у випадку головної сторінки (де шлях буде
+                просто /), тоді підставляється <span>'index.html'</span> за замовчуванням.
+            </p>
+            <p>Далі скрипт перебирає всі елементи з класом .nav__link — це посилання в головному меню. Для кожного
+                такого посилання він порівнює значення атрибута <span>href</span> з назвою поточної сторінки, яку ми
+                тільки-но визначили. Якщо значення збігаються, тобто якщо href посилання співпадає з тим, яка сторінка
+                зараз відкрита, скрипт додає до цього посилання клас <span>currentPage</span>.</p>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-            <p>Модуль запускається автоматично при завантаженні сторінки. В основі реалізації — обробка кліків по
-                заголовках акордеонів:</p>
-            <ul>
-                <li>Кожен заголовок знаходиться всередині блоку акордеона, який також містить прихований контент.</li>
-                <li>При натисканні на заголовок:
-                    <ul>
-                        <li>Закриваються всі інші блоки (приховується їхній контент, видаляється активний стан).</li>
-                        <li>Якщо натиснутий блок був закритим — він відкривається, а його контент розгортається на повну
-                            висоту (визначену динамічно).</li>
-                    </ul>
-                </li>
-                <li>Перший блок автоматично відкривається при завантаженні сторінки.</li>
-                <li>Стрілка праворуч візуально обертається при відкритті блоку (CSS-трансформація).</li>
-            </ul>
-            <p><strong>Ключові етапи:</strong></p>
-            <ul>
-                <li>Визначення всіх заголовків та блоків акордеона.</li>
-                <li>Призначення обробника події <span>click</span> для кожного заголовка.</li>
-                <li>Встановлення <span>max-height</span> для відкритого контенту, щоб забезпечити плавну анімацію.</li>
-                <li>Скидання <span>max-height</span> до <span>null</span> для закритих блоків.</li>
-            </ul>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-const accordions = document.querySelectorAll(".accordion__header");
-const allItems = document.querySelectorAll(".accordion__item");
-
-const toggleAccordion = (accordion) => {
-  const currentItem = accordion.parentElement;
-  const isActive = currentItem.classList.contains("accordion__item--active");
-
-  allItems.forEach((item) => {
-    if (item !== currentItem) {
-      item.classList.remove("accordion__item--active");
-      item.querySelector(".accordion__content").style.maxHeight = null;
-    }
-  });
-
-  if (!isActive) {
-    currentItem.classList.add("accordion__item--active");
-    const content = currentItem.querySelector(".accordion__content");
-    content.style.maxHeight = `${content.scrollHeight}px`;
-  }
-};
-
-accordions.forEach((accordion) => {
-  accordion.addEventListener("click", () => toggleAccordion(accordion));
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav__link').forEach(link => {
+    if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
 });
-
-if (allItems.length > 0) {
-  const firstAccordion = allItems[0];
-  firstAccordion.classList.add("accordion__item--active");
-  const firstContent = firstAccordion.querySelector(".accordion__content");
-  firstContent.style.maxHeight = `${firstContent.scrollHeight}px`;
-}
   </code></pre>
             </div>
-            <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
-                        <div class="code">
+            <h2 data-anchors="style">Стилізація</h2>
+            <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-.accordion {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.accordion__header {
-  background-color: transparent;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.5s ease;
-}
-
-.accordion__arrow {
-  transition: transform 0.3s ease;
-  font-size: 30px;
+.currentPage {
   font-weight: bold;
-}
-
-.accordion__item--active .accordion__arrow {
-  transform: rotate(180deg);
-}
-
-.accordion__content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease;
+  color: #ff6600;
 }
   </code></pre>
             </div>
-            <h2 data-anchors="html">Використання в розмітці</h2>
-                        <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-&lt;div class="accordion"&gt; 
-  &lt;div class="accordion__item accordion__item--active"&gt; 
-    &lt;button class="accordion__header"&gt;
-      &lt;span class="accordion__title"&gt;Accordion 1&lt;/span&gt;
-      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="accordion__content"&gt;
-      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
-        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
-        asperiores aut.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;div class="accordion__item"&gt;
-    &lt;button class="accordion__header"&gt;
-      &lt;span class="accordion__title"&gt;Accordion 2&lt;/span&gt;
-      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="accordion__content"&gt;
-      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
-        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
-        asperiores aut.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;div class="accordion__item"&gt;
-    &lt;button class="accordion__header"&gt;
-      &lt;span class="accordion__title"&gt;Accordion 3&lt;/span&gt;
-      &lt;span class="accordion__arrow"&gt;+&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="accordion__content"&gt;
-      &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste modi repellat labore explicabo officiis ipsum
-        ducimus perspiciatis, nesciunt culpa tempore debitis itaque inventore natus minima unde blanditiis neque
-        asperiores aut.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-  </code></pre>
-            </div>
+            <p>Цей клас можна використовувати в CSS для стилізації активного пункту меню, наприклад, зробити його
+                жирним, змінити колір або підкреслити. Таким чином, користувач завжди буде бачити, на якій сторінці він
+                знаходиться, і не потрібно вручну додавати спеціальний клас до кожного посилання на всіх сторінках
+                сайту. Усе відбувається автоматично при завантаженні сторінки.</p>
+                <h2 data-anchors="recomendation">Рекомендації</h2>
+                <ul>
+                    <li>Підтримка підкаталогів: якщо сайт має структуру з підкаталогами (наприклад, <span>/blog/article.html</span> ), поточна логіка може не працювати коректно. У такому разі варто враховувати повний шлях або частину шляху.</li>
+                    <li>Порівняння з <span>location.href</span>: у складніших випадках, коли href містить абсолютні або відносні шляхи, варто привести <span>href</span> до повного вигляду перед порівнянням або використовувати new <span>URL()</span>.</li>
+                    <li>Плавна анімація активного пункту: можна додати ефекти типу <span>transition</span>, щоб зміна стилю була плавною.</li>
+                    <li>ARIA-атрибути для доступності: для підвищення доступності сайту додайте до активного пункту атрибут <span> aria-current="page"</span>. Наприклад:</li>
+                    <li>SEO-дружність: підсвічування активного посилання може позитивно впливати на користувацький досвід і знижувати показник відмов, що важливо для <span>SEO</span>.</li>
+                </ul>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>
