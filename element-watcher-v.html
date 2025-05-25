@@ -122,213 +122,89 @@
   });
 </script>
         <main class="content">
-            <h1>Бургер меню</h1>
-
-            <p>
-                Для інтеграції бургер-меню у свій проєкт, вам необхідно мати як HTML-структуру, так і відповідну логіку
-                JavaScript разом зі стилями. Нижче детально описано, як усе працює і як правильно його підключити.
-            </p>
-
-            <h2 data-anchors="html">HTML-розмітка</h2>
-
-            <p>
-                У вашому <span>header</span> має бути структура з логотипом, навігаційним меню та самим бургером.
-                Основні класи, з якими взаємодіє скрипт: <span>.header__burger</span> для кнопки-бургера,
-                <span>.header__nav</span> для навігаційного меню, а також <span>body</span> для блокування скролу.
-            </p>
-
+            <h1>Функціональний модуль спостереження за елементами</h1>
+            <h2 data-anchors="desribe">Опис функціоналу</h2>
+            <p>Цей модуль відповідає за відстеження появи елементів у зоні видимості користувача <span>(viewport)</span>
+                за допомогою сучасного браузерного API — <span>IntersectionObserver</span>. Як тільки DOM повністю
+                завантажується <span>(DOMContentLoaded),</span> ініціалізується система спостереження. У ній задаються
+                параметри: використовується стандартне вікно перегляду (тобто без додаткового контейнера), не
+                застосовуються зовнішні відступи, і тригер спрацьовує, коли хоча б 10% площі елемента стає видимою.
+                Кожен елемент з атрибутом <span>data-watch</span> потрапляє під спостереження. Якщо елемент потрапляє у
+                видиму частину сторінки, йому додається клас <span>_watcher--view</span>, а якщо зникає — цей клас
+                видаляється. Усі ці дії супроводжуються повідомленнями в консолі.</p>
+            <h2 data-anchors="usage">Використання</h2>
+            <p>Щоб використати цей функціонал, достатньо додати до потрібного HTML-елемента атрибут
+                <span>data-watch</span> — наприклад, <span>&lt;section data-watch&gt;</span>. Скрипт автоматично знайде
+                всі такі елементи після завантаження сторінки і почне відстежувати їхню появу або зникнення з області
+                перегляду. Коли користувач скролить сторінку і певний елемент з цим атрибутом потрапляє у видиму зону,
+                до нього додається клас <span>_watcher--view</span>, завдяки якому можна запускати анімації, змінювати
+                стилі, виводити дані тощо. Коли елемент виходить із поля зору, клас зникає — відповідно, можна
+                реалізовувати "повторні появи" або "згасання".</p>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-&lt;header class="header"&gt;
-  &lt;div class="header__container"&gt;
-    &lt;a href="index.html" class="header__logo"&gt;
-      &lt;img src="" alt="Header logo"&gt;
-    &lt;/a&gt;
-    &lt;nav class="header__nav"&gt;
-      &lt;!-- Навігаційні посилання тут --&gt;
-    &lt;/nav&gt;
-    &lt;div class="header__burger"&gt;
-      &lt;span&gt;&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/header&gt;
+&lt;section class="section" data-watch&gt;
+  &lt;h2&gt;Про нас&lt;/h2&gt;
+  &lt;p&gt;Цей блок з'явиться з анімацією, коли потрапить у зону видимості.&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section class="section" data-watch&gt;
+  &lt;h2&gt;Наші послуги&lt;/h2&gt;
+  &lt;p&gt;Ще один блок, який реагує на скрол завдяки класу _watcher--view.&lt;/p&gt;
+&lt;/section&gt;
   </code></pre>
             </div>
-
-            <h2 data-anchors="js">JavaScript-логіка</h2>
-
-            <p>
-                Після того як DOM повністю завантажився, відбувається ініціалізація модуля. Коли користувач натискає на
-                <span>.header__burger</span>, до нього та до навігації додається клас <span>.active</span>, що
-                візуалізує меню. Також додається клас <span>.no-scroll</span> до <span>&lt;body&gt;</span> для
-                блокування скролу сторінки.
-            </p>
-
-            <p>
-                Якщо користувач клацає будь-де поза бургером або навігацією, меню автоматично закривається — всі активні
-                класи прибираються, і скрол сторінки розблоковується.
-            </p>
-
+            <h3>Приклад стилів</h3>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-document.addEventListener('DOMContentLoaded', () =&gt; {
-    const burger = document.querySelector('.header__burger');
-    const nav = document.querySelector('.header__nav');
-    const body = document.body;
+.section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  margin: 100px 0;
+  padding: 40px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
 
-    burger.addEventListener('click', (event) =&gt; {
-        event.stopPropagation();
-        burger.classList.toggle('active');
-        nav.classList.toggle('active');
-
-        if (burger.classList.contains('active')) {
-            body.classList.add('no-scroll');
-        } else {
-            body.classList.remove('no-scroll');
-        }
-    });
-
-    document.addEventListener('click', (event) =&gt; {
-        if (!nav.contains(event.target) &amp;&amp; !burger.contains(event.target)) {
-            if (nav.classList.contains('active')) {
-                burger.classList.remove('active');
-                nav.classList.remove('active');
-                body.classList.remove('no-scroll');
+._watcher--view {
+  opacity: 1;
+  transform: translateY(0);
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log(`Element watcher --- Готовий до роботи.`);
+    const observerOptions = {
+        root: null, // Використовуємо viewport як корінь
+        rootMargin: '0px', // Немає додаткових відступів
+        threshold: 0.1 // Елемент вважається видимим, якщо 10% його площі видимі
+    };
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            const element = entry.target; // Елемент, за яким спостерігаємо
+            if (entry.isIntersecting) {
+                element.classList.add('_watcher--view');
+                console.log(`Додано клас _watcher--view до елемента з класами: ${element.className}`);
+            } else {
+                element.classList.remove('_watcher--view');
+                console.log(`Видалено клас _watcher--view з елемента з класами: ${element.className}`);
             }
-        }
-    });
+        });
+    };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const elementsToWatch = document.querySelectorAll('[data-watch]');
+    elementsToWatch.forEach(element => observer.observe(element));
 });
   </code></pre>
             </div>
-
-            <h2 data-anchors="css">CSS-стилі</h2>
-
-            <p>
-                Нижче наведено базові стилі, які забезпечують коректну роботу бургер-меню та його анімацію. При ширині
-                вікна до <span>768px</span> бургер активується, навігація перекриває весь екран, а сам бургер
-                перетворюється на хрестик за допомогою псевдоелементів <span>::before</span> та <span>::after</span>.
-            </p>
-
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-.header {
-  z-index: 100;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  transition: top 0.3s;
-}
-
-.header__nav {
-  width: 100%;
-  max-width: 715px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-@media (max-width: 768px) {
-  .header__nav {
-    position: absolute;
-    right: -100%;
-    top: 0;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    background-color: #ffffff;
-    transition: right 0.3s;
-  }
-
-  .header__nav.active {
-    right: 0;
-  }
-
-  .header__burger {
-    min-width: 20px;
-    width: 40px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-    z-index: 11;
-  }
-
-  .header__burger span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #000000;
-    position: relative;
-    transition: all 0.3s;
-  }
-
-  .header__burger span::before,
-  .header__burger span::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: #000000;
-    transition: all 0.3s;
-  }
-
-  .header__burger span::before {
-    top: -10px;
-  }
-
-  .header__burger span::after {
-    top: 10px;
-  }
-
-  .header__burger.active span {
-    background-color: transparent;
-  }
-
-  .header__burger.active span::before {
-    top: 0;
-    transform: rotate(45deg);
-  }
-
-  .header__burger.active span::after {
-    top: 0;
-    transform: rotate(-45deg);
-  }
-}
-  </code></pre>
-            </div>
-
-            <h2 data-anchors="recomendation">Загальні рекомендації</h2>
-
-            <p>
-                Бургер-меню найкраще працює на мобільних пристроях. Ви можете приховувати його для більших екранів за
-                допомогою медіа-запитів. Для анімацій бажано встановлювати змінну <span>$transitionDuration</span> у
-                SCSS, наприклад <span>0.3s</span>, або ж замінити її у CSS напряму, як показано вище.
-            </p>
-
-            <p>
-                Для кращої доступності не забудьте додати <span>aria-label</span> до <span>.header__burger</span> або
-                додати <span>button</span> замість <span>div</span> та позначити ролі вручну.
-            </p>
-
-            <h2>Підсумок</h2>
-
-            <p>
-                Щоб використати цей функціональний модуль бургер-меню, достатньо вставити наведений HTML у свій
-                <span>&lt;header&gt;</span>, підключити стилі й скрипт після DOM, і все буде працювати "з коробки".
-                Важливо дотримуватись імен класів, бо логіка скрипта зав’язана саме на них. При потребі легко можна
-                змінити кольори, розміри або поведінку через CSS або JS відповідно.
-            </p>
-
+            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <p>Цей підхід зручний для створення анімованих ефектів на скролі, поступового з’явлення блоків або підвантаження контенту. Щоб підвищити продуктивність, не додавайте <span>data-watch</span> до великої кількості дрібних елементів — краще спостерігати за більшими контейнерами. Також варто використовувати клас <span>_watcher--view</span> у CSS з переходами або анімаціями, які будуть активуватись саме при його появі. Якщо ви працюєте з динамічно підвантаженим контентом, після вставки нових елементів на сторінку потрібно повторно викликати спостереження або перепризначити його для нових вузлів.</p>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>
