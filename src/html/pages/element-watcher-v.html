@@ -1,0 +1,97 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Функціональний модуль спостереження за елементами</h1>
+            <h2 data-anchors="desribe">Опис функціоналу</h2>
+            <p>Цей модуль відповідає за відстеження появи елементів у зоні видимості користувача <span>(viewport)</span>
+                за допомогою сучасного браузерного API — <span>IntersectionObserver</span>. Як тільки DOM повністю
+                завантажується <span>(DOMContentLoaded),</span> ініціалізується система спостереження. У ній задаються
+                параметри: використовується стандартне вікно перегляду (тобто без додаткового контейнера), не
+                застосовуються зовнішні відступи, і тригер спрацьовує, коли хоча б 10% площі елемента стає видимою.
+                Кожен елемент з атрибутом <span>data-watch</span> потрапляє під спостереження. Якщо елемент потрапляє у
+                видиму частину сторінки, йому додається клас <span>_watcher--view</span>, а якщо зникає — цей клас
+                видаляється. Усі ці дії супроводжуються повідомленнями в консолі.</p>
+            <h2 data-anchors="usage">Використання</h2>
+            <p>Щоб використати цей функціонал, достатньо додати до потрібного HTML-елемента атрибут
+                <span>data-watch</span> — наприклад, <span>&lt;section data-watch&gt;</span>. Скрипт автоматично знайде
+                всі такі елементи після завантаження сторінки і почне відстежувати їхню появу або зникнення з області
+                перегляду. Коли користувач скролить сторінку і певний елемент з цим атрибутом потрапляє у видиму зону,
+                до нього додається клас <span>_watcher--view</span>, завдяки якому можна запускати анімації, змінювати
+                стилі, виводити дані тощо. Коли елемент виходить із поля зору, клас зникає — відповідно, можна
+                реалізовувати "повторні появи" або "згасання".</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;section class="section" data-watch&gt;
+  &lt;h2&gt;Про нас&lt;/h2&gt;
+  &lt;p&gt;Цей блок з'явиться з анімацією, коли потрапить у зону видимості.&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section class="section" data-watch&gt;
+  &lt;h2&gt;Наші послуги&lt;/h2&gt;
+  &lt;p&gt;Ще один блок, який реагує на скрол завдяки класу _watcher--view.&lt;/p&gt;
+&lt;/section&gt;
+  </code></pre>
+            </div>
+            <h3>Приклад стилів</h3>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  margin: 100px 0;
+  padding: 40px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+._watcher--view {
+  opacity: 1;
+  transform: translateY(0);
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log(`Element watcher --- Готовий до роботи.`);
+    const observerOptions = {
+        root: null, // Використовуємо viewport як корінь
+        rootMargin: '0px', // Немає додаткових відступів
+        threshold: 0.1 // Елемент вважається видимим, якщо 10% його площі видимі
+    };
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            const element = entry.target; // Елемент, за яким спостерігаємо
+            if (entry.isIntersecting) {
+                element.classList.add('_watcher--view');
+                console.log(`Додано клас _watcher--view до елемента з класами: ${element.className}`);
+            } else {
+                element.classList.remove('_watcher--view');
+                console.log(`Видалено клас _watcher--view з елемента з класами: ${element.className}`);
+            }
+        });
+    };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const elementsToWatch = document.querySelectorAll('[data-watch]');
+    elementsToWatch.forEach(element => observer.observe(element));
+});
+  </code></pre>
+            </div>
+            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <p>Цей підхід зручний для створення анімованих ефектів на скролі, поступового з’явлення блоків або підвантаження контенту. Щоб підвищити продуктивність, не додавайте <span>data-watch</span> до великої кількості дрібних елементів — краще спостерігати за більшими контейнерами. Також варто використовувати клас <span>_watcher--view</span> у CSS з переходами або анімаціями, які будуть активуватись саме при його появі. Якщо ви працюєте з динамічно підвантаженим контентом, після вставки нових елементів на сторінку потрібно повторно викликати спостереження або перепризначити його для нових вузлів.</p>
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
