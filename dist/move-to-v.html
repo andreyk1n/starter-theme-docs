@@ -113,7 +113,7 @@
 
   <a href="" class="sidebar__link">Корисні посилання</a>
 
-  <a href="" class="sidebar__link">Контакти</a>
+  <a href="#contacts" class="sidebar__link">Контакти</a>
 
 
 </div>
@@ -162,7 +162,7 @@
   </code></pre>
             </div>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-                        <div class="code">
+            <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
 document.addEventListener('DOMContentLoaded', function () {
@@ -213,10 +213,40 @@ document.addEventListener('DOMContentLoaded', function () {
                 <li>Використовуйте унікальні селектори в <span>data-move</span>, щоб уникнути помилок.</li>
                 <li>Слідкуйте за порядком елементів — особливо, якщо з ними пов’язані стилі або JavaScript.</li>
                 <li>Ініціалізуйте цей скрипт після завантаження DOM (що й робить <span>DOMContentLoaded</span>).</li>
-                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській стороні й може мати мікрозатримки.</li>
-                <li>Перевіряйте наявність цільових контейнерів <span>(.mobile-wrapper у прикладі)</span> — інакше буде помилка в консолі.</li>
-                <li>Не додавайте до одного елемента декілька <span>data-move</span> або <span>data-breakpoint</span> — це не підтримується.</li>
+                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській
+                    стороні й може мати мікрозатримки.</li>
+                <li>Перевіряйте наявність цільових контейнерів <span>(.mobile-wrapper у прикладі)</span> — інакше буде
+                    помилка в консолі.</li>
+                <li>Не додавайте до одного елемента декілька <span>data-move</span> або <span>data-breakpoint</span> —
+                    це не підтримується.</li>
             </ol>
+            <section class="contacts" id="contacts">
+    <h2 class="contacts__title">📬 Контакти</h2>
+    <ul class="contacts__list">
+        <li class="contacts__item">
+            🔗 <strong>GitHub:</strong>
+            <a href="https://github.com/andreyk1n" target="_blank" rel="noopener noreferrer">
+                    github.com/andreyk1n
+            </a>
+        </li>
+        <li class="contacts__item">
+            💼 <strong>LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/andrii-panasiuk-61786029a/" target="_blank" rel="noopener noreferrer">
+                linkedin.com/in/andrii-panasiuk-61786029a/
+            </a>
+        </li>
+        <li class="contacts__item">
+            ✉️ <strong>Email:</strong>
+            <a href="mailto:andrii.panasiuk2002@gmail.com">andrii.panasiuk2002@gmail.com</a>
+        </li>
+        <li class="contacts__item">
+            🌐 <strong>Портфоліо:</strong>
+            <a href="https://andreyk1n.github.io/My-portfolio/index.html" target="_blank" rel="noopener noreferrer">
+                andreyk1n.github.io/My-portfolio/index.html
+            </a>
+        </li>
+    </ul>
+</section>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>

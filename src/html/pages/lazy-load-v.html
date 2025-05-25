@@ -6,14 +6,18 @@
         @@include('partials/sidebar.html')
         <main class="content">
             <h1>Відкладене завантаження зображень</h1>
-            <p>Цей модуль забезпечує ліниве завантаження зображень та елементів із фоновими зображеннями, що мають відповідні класи:</p>
+            <p>Цей модуль забезпечує ліниве завантаження зображень та елементів із фоновими зображеннями, що мають
+                відповідні класи:</p>
             <ul>
-                <li><span>img.lazy</span> — для зображень, які не мають <span>src</span>, а лише <span>data-src</span></li>
+                <li><span>img.lazy</span> — для зображень, які не мають <span>src</span>, а лише <span>data-src</span>
+                </li>
                 <li><span>.lazy-bg</span> — для елементів із фоном, заданим через <span>data-bg</span></li>
             </ul>
-            <p>Завантаження відбувається тільки тоді, коли елемент потрапляє у видиму зону вікна браузера <span>(використовується IntersectionObserver)</span>.</p>
+            <p>Завантаження відбувається тільки тоді, коли елемент потрапляє у видиму зону вікна браузера
+                <span>(використовується IntersectionObserver)</span>.
+            </p>
             <h2 data-anchors="usage">Використання</h2>
-                        <div class="code">
+            <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
 &lt;!-- Зображення, яке буде підвантажено --&gt;
@@ -27,15 +31,21 @@
             </div>
             <h2 data-anchors="how-it-works">Як це працює</h2>
             <ol>
-                <li>Усі елементи з класами <span>lazy</span> та <span>lazy-bg</span> додаються до <span>IntersectionObserver</span>.</li>
+                <li>Усі елементи з класами <span>lazy</span> та <span>lazy-bg</span> додаються до
+                    <span>IntersectionObserver</span>.
+                </li>
                 <li>Коли елемент з’являється у вікні браузера: <ul>
-                    <li>Для <span>&lt;img&gt;</span> атрибут <span>data-src</span> копіюється в <span>src</span>.</li>
-                    <li>Для <span>.lazy-bg</span> — з <span>data-bg</span> встановлюється <span>background-image</span>.</li>
-                </ul></li>
+                        <li>Для <span>&lt;img&gt;</span> атрибут <span>data-src</span> копіюється в <span>src</span>.
+                        </li>
+                        <li>Для <span>.lazy-bg</span> — з <span>data-bg</span> встановлюється
+                            <span>background-image</span>.
+                        </li>
+                    </ul>
+                </li>
                 <li>Клас <span>lazy</span> або <span>lazy-bg</span> видаляється для очищення.</li>
             </ol>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-                        <div class="code">
+            <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
 document.addEventListener("DOMContentLoaded", () => {
@@ -84,12 +94,18 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <h2 data-anchors="recomendation">Рекомендації</h2>
             <ul>
-                <li>Завжди додавайте <span>data-src</span> або <span>data-bg</span>, не використовуйте <span>src</span> або <span>background-image</span> напряму.</li>
+                <li>Завжди додавайте <span>data-src</span> або <span>data-bg</span>, не використовуйте <span>src</span>
+                    або <span>background-image</span> напряму.</li>
                 <li>Додайте альтернативний текст до зображень: <span>alt="..."</span> для доступності.</li>
-                <li>Додавайте стилі до <span>.lazy-bg</span>, щоб фонові зображення займали місце перед завантаженням <span>(наприклад, min-height або aspect-ratio)</span>.</li>
-                <li>Можна поєднувати з <span>loading="lazy"</span>, однак <span>IntersectionObserver</span> дає більше контролю.</li>
-                <li>Обов’язково протестуйте на різних пристроях: поведінка <span>IntersectionObserver</span> може відрізнятись.</li>
+                <li>Додавайте стилі до <span>.lazy-bg</span>, щоб фонові зображення займали місце перед завантаженням
+                    <span>(наприклад, min-height або aspect-ratio)</span>.
+                </li>
+                <li>Можна поєднувати з <span>loading="lazy"</span>, однак <span>IntersectionObserver</span> дає більше
+                    контролю.</li>
+                <li>Обов’язково протестуйте на різних пристроях: поведінка <span>IntersectionObserver</span> може
+                    відрізнятись.</li>
             </ul>
+            @@include('partials/contacts.html')
         </main>
         @@include('partials/anchors.html')
     </div>

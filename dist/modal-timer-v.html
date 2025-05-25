@@ -113,7 +113,7 @@
 
   <a href="" class="sidebar__link">Корисні посилання</a>
 
-  <a href="" class="sidebar__link">Контакти</a>
+  <a href="#contacts" class="sidebar__link">Контакти</a>
 
 
 </div>
@@ -137,7 +137,8 @@
             <ul>
                 <li>Через 30 секунд після завантаження сторінки.</li>
                 <li>Кожні 5 хвилин (300 секунд) після першого показу.</li>
-                <li>При спробі користувача залишити сторінку (exit intent), тобто коли курсор миші покидає межі вікна браузера.</li>
+                <li>При спробі користувача залишити сторінку (exit intent), тобто коли курсор миші покидає межі вікна
+                    браузера.</li>
             </ul>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
             <div class="code">
@@ -166,9 +167,13 @@ document.addEventListener('mouseleave', e => {
             </div>
             <h2 data-anchors="how-it-works">Як це працює</h2>
             <ul>
-                <li>location = <span>'#open-modal'</span> — змінює хеш URL, що викликає прокручування до елемента з <span>id="open-modal"</span>. Найчастіше це використовується з CSS або JavaScript, щоб відкривати модальне вікно.</li>
-                <li><span>modalOpenedByMouseLeave</span> — прапорець, що запобігає повторному відкриттю модалки при наступних подіях <span>mouseleave</span>.</li>
-                <li><span>setTimeout</span> та <span>setInterval</span> — забезпечують відкриття модального вікна з часом:</li>
+                <li>location = <span>'#open-modal'</span> — змінює хеш URL, що викликає прокручування до елемента з
+                    <span>id="open-modal"</span>. Найчастіше це використовується з CSS або JavaScript, щоб відкривати
+                    модальне вікно.</li>
+                <li><span>modalOpenedByMouseLeave</span> — прапорець, що запобігає повторному відкриттю модалки при
+                    наступних подіях <span>mouseleave</span>.</li>
+                <li><span>setTimeout</span> та <span>setInterval</span> — забезпечують відкриття модального вікна з
+                    часом:</li>
                 <li><span>setTimeout(...)</span> — одноразовий запуск через 30 секунд.</li>
                 <li><span>setInterval(...)</span> — періодичне повторення кожні 5 хвилин</li>
             </ul>
@@ -189,7 +194,7 @@ document.addEventListener('mouseleave', e => {
   </code></pre>
             </div>
             <h2 data-anchors="base-styles">Базова стилізація</h2>
-                        <div class="code">
+            <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
 .modal {
@@ -281,6 +286,33 @@ document.addEventListener('mouseleave', e => {
 }
   </code></pre>
             </div>
+            <section class="contacts" id="contacts">
+    <h2 class="contacts__title">📬 Контакти</h2>
+    <ul class="contacts__list">
+        <li class="contacts__item">
+            🔗 <strong>GitHub:</strong>
+            <a href="https://github.com/andreyk1n" target="_blank" rel="noopener noreferrer">
+                    github.com/andreyk1n
+            </a>
+        </li>
+        <li class="contacts__item">
+            💼 <strong>LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/andrii-panasiuk-61786029a/" target="_blank" rel="noopener noreferrer">
+                linkedin.com/in/andrii-panasiuk-61786029a/
+            </a>
+        </li>
+        <li class="contacts__item">
+            ✉️ <strong>Email:</strong>
+            <a href="mailto:andrii.panasiuk2002@gmail.com">andrii.panasiuk2002@gmail.com</a>
+        </li>
+        <li class="contacts__item">
+            🌐 <strong>Портфоліо:</strong>
+            <a href="https://andreyk1n.github.io/My-portfolio/index.html" target="_blank" rel="noopener noreferrer">
+                andreyk1n.github.io/My-portfolio/index.html
+            </a>
+        </li>
+    </ul>
+</section>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>

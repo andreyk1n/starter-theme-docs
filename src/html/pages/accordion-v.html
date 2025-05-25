@@ -2,38 +2,38 @@
 
 
 <div class="wrapper">
-    <div class="wrapper__container">
-        @@include('partials/sidebar.html')
-        <main class="content">
-            <h1>Аккордіон</h1>
-            <p>Цей модуль реалізує інтерфейс акордеона — коли натискаєш на заголовок, розкривається відповідний контент,
-                а решта блоків автоматично закриваються. Це покращує UX, дозволяючи користувачу зосередитися лише на
-                одному фрагменті контенту за раз.</p>
-            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-            <p>Модуль запускається автоматично при завантаженні сторінки. В основі реалізації — обробка кліків по
-                заголовках акордеонів:</p>
-            <ul>
-                <li>Кожен заголовок знаходиться всередині блоку акордеона, який також містить прихований контент.</li>
-                <li>При натисканні на заголовок:
-                    <ul>
-                        <li>Закриваються всі інші блоки (приховується їхній контент, видаляється активний стан).</li>
-                        <li>Якщо натиснутий блок був закритим — він відкривається, а його контент розгортається на повну
-                            висоту (визначену динамічно).</li>
-                    </ul>
-                </li>
-                <li>Перший блок автоматично відкривається при завантаженні сторінки.</li>
-                <li>Стрілка праворуч візуально обертається при відкритті блоку (CSS-трансформація).</li>
-            </ul>
-            <p><strong>Ключові етапи:</strong></p>
-            <ul>
-                <li>Визначення всіх заголовків та блоків акордеона.</li>
-                <li>Призначення обробника події <span>click</span> для кожного заголовка.</li>
-                <li>Встановлення <span>max-height</span> для відкритого контенту, щоб забезпечити плавну анімацію.</li>
-                <li>Скидання <span>max-height</span> до <span>null</span> для закритих блоків.</li>
-            </ul>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
+  <div class="wrapper__container">
+    @@include('partials/sidebar.html')
+    <main class="content">
+      <h1>Аккордіон</h1>
+      <p>Цей модуль реалізує інтерфейс акордеона — коли натискаєш на заголовок, розкривається відповідний контент,
+        а решта блоків автоматично закриваються. Це покращує UX, дозволяючи користувачу зосередитися лише на
+        одному фрагменті контенту за раз.</p>
+      <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+      <p>Модуль запускається автоматично при завантаженні сторінки. В основі реалізації — обробка кліків по
+        заголовках акордеонів:</p>
+      <ul>
+        <li>Кожен заголовок знаходиться всередині блоку акордеона, який також містить прихований контент.</li>
+        <li>При натисканні на заголовок:
+          <ul>
+            <li>Закриваються всі інші блоки (приховується їхній контент, видаляється активний стан).</li>
+            <li>Якщо натиснутий блок був закритим — він відкривається, а його контент розгортається на повну
+              висоту (визначену динамічно).</li>
+          </ul>
+        </li>
+        <li>Перший блок автоматично відкривається при завантаженні сторінки.</li>
+        <li>Стрілка праворуч візуально обертається при відкритті блоку (CSS-трансформація).</li>
+      </ul>
+      <p><strong>Ключові етапи:</strong></p>
+      <ul>
+        <li>Визначення всіх заголовків та блоків акордеона.</li>
+        <li>Призначення обробника події <span>click</span> для кожного заголовка.</li>
+        <li>Встановлення <span>max-height</span> для відкритого контенту, щоб забезпечити плавну анімацію.</li>
+        <li>Скидання <span>max-height</span> до <span>null</span> для закритих блоків.</li>
+      </ul>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
 const accordions = document.querySelectorAll(".accordion__header");
 const allItems = document.querySelectorAll(".accordion__item");
 
@@ -66,11 +66,11 @@ if (allItems.length > 0) {
   firstContent.style.maxHeight = `${firstContent.scrollHeight}px`;
 }
   </code></pre>
-            </div>
-            <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
-                        <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
+      </div>
+      <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
 .accordion {
   max-width: 600px;
   margin: 0 auto;
@@ -102,11 +102,11 @@ if (allItems.length > 0) {
   transition: max-height 0.5s ease;
 }
   </code></pre>
-            </div>
-            <h2 data-anchors="html">Використання в розмітці</h2>
-                        <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
+      </div>
+      <h2 data-anchors="html">Використання в розмітці</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
 &lt;div class="accordion"&gt; 
   &lt;div class="accordion__item accordion__item--active"&gt; 
     &lt;button class="accordion__header"&gt;
@@ -145,10 +145,11 @@ if (allItems.length > 0) {
   &lt;/div&gt;
 &lt;/div&gt;
   </code></pre>
-            </div>
-        </main>
-        @@include('partials/anchors.html')
-    </div>
+      </div>
+      @@include('partials/contacts.html')
+    </main>
+    @@include('partials/anchors.html')
+  </div>
 </div>
 </div>
 

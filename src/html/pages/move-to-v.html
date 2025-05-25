@@ -35,7 +35,7 @@
   </code></pre>
             </div>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-                        <div class="code">
+            <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
 document.addEventListener('DOMContentLoaded', function () {
@@ -86,10 +86,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 <li>Використовуйте унікальні селектори в <span>data-move</span>, щоб уникнути помилок.</li>
                 <li>Слідкуйте за порядком елементів — особливо, якщо з ними пов’язані стилі або JavaScript.</li>
                 <li>Ініціалізуйте цей скрипт після завантаження DOM (що й робить <span>DOMContentLoaded</span>).</li>
-                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській стороні й може мати мікрозатримки.</li>
-                <li>Перевіряйте наявність цільових контейнерів <span>(.mobile-wrapper у прикладі)</span> — інакше буде помилка в консолі.</li>
-                <li>Не додавайте до одного елемента декілька <span>data-move</span> або <span>data-breakpoint</span> — це не підтримується.</li>
+                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській
+                    стороні й може мати мікрозатримки.</li>
+                <li>Перевіряйте наявність цільових контейнерів <span>(.mobile-wrapper у прикладі)</span> — інакше буде
+                    помилка в консолі.</li>
+                <li>Не додавайте до одного елемента декілька <span>data-move</span> або <span>data-breakpoint</span> —
+                    це не підтримується.</li>
             </ol>
+            @@include('partials/contacts.html')
         </main>
         @@include('partials/anchors.html')
     </div>
