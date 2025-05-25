@@ -21,9 +21,8 @@
 
 
 <div class="wrapper">
-
-  <div class="wrapper__container">
-    <div class="sidebar">
+    <div class="wrapper__container">
+        <div class="sidebar">
   <header class="header" data-move=".wrapper" data-breakpoint="992">
   <div class="header__container">
     <a href="index.html" class="header__logo">
@@ -132,33 +131,97 @@
     });
   });
 </script>
-    <main class="content">
-      <h1>Простий старт для ваших веб-проєктів</h1>
-      <p>Цей сайт – мій особистий збірник стартових тем і рішень, які я створював для себе протягом кількох років. Вони допомогли мені значно прискорити процес розробки веб-проєктів і організувати роботу так, щоб не витрачати час на налаштування кожного нового проєкту з нуля. І тепер я вирішив поділитися цими матеріалами, раптом вони можуть бути корисними й вам!</p>
-      <p>Тут ви знайдете кілька готових стартових шаблонів для різних платформ і фреймворків:</p>
-      <ul>
-        <li><b>Vanilla JS + Gulp:</b> Мінімалістична стартова тема, що використовує Gulp для автоматизації збірки проєкту. Цей шаблон не залежить від зовнішніх бібліотек і фреймворків і ідеально підходить для тих, хто хоче працювати з чистим JavaScript. Gulp автоматизує процеси, як-от стиснення файлів, компіляцію SCSS, оптимізацію зображень і багато іншого, що дає можливість зосередитися на коді, а не на технічних деталях.</li>
-        <li><b>WordPress:</b> Стартовий шаблон для WordPress, що включає базові налаштування для теми, структуру шаблонів і кілька корисних функцій, щоб ви могли одразу почати розробку сайту на WordPress без зайвих налаштувань.</li>
-        <li><b>React:</b> Шаблон для розробки на React. Включає необхідну структуру компонентів, налаштування для швидкого запуску та приклади використання.</li>
-      </ul>
-      <p>Також я додав ряд готових рішень і прикладів коду для типових завдань розробки, таких як налаштування теми, організація структури файлів, оптимізація продуктивності та інші нюанси, з якими часто стикаються розробники. Це дозволяє заощадити час, не шукаючи рішення в інтернеті, а одразу використовуючи готові фрагменти.</p>
-      <p>Крім того, на сайті є пояснення та коментарі до кожного шаблону, щоб було зрозуміло, як і чому саме так організовані файли та структури. Моя мета – зробити процес роботи з цими темами і рішеннями якомога більш зрозумілим і зручним.</p>
-      <p>Ви можете використовувати ці шаблони для своїх проєктів, адаптувати їх під свої потреби або ж взяти окремі частини для використання в інших розробках. Сподіваюся, це спростить вашу роботу так само, як свого часу полегшило мою.</p>
-      <blockquote>Якщо ви маєте питання чи пропозиції, не соромтесь звертатися. Успіхів у ваших проєктах!</blockquote>
-    </main>
-  </div>
+        <main class="content">
+            <h1>Динамічне переміщення елементів при адаптиві</h1>
+            <p>Цей модуль дозволяє переміщувати HTML-елементи в інші контейнери при зміні розміру вікна. Він особливо
+                корисний у адаптивній верстці, коли один і той самий елемент має перебувати в різних місцях DOM на
+                мобільних і десктопних екранах.</p>
+            <p>Модуль автоматично:</p>
+            <ul>
+                <li>зберігає початкову позицію елемента;</li>
+                <li>переміщує елемент до нового контейнера при зміні ширини вікна;</li>
+                <li>повертає елемент на місце, якщо ширина знову стала більшою за вказаний брейкпойнт.</li>
+            </ul>
+            <h2 data-anchors="usage">Використання</h2>
+            <p>Щоб використовувати цю функцію, потрібно додати до HTML елементу два атрибути:</p>
+            <ul>
+                <li><span>data-move</span> — селектор цільового контейнера (наприклад, .mobile-wrapper);</li>
+                <li><span>data-breakpoint</span> — число, при ширині вікна менше або дорівнює якому елемент буде
+                    переміщено.</li>
+            </ul>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;div class="header"&gt;
+  &lt;div class="some-element" data-move=".mobile-wrapper" data-breakpoint="768"&gt;
+    Це елемент, який переміщується
+  &lt;/div&gt;
+&lt;/div&gt;
 
+&lt;div class="mobile-wrapper"&gt;&lt;/div&gt;
+  </code></pre>
+            </div>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+                        <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+document.addEventListener('DOMContentLoaded', function () {
+    const movedElements = document.querySelectorAll('[data-move]');
+    const originalContainers = new WeakMap();
+    const originalIndexes = new WeakMap();
 
+    if (movedElements.length === 0) {
+        console.log("Не знайдено жодного елемента з атрибутом 'data-move'");
+    }
+
+    movedElements.forEach((element) => {
+        const targetSelector = element.getAttribute('data-move');
+        const breakpoint = parseInt(element.getAttribute('data-breakpoint'), 10);
+
+        if (!targetSelector || isNaN(breakpoint)) return;
+
+        const parent = element.parentNode;
+        originalContainers.set(element, parent);
+        originalIndexes.set(element, Array.from(parent.children).indexOf(element));
+
+        const moveElement = () => {
+            if (window.innerWidth <= breakpoint) {
+                const targetContainer = document.querySelector(targetSelector);
+                if (targetContainer) targetContainer.appendChild(element);
+            } else {
+                const originalContainer = originalContainers.get(element);
+                const originalIndex = originalIndexes.get(element);
+                if (originalContainer) {
+                    const referenceNode = originalContainer.children[originalIndex];
+                    if (referenceNode) {
+                        originalContainer.insertBefore(element, referenceNode);
+                    } else {
+                        originalContainer.appendChild(element);
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('resize', moveElement);
+        moveElement();
+    });
+});
+  </code></pre>
+            </div>
+            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <ol>
+                <li>Використовуйте унікальні селектори в <span>data-move</span>, щоб уникнути помилок.</li>
+                <li>Слідкуйте за порядком елементів — особливо, якщо з ними пов’язані стилі або JavaScript.</li>
+                <li>Ініціалізуйте цей скрипт після завантаження DOM (що й робить <span>DOMContentLoaded</span>).</li>
+                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській стороні й може мати мікрозатримки.</li>
+                <li>Перевіряйте наявність цільових контейнерів <span>(.mobile-wrapper у прикладі)</span> — інакше буде помилка в консолі.</li>
+                <li>Не додавайте до одного елемента декілька <span>data-move</span> або <span>data-breakpoint</span> — це не підтримується.</li>
+            </ol>
+        </main>
+        <div id="anchors" class="anchors"></div>
+    </div>
 </div>
 </div>
-
-
-
-<script>
-
-
-
-</script>
 
 <!-- <footer class="footer">
   <div class="footer__container">
