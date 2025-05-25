@@ -21,8 +21,8 @@
 
 
 <div class="wrapper">
-    <div class="wrapper__container">
-        <div class="sidebar">
+  <div class="wrapper__container">
+    <div class="sidebar">
   <header class="header" data-move=".wrapper" data-breakpoint="992">
   <div class="header__container">
     <a href="index.html" class="header__logo">
@@ -113,7 +113,7 @@
 
   <a href="" class="sidebar__link">Корисні посилання</a>
 
-  <a href="" class="sidebar__link">Контакти</a>
+  <a href="#contacts" class="sidebar__link">Контакти</a>
 
 
 </div>
@@ -131,22 +131,22 @@
     });
   });
 </script>
-        <main class="content">
-            <h1>Таби</h1>
-            <p>Цей модуль реалізує класичну поведінку табів — перемикання видимого вмісту залежно від активної кнопки.
-                Він дозволяє користувачеві переглядати різні блоки контенту, натискаючи на відповідні вкладки.</p>
-            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-            <p>Модуль працює на основі двох колекцій елементів: кнопок табів та вмісту кожної вкладки. Основна
-                функціональність досягається через перебір усіх кнопок та призначення обробника події click. Під час
-                кліку:</p>
-            <ul>
-                <li>У всіх кнопок забирається клас активного стану <span>tabs__button--active</span>;</li>
-                <li>У всього вмісту видаляється клас активного стану <span>tabs__content--active</span>;</li>
-                <li>Поточній кнопці та відповідному блоку контенту призначається активний клас.</li>
-            </ul>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
+    <main class="content">
+      <h1>Таби</h1>
+      <p>Цей модуль реалізує класичну поведінку табів — перемикання видимого вмісту залежно від активної кнопки.
+        Він дозволяє користувачеві переглядати різні блоки контенту, натискаючи на відповідні вкладки.</p>
+      <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+      <p>Модуль працює на основі двох колекцій елементів: кнопок табів та вмісту кожної вкладки. Основна
+        функціональність досягається через перебір усіх кнопок та призначення обробника події click. Під час
+        кліку:</p>
+      <ul>
+        <li>У всіх кнопок забирається клас активного стану <span>tabs__button--active</span>;</li>
+        <li>У всього вмісту видаляється клас активного стану <span>tabs__content--active</span>;</li>
+        <li>Поточній кнопці та відповідному блоку контенту призначається активний клас.</li>
+      </ul>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
 const buttons = document.querySelectorAll('.tabs__button');
 const contents = document.querySelectorAll('.tabs__content');
   
@@ -160,11 +160,11 @@ buttons.forEach((button, index) => {
   });
 });
   </code></pre>
-            </div>
-            <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
+      </div>
+      <h2 data-anchors="needfull-styles">Необхідні стилі</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
 .tabs {
   display: flex;
   flex-direction: column;
@@ -201,11 +201,11 @@ buttons.forEach((button, index) => {
   display: block;
 }
   </code></pre>
-            </div>
-            <h2 data-anchors="usage">Використання</h2>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
+      </div>
+      <h2 data-anchors="usage">Використання</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
 &lt;div class="tabs"&gt;
   &lt;div class="tabs__buttons"&gt;
     &lt;button class="tabs__button tabs__button--active"&gt;Tab 1&lt;/button&gt;
@@ -217,10 +217,37 @@ buttons.forEach((button, index) => {
   &lt;div class="tabs__content"&gt;Content for Tab 3&lt;/div&gt;
 &lt;/div&gt;
   </code></pre>
-            </div>
-        </main>
-        <div id="anchors" class="anchors"></div>
-    </div>
+      </div>
+      <section class="contacts" id="contacts">
+    <h2 class="contacts__title">📬 Контакти</h2>
+    <ul class="contacts__list">
+        <li class="contacts__item">
+            🔗 <strong>GitHub:</strong>
+            <a href="https://github.com/andreyk1n" target="_blank" rel="noopener noreferrer">
+                    github.com/andreyk1n
+            </a>
+        </li>
+        <li class="contacts__item">
+            💼 <strong>LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/andrii-panasiuk-61786029a/" target="_blank" rel="noopener noreferrer">
+                linkedin.com/in/andrii-panasiuk-61786029a/
+            </a>
+        </li>
+        <li class="contacts__item">
+            ✉️ <strong>Email:</strong>
+            <a href="mailto:andrii.panasiuk2002@gmail.com">andrii.panasiuk2002@gmail.com</a>
+        </li>
+        <li class="contacts__item">
+            🌐 <strong>Портфоліо:</strong>
+            <a href="https://andreyk1n.github.io/My-portfolio/index.html" target="_blank" rel="noopener noreferrer">
+                andreyk1n.github.io/My-portfolio/index.html
+            </a>
+        </li>
+    </ul>
+</section>
+    </main>
+    <div id="anchors" class="anchors"></div>
+  </div>
 </div>
 </div>
 
