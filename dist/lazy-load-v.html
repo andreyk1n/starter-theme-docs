@@ -132,89 +132,91 @@
   });
 </script>
         <main class="content">
-            <h1>Функціональний модуль спостереження за елементами</h1>
-            <h2 data-anchors="desribe">Опис функціоналу</h2>
-            <p>Цей модуль відповідає за відстеження появи елементів у зоні видимості користувача <span>(viewport)</span>
-                за допомогою сучасного браузерного API — <span>IntersectionObserver</span>. Як тільки DOM повністю
-                завантажується <span>(DOMContentLoaded),</span> ініціалізується система спостереження. У ній задаються
-                параметри: використовується стандартне вікно перегляду (тобто без додаткового контейнера), не
-                застосовуються зовнішні відступи, і тригер спрацьовує, коли хоча б 10% площі елемента стає видимою.
-                Кожен елемент з атрибутом <span>data-watch</span> потрапляє під спостереження. Якщо елемент потрапляє у
-                видиму частину сторінки, йому додається клас <span>_watcher--view</span>, а якщо зникає — цей клас
-                видаляється. Усі ці дії супроводжуються повідомленнями в консолі.</p>
+            <h1>Відкладене завантаження зображень</h1>
+            <p>Цей модуль забезпечує ліниве завантаження зображень та елементів із фоновими зображеннями, що мають відповідні класи:</p>
+            <ul>
+                <li><span>img.lazy</span> — для зображень, які не мають <span>src</span>, а лише <span>data-src</span></li>
+                <li><span>.lazy-bg</span> — для елементів із фоном, заданим через <span>data-bg</span></li>
+            </ul>
+            <p>Завантаження відбувається тільки тоді, коли елемент потрапляє у видиму зону вікна браузера <span>(використовується IntersectionObserver)</span>.</p>
             <h2 data-anchors="usage">Використання</h2>
-            <p>Щоб використати цей функціонал, достатньо додати до потрібного HTML-елемента атрибут
-                <span>data-watch</span> — наприклад, <span>&lt;section data-watch&gt;</span>. Скрипт автоматично знайде
-                всі такі елементи після завантаження сторінки і почне відстежувати їхню появу або зникнення з області
-                перегляду. Коли користувач скролить сторінку і певний елемент з цим атрибутом потрапляє у видиму зону,
-                до нього додається клас <span>_watcher--view</span>, завдяки якому можна запускати анімації, змінювати
-                стилі, виводити дані тощо. Коли елемент виходить із поля зору, клас зникає — відповідно, можна
-                реалізовувати "повторні появи" або "згасання".</p>
-            <div class="code">
+                        <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-&lt;section class="section" data-watch&gt;
-  &lt;h2&gt;Про нас&lt;/h2&gt;
-  &lt;p&gt;Цей блок з'явиться з анімацією, коли потрапить у зону видимості.&lt;/p&gt;
-&lt;/section&gt;
+&lt;!-- Зображення, яке буде підвантажено --&gt;
+&lt;img class="lazy" data-src="images/photo.jpg" alt="Опис зображення"&gt;
 
-&lt;section class="section" data-watch&gt;
-  &lt;h2&gt;Наші послуги&lt;/h2&gt;
-  &lt;p&gt;Ще один блок, який реагує на скрол завдяки класу _watcher--view.&lt;/p&gt;
-&lt;/section&gt;
+&lt;!-- Блок із фоновим зображенням --&gt;
+&lt;div class="lazy-bg" data-bg="images/background.jpg"&gt;
+    Контент блоку
+&lt;/div&gt;
   </code></pre>
             </div>
-            <h3>Приклад стилів</h3>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-.section {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  margin: 100px 0;
-  padding: 40px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
-
-._watcher--view {
-  opacity: 1;
-  transform: translateY(0);
-}
-  </code></pre>
-            </div>
+            <h2 data-anchors="how-it-works">Як це працює</h2>
+            <ol>
+                <li>Усі елементи з класами <span>lazy</span> та <span>lazy-bg</span> додаються до <span>IntersectionObserver</span>.</li>
+                <li>Коли елемент з’являється у вікні браузера: <ul>
+                    <li>Для <span>&lt;img&gt;</span> атрибут <span>data-src</span> копіюється в <span>src</span>.</li>
+                    <li>Для <span>.lazy-bg</span> — з <span>data-bg</span> встановлюється <span>background-image</span>.</li>
+                </ul></li>
+                <li>Клас <span>lazy</span> або <span>lazy-bg</span> видаляється для очищення.</li>
+            </ol>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-            <div class="code">
+                        <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-document.addEventListener('DOMContentLoaded', () => {
-    console.log(`Element watcher --- Готовий до роботи.`);
-    const observerOptions = {
-        root: null, // Використовуємо viewport як корінь
-        rootMargin: '0px', // Немає додаткових відступів
-        threshold: 0.1 // Елемент вважається видимим, якщо 10% його площі видимі
-    };
-    const observerCallback = (entries) => {
+document.addEventListener("DOMContentLoaded", () => {
+    const lazyImages = document.querySelectorAll('img.lazy');
+    const lazyBackgrounds = document.querySelectorAll('.lazy-bg');
+    const placeholderImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
-            const element = entry.target; // Елемент, за яким спостерігаємо
             if (entry.isIntersecting) {
-                element.classList.add('_watcher--view');
-                console.log(`Додано клас _watcher--view до елемента з класами: ${element.className}`);
-            } else {
-                element.classList.remove('_watcher--view');
-                console.log(`Видалено клас _watcher--view з елемента з класами: ${element.className}`);
+                const target = entry.target;
+
+                if (target.tagName === 'IMG') {
+                    const realSrc = target.getAttribute('data-src');
+                    if (realSrc) {
+                        target.src = realSrc;
+                        target.removeAttribute('data-src');
+                        target.classList.remove('lazy');
+                    }
+                } else if (target.classList.contains('lazy-bg')) {
+                    const realBg = target.getAttribute('data-bg');
+                    if (realBg) {
+                        target.style.backgroundImage = `url(${realBg})`;
+                        target.removeAttribute('data-bg');
+                        target.classList.remove('lazy-bg');
+                    }
+                }
+
+                observer.unobserve(target);
             }
         });
-    };
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const elementsToWatch = document.querySelectorAll('[data-watch]');
-    elementsToWatch.forEach(element => observer.observe(element));
+    });
+
+    lazyImages.forEach(image => {
+        if (!image.hasAttribute('src')) {
+            image.src = placeholderImage;
+        }
+        imageObserver.observe(image);
+    });
+
+    lazyBackgrounds.forEach(background => {
+        imageObserver.observe(background);
+    });
 });
   </code></pre>
             </div>
             <h2 data-anchors="recomendation">Рекомендації</h2>
-            <p>Цей підхід зручний для створення анімованих ефектів на скролі, поступового з’явлення блоків або підвантаження контенту. Щоб підвищити продуктивність, не додавайте <span>data-watch</span> до великої кількості дрібних елементів — краще спостерігати за більшими контейнерами. Також варто використовувати клас <span>_watcher--view</span> у CSS з переходами або анімаціями, які будуть активуватись саме при його появі. Якщо ви працюєте з динамічно підвантаженим контентом, після вставки нових елементів на сторінку потрібно повторно викликати спостереження або перепризначити його для нових вузлів.</p>
+            <ul>
+                <li>Завжди додавайте <span>data-src</span> або <span>data-bg</span>, не використовуйте <span>src</span> або <span>background-image</span> напряму.</li>
+                <li>Додайте альтернативний текст до зображень: <span>alt="..."</span> для доступності.</li>
+                <li>Додавайте стилі до <span>.lazy-bg</span>, щоб фонові зображення займали місце перед завантаженням <span>(наприклад, min-height або aspect-ratio)</span>.</li>
+                <li>Можна поєднувати з <span>loading="lazy"</span>, однак <span>IntersectionObserver</span> дає більше контролю.</li>
+                <li>Обов’язково протестуйте на різних пристроях: поведінка <span>IntersectionObserver</span> може відрізнятись.</li>
+            </ul>
         </main>
         <div id="anchors" class="anchors"></div>
     </div>
