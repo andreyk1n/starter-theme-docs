@@ -1,0 +1,103 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Анімація цифрового лічильника</h1>
+            <h2 data-anchors="describe">Опис функціоналу</h2>
+            <p>Цей модуль реалізує анімовану зміну чисел у секціях сайту. Його основна мета — запускати анімацію
+                лічильників лише тоді, коли відповідна секція потрапляє у зону видимості (з використанням
+                <span>IntersectionObserver</span>). Це дозволяє уникати навантаження при старті сторінки й робить
+                взаємодію динамічнішою.
+            </p>
+            <p>Після виклику функції <span>initializeCounters</span>, на кожну секцію з класом
+                <span>.page_section</span> встановлюється спостерігач. Коли така секція потрапляє в поле зору
+                користувача щонайменше на 30%, для всіх елементів із атрибутом <span>data-counter-target</span>
+                усередині цієї секції запускається анімація лічильника. Анімація змінює значення в елементі від
+                початкового до вказаного в <span>data-counter-target</span>.
+            </p>
+            <p>Механізм працює лише один раз для кожної секції, оскільки після активації вона знімається з
+                <span>IntersectionObserver</span>.
+            </p>
+            <h2 data-anchors="usage">Приклад використання</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;section class="page_section"&gt;
+  &lt;h2&gt;Наші досягнення&lt;/h2&gt;
+  &lt;div&gt;
+    &lt;span data-counter-target="1500"&gt;0&lt;/span&gt; клієнтів
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;span data-counter-target="120"&gt;0&lt;/span&gt; проєктів
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class="page_section"&gt;
+  &lt;h2&gt;Статистика&lt;/h2&gt;
+  &lt;div&gt;
+    &lt;span data-counter-target="98"&gt;0&lt;/span&gt;% задоволених користувачів
+  &lt;/div&gt;
+&lt;/section&gt;
+  </code></pre>
+            </div>
+            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+// Функція ініціалізації лічильників
+export function initializeCounters() {
+    const observerOptions = { threshold: 0.3 };
+    const observer = new IntersectionObserver(onSectionIntersect, observerOptions);
+    document.querySelectorAll(".page_section").forEach(section => observer.observe(section));
+}
+
+// Функція, що обробляє перетин секцій
+function onSectionIntersect(entries, observer) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const counters = entry.target.querySelectorAll("[data-counter-target]");
+            counters.forEach(counter => animateCounter(counter));
+            observer.unobserve(entry.target);
+        }
+    });
+}
+
+// Анімація лічильника
+function animateCounter(counter) {
+    const targetValue = parseInt(counter.dataset.counterTarget) || 0;
+    const duration = 1000;  // Тривалість анімації в мілісекундах
+    const startValue = parseInt(counter.textContent) || 0;
+    const startTime = performance.now();
+
+    function updateCounter(currentTime) {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        counter.textContent = Math.floor(progress * (targetValue - startValue) + startValue);
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        }
+    }
+
+    requestAnimationFrame(updateCounter);
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <ol>
+                <li>Уникайте великої кількості лічильників на одній сторінці — це може викликати непотрібне навантаження при активації.</li>
+                <li>Не запускайте анімацію повторно — скрипт вже знімає секцію з спостереження після першого показу. Але не змінюйте текст лічильника після запуску, інакше результат може бути неочікуваним.</li>
+                <li>Використовуйте тільки цілі числа у <span>data-counter-target</span>, або допишіть логіку для роботи з десятковими.</li>
+                <li>Оптимізуйте для мобільних — можливо, вам знадобиться змінити <span>threshold</span> до 0.5, щоб анімація запускалась пізніше.</li>
+                <li>Синхронізуйте з іншими ефектами, наприклад, появою елементів або анімаціями прокрутки.</li>
+            </ol>
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')

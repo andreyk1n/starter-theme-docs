@@ -356,7 +356,7 @@ p span {
   background-color: var(--tableHead);
 }
 
-ul li span {
+ul li span, ol li span {
   padding: 4px;
   border-radius: 6px;
   background-color: var(--tableHead);
