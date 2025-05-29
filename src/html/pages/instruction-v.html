@@ -58,6 +58,33 @@ git subtree push --prefix dist origin gh-pages
 https://ваше_ім’я_користувача.github.io/назва_репозиторію/
   </code></pre>
             </div>
+            <h2 data-anchors="archive">Архівація проєкту</h2>
+            <p>Для збереження резервних копій або передавання проєкту стороннім особам рекомендовано виконувати
+                архівацію. Ви можете архівувати:</p>
+            <ul>
+                <li>лише зібрану папку <span>dist</span> (готову до деплою)</li>
+                <li>або весь проєкт за винятком службових файлів і директорій</li>
+            </ul>
+            <p>Для цього в проєкті реалізовано два асинхронні завдання, які можна запускати через Gulp або окремо:</p>
+            <h3>Архівація папки dist</h3>
+            <p>Функція <span>zipDist()</span> створює ZIP-архів поточної збірки. Назва архіву автоматично включає дату,
+                а також індекс,
+                якщо архів з такою назвою вже існує</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+gulp zipDist
+  </code></pre>
+            </div>
+            <h3>Архівація всього проєкту</h3>
+            <p>Функція <span>zipProject()</span> архівує весь проєкт, ігноруючи службові папки <span>(node_modules, .git, archives) та тимчасові файли</span>:</p>
+                        <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+gulp zipProject
+  </code></pre>
+            </div>
+            <p>Це корисно для зберігання повної копії робочої версії проєкту або під час передачі іншому розробнику.</p>
             <h2 data-anchors="recomendation">Рекомендації</h2>
             <ul>
                 <li>Якщо ви регулярно оновлюєте сайт, створіть alias або npm-скрипт для команди <span>git subtree
