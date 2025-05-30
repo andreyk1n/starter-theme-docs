@@ -1,11 +1,93 @@
-/* ============================================================================================== */
-/* Стилізація модального вікна */
-/* ============================================================================================== */
+// .modal {
+//     display: flex;
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     z-index: 1000;
+//     justify-content: center;
+//     align-items: center;
+//     opacity: 0;
+//     visibility: hidden;
+//     transition: visibility 0s 0.5s, opacity 0.5s ease, transform 0.5s ease;
 
-@use 'variables' as *;
-@use 'mixins' as *;
+//     &:target {
+//         opacity: 1;
+//         visibility: visible;
+//         transition: opacity 0.5s ease, transform 0.5s ease;
 
-.modal {
+//         .modal-content {
+//             opacity: 1;
+//             transform: translateY(0);
+//         }
+
+//         .close-overlay {
+//             background: rgba(0, 0, 0, 0.5);
+//         }
+//     }
+
+//     .modal-content {
+//         background: var(--bg);
+//         padding: 20px;
+//         border-radius: 5px;
+//         position: relative;
+//         max-width: 500px;
+//         width: 100%;
+//         z-index: 2;
+//         opacity: 0;
+//         transform: translateY(20px);
+//         transition: opacity 0.5s ease, transform 0.5s ease;
+//     }
+
+//     .close-overlay {
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         width: 100%;
+//         height: 100%;
+//         background: rgba(0, 0, 0, 0);
+//         cursor: pointer;
+//         text-decoration: none;
+//         z-index: 1;
+//         transition: background 0.5s ease;
+//     }
+
+//     .close {
+//         position: absolute;
+//         top: 10px;
+//         right: 10px;
+//         width: 40px;
+//         height: 40px;
+//         background: transparent;
+//         border: none;
+//         cursor: pointer;
+//         z-index: 3;
+
+//         &::before,
+//         &::after {
+//             content: '';
+//             position: absolute;
+//             top: 50%;
+//             left: 50%;
+//             width: 30px;
+//             height: 2px;
+//             background-color: var(--text);
+//             transform-origin: center;
+//         }
+
+//         &::before {
+//             transform: translate(-50%, -50%) rotate(45deg);
+//         }
+
+//         &::after {
+//             transform: translate(-50%, -50%) rotate(-45deg);
+//         }
+//     }
+// }
+
+
+.modal-simple {
     display: flex;
     position: fixed;
     top: 0;
@@ -17,90 +99,72 @@
     align-items: center;
     opacity: 0;
     visibility: hidden;
-    transition: visibility 0s $transitionDuration, opacity $transitionDuration ease, transform $transitionDuration ease;
-}
 
-/* Активний стан модального вікна */
-.modal:target {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity $transitionDuration ease, transform $transitionDuration ease;
-}
+    &:target {
+        opacity: 1;
+        visibility: visible;
 
-/* Модальне вікно */
-.modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity $transitionDuration ease, transform $transitionDuration ease;
-}
+        .modal-content {
+            opacity: 1;
+        }
 
-/* Активний стан контенту модалки */
-.modal:target .modal-content {
-    opacity: 1;
-    transform: translateY(0);
-}
+        .close-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+    }
 
-/* ============================================================================================== */
-/* Фоновий оверлей */
-/* ============================================================================================== */
+    .modal-content {
+        background: var(--bg);
+        padding: 20px;
+        border-radius: 5px;
+        position: relative;
+        max-width: 500px;
+        width: 100%;
+        z-index: 2;
+        opacity: 0;
+    }
 
-.close-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1;
-    transition: background $transitionDuration ease;
-}
-
-/* Активний стан оверлею */
-.modal:target .close-overlay {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-/* ============================================================================================== */
-/* Стилі кнопки закриття */
-/* ============================================================================================== */
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 3;
-
-    &::before,
-    &::after {
-        content: '';
+    .close-overlay {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 30px;
-        height: 2px;
-        background-color: #000;
-        transform-origin: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0);
+        cursor: pointer;
+        text-decoration: none;
+        z-index: 1;
     }
 
-    &::before {
-        transform: translate(-50%, -50%) rotate(45deg);
-    }
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 3;
 
-    &::after {
-        transform: translate(-50%, -50%) rotate(-45deg);
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 2px;
+            background-color: var(--text);
+            transform-origin: center;
+        }
+
+        &::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
     }
 }

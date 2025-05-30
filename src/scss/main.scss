@@ -30,7 +30,7 @@
 // **Модальні вікна та поп-апи**
 // Налаштування стилів для модальних вікон, поп-апів і тригерів для їх відкриття/закриття.
 // Підключення:
-// @use 'partials/modal';
+@use 'partials/modal';
 // ==============================================================================================
 
 // ==============================================================================================
@@ -356,7 +356,7 @@ p span {
   background-color: var(--tableHead);
 }
 
-ul li span, ol li span {
+ul li span, ol li span, blockquote span {
   padding: 4px;
   border-radius: 6px;
   background-color: var(--tableHead);
@@ -370,5 +370,24 @@ h3 {
 .contacts {
   h2 {
     margin-bottom: 20px;    
+  }
+}
+
+button {
+  padding: 11px 20px;
+  border-radius: 5px;
+  border: 0;
+  outline: 0;
+  background-color: var(--sidebarBg);
+  border: 2px solid transparent;
+  color: var(--text);
+  width: fit-content;
+  transition-duration: $transitionDuration;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: var(--bg);
+    border: 2px solid var(--sidebarBg);
   }
 }

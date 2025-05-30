@@ -1,0 +1,51 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Приклади модальних вікон і попапів</h1>
+            <p>На цій сторінці ви знайдете приклади різних модальних вікон і попапів із різноманітними анімаціями появи
+                та унікальною структурою, які працюють без використання JavaScript, за винятком виклику через таймер або
+                взаємодії з атрибутами.</p>
+            <h2 data-anchors="base">Базова верстка модального вікна</h2>
+            <p>Це універсальна HTML-структура, яка буде використовуватись для всіх модальних вікон на сторінці.
+                Використовуйте її як основу, додаючи або змінюючи стилі відповідно до ефекту.</p>
+            <blockquote>Зверніть увагу, що ідентифікатор модального вікна відповідає за <span>хеш</span> у браузерному
+                рядку пошуку.</blockquote>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;div class="modal" id="open-modal"&gt;
+  &lt;div class="modal-content"&gt;
+    &lt;span onclick="document.location='#close'; return false;" class="close"&gt;&lt;/span&gt;
+    &lt;h2&gt;Модальне вікно&lt;/h2&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;span onclick="document.location='#close'; return false;" class="close-overlay"&gt;&lt;/span&gt;
+&lt;/div&gt;
+  </code></pre>
+            </div>
+            <h2 data-anchors="simple-modal">Просте модальне вікно без анімацій</h2>
+            <button onclick="document.location='#simple'; return false;">Клікни, щоб відкрити
+                модальне вікно</button>
+            <div class="modal-simple" id="simple">
+                <div class="modal-content">
+                    <span onclick="document.location='#close'; return false;" class="close"></span>
+                    <h2>Модальне вікно</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
+                        sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
+                        architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
+                </div>
+                <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
+            </div>
+
+            @@include('partials/contacts.html')
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
