@@ -155,8 +155,7 @@
   </code></pre>
             </div>
             <h2 data-anchors="simple-modal">Просте модальне вікно без анімацій</h2>
-            <button onclick="document.location='#simple'; return false;">Клікни, щоб відкрити
-                модальне вікно</button>
+            <button onclick="document.location='#simple'; return false;">Викликати модальне вікно</button>
             <div class="modal-simple" id="simple">
                 <div class="modal-content">
                     <span onclick="document.location='#close'; return false;" class="close"></span>
@@ -167,7 +166,302 @@
                 </div>
                 <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
             </div>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+}
 
+.modal:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal:target .modal-content {
+    opacity: 1;
+}
+
+.modal:target .close-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal .modal-content {
+    background: var(--bg);
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+}
+
+.modal .close-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1;
+}
+
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.modal .close::before,
+.modal .close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 2px;
+    background-color: var(--text);
+    transform-origin: center;
+}
+
+.modal .close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.modal .close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="minimal">Модальне вікно із плавною анімацією</h2>
+            <button onclick="document.location='#ease'; return false;">Викликати модальне вікно</button>
+            <div class="modal-ease" id="ease">
+                <div class="modal-content">
+                    <span onclick="document.location='#close'; return false;" class="close"></span>
+                    <h2>Модальне вікно</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
+                        sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
+                        architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
+                </div>
+                <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
+            </div>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s 0.5s, opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modal:target {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modal:target .modal-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.modal:target .close-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal .modal-content {
+    background: var(--bg);
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modal .close-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1;
+    transition: background 0.5s ease;
+}
+
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.modal .close::before,
+.modal .close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 2px;
+    background-color: var(--text);
+    transform-origin: center;
+}
+
+.modal .close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.modal .close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+  </code></pre>
+            </div>
+            <h2 data-anchors="scale">Модальне вікно із анімацією маштабування</h2>
+            <button onclick="document.location='#modal-scale'; return false;">Викликати модальне вікно</button>
+            <div class="modal-scale" id="modal-scale">
+                <div class="modal-content">
+                    <span onclick="document.location='#close'; return false;" class="close"></span>
+                    <h2>Модальне вікно</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim corrupti necessitatibus
+                        sint quas error soluta voluptatibus? Delectus accusamus necessitatibus omnis iure cum
+                        architecto. Nesciunt aspernatur tempora minima sint quae eligendi.</p>
+                </div>
+                <span onclick="document.location='#close'; return false;" class="close-overlay"></span>
+            </div>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>                      
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s 0.3s, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal:target {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: scale(0);
+}
+
+.modal:target .modal-content {
+  opacity: 1;
+  transform: translateY(0);
+  transform: scale(1);
+}
+
+.close-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.modal:target .close-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.close::before,
+.close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 2px;
+  background-color: #000;
+  transform-origin: center;
+}
+
+.close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+  </code></pre>
+            </div>
             <section class="contacts" id="contacts">
     <h2 class="contacts__title">📬 Контакти</h2>
     <ul class="contacts__list">
