@@ -69,9 +69,11 @@
       transition-duration: $transitionDuration;
     }
 
-    &:hover {
-      opacity: .5;
-      color: var(--text);
+    @media (hover: hover) {
+      &:hover {
+        opacity: .5;
+        color: var(--text);
+      }
     }
   }
 
@@ -96,9 +98,11 @@
     text-decoration: none;
     transition-duration: $transitionDuration;
 
-    &:hover {
-      opacity: .5;
-      color: var(--text);
+    @media (hover: hover) {
+      &:hover {
+        opacity: .5;
+        color: var(--text);
+      }
     }
   }
 }

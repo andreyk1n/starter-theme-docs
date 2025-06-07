@@ -106,13 +106,12 @@ a {
   transition-duration: $transitionDuration;
 }
 
-a:hover {
-  opacity: .5;
+@media (hover: hover) {
+  a:hover {
+    opacity: 0.5;
+  }
 }
 
-a:active {
-  opacity: .5;
-}
 
 // Застосування стилів для кнопкки з класом .button
 .button {
@@ -130,13 +129,12 @@ a:active {
   outline: 0;
 }
 
-.button:hover {
-  background-color: $buttonHover;
+@media (hover: hover) {
+  .button:hover {
+    background-color: $buttonHover;
+  }
 }
 
-.button:active {
-  background-color: $buttonActive;
-}
 
 // Загальні стилі для списків
 ol,
@@ -152,7 +150,8 @@ h1 {
   font-size: clamp(28px, 5vw, 60px);
 }
 
-p, li {
+p,
+li {
   line-height: 150%;
 }
 
@@ -325,10 +324,14 @@ table {
   padding: 10px 0 10px 30px;
   border-left: 2px solid var(--border);
 
-  &:hover {
-    opacity: .5;
-    color: var(--text);
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: .5;
+      color: var(--text);
+    }
   }
+
 }
 
 .anchors__item--active {
@@ -356,7 +359,9 @@ p span {
   background-color: var(--tableHead);
 }
 
-ul li span, ol li span, blockquote span {
+ul li span,
+ol li span,
+blockquote span {
   padding: 4px;
   border-radius: 6px;
   background-color: var(--tableHead);
@@ -369,7 +374,7 @@ h3 {
 
 .contacts {
   h2 {
-    margin-bottom: 20px;    
+    margin-bottom: 20px;
   }
 }
 
@@ -386,8 +391,11 @@ button {
   cursor: pointer;
   font-size: 16px;
 
-  &:hover {
-    background-color: var(--bg);
-    border: 2px solid var(--sidebarBg);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--bg);
+      border: 2px solid var(--sidebarBg);
+    }
   }
+
 }
