@@ -132,57 +132,89 @@
   });
 </script>
         <main class="content">
-            <h1>Визначення поточної сторінки</h1>
-            <p>Цей функціонал призначений для автоматичного визначення, яка саме сторінка зараз відкрита, і
-                підсвічування відповідного пункту меню в навігації. Коли користувач переходить на будь-яку сторінку
-                сайту, скрипт спочатку отримує поточний шлях сторінки за допомогою
-                <span>window.location.pathname</span>. Цей шлях може виглядати, наприклад, як /about.html. Метод
-                <span>split('/')</span> розбиває цей шлях на частини, а <span>.pop()</span> бере останній елемент —
-                тобто назву файлу сторінки. Якщо ж ім’я файлу відсутнє, як у випадку головної сторінки (де шлях буде
-                просто /), тоді підставляється <span>'index.html'</span> за замовчуванням.
-            </p>
-            <p>Далі скрипт перебирає всі елементи з класом .nav__link — це посилання в головному меню. Для кожного
-                такого посилання він порівнює значення атрибута <span>href</span> з назвою поточної сторінки, яку ми
-                тільки-но визначили. Якщо значення збігаються, тобто якщо href посилання співпадає з тим, яка сторінка
-                зараз відкрита, скрипт додає до цього посилання клас <span>currentPage</span>.</p>
-            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav__link').forEach(link => {
-    if (link.getAttribute('href') === currentPath) link.classList.add('currentPage');
-});
-  </code></pre>
-            </div>
-            <h2 data-anchors="style">Стилізація</h2>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-.currentPage {
-  font-weight: bold;
-  color: #ff6600;
-}
-  </code></pre>
-            </div>
-            <p>Цей клас можна використовувати в CSS для стилізації активного пункту меню, наприклад, зробити його
-                жирним, змінити колір або підкреслити. Таким чином, користувач завжди буде бачити, на якій сторінці він
-                знаходиться, і не потрібно вручну додавати спеціальний клас до кожного посилання на всіх сторінках
-                сайту. Усе відбувається автоматично при завантаженні сторінки.</p>
-            <h2 data-anchors="recomendation">Рекомендації</h2>
+            <h1>Корисні посилання</h1>
+            <p>На цій сторінці зібрано корисні посилання, які можуть стати в пригоді як на старті роботи, так і під час
+                щоденної розробки. Тут є все: від офіційної документації та генераторів коду — до стартових шаблонів,
+                UI-бібліотек і зручних онлайн-інструментів.</p>
+            <p>Посилання розбиті за категоріями для зручності:</p>
             <ul>
-                <li>Підтримка підкаталогів: якщо сайт має структуру з підкаталогами (наприклад,
-                    <span>/blog/article.html</span> ), поточна логіка може не працювати коректно. У такому разі варто
-                    враховувати повний шлях або частину шляху.</li>
-                <li>Порівняння з <span>location.href</span>: у складніших випадках, коли href містить абсолютні або
-                    відносні шляхи, варто привести <span>href</span> до повного вигляду перед порівнянням або
-                    використовувати new <span>URL()</span>.</li>
-                <li>Плавна анімація активного пункту: можна додати ефекти типу <span>transition</span>, щоб зміна стилю
-                    була плавною.</li>
-                <li>ARIA-атрибути для доступності: для підвищення доступності сайту додайте до активного пункту атрибут
-                    <span> aria-current="page"</span>. Наприклад:</li>
-                <li>SEO-дружність: підсвічування активного посилання може позитивно впливати на користувацький досвід і
-                    знижувати показник відмов, що важливо для <span>SEO</span>.</li>
+                <li>базові ресурси</li>
+                <li>чистий JavaScript + Gulp</li>
+                <li>WordPress</li>
+                <li>React</li>
+                <li>допоміжні сервіси та утиліти</li>
+            </ul>
+            <blockquote>Це мій власний набір, який я постійно доповнюю. Користуйся на здоров’я! 💻✨</blockquote>
+            <h2 data-anchors="basic-resourses">🔤 Базові ресурси</h2>
+            <ul>
+                <li><a href="https://developer.mozilla.org/uk/" target="_blank">MDN Web Docs</a> – документація HTML,
+                    CSS, JS</li>
+                <li><a href="https://caniuse.com/" target="_blank">Can I use</a> – перевірка підтримки фіч у браузерах
+                </li>
+                <li><a href="https://css-tricks.com/" target="_blank">CSS Tricks</a> – приклади та пояснення CSS</li>
+                <li><a href="https://htmlreference.io/" target="_blank">HTML Reference</a></li>
+                <li><a href="https://shields.io/" target="_blank">Shields.io</a> – бейджі для README</li>
+                <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a> – приклади для новачків</li>
+                <li><a href="https://codepen.io/" target="_blank">CodePen</a> – онлайн-середовище для тестів</li>
+            </ul>
+            <h2 data-anchors="gulp-js">🛠️ Gulp і чистий JavaScript</h2>
+            <ul>
+                <li><a href="https://gulpjs.com/" target="_blank">Gulp.js</a> – офіційна документація</li>
+                <li><a href="https://browsersync.io/" target="_blank">BrowserSync</a> – автоперезавантаження сторінки
+                </li>
+                <li><a href="https://www.npmjs.com/package/dart-sass" target="_blank">Dart Sass</a> – SCSS компілятор
+                </li>
+                <li><a href="https://eslint.org/" target="_blank">ESLint</a> – перевірка JS-коду</li>
+                <li><a href="https://prettier.io/" target="_blank">Prettier</a> – автоформатування коду</li>
+                <li><a href="https://docs.npmjs.com/cli/v9/commands" target="_blank">NPM Scripts Docs</a></li>
+                <li><a href="https://github.com/" target="_blank">GitHub Starter Template</a></li>
+            </ul>
+            <h2 data-anchors="wordpress">🌐 WordPress</h2>
+            <ul>
+                <li><a href="https://developer.wordpress.org/" target="_blank">WordPress Developer Resources</a></li>
+                <li><a href="https://codex.wordpress.org/" target="_blank">WordPress Codex</a></li>
+                <li><a href="https://wp-kama.com/" target="_blank">WP-Kama</a> – корисна документація</li>
+                <li><a href="https://generatewp.com/" target="_blank">GenerateWP</a> – генератори коду</li>
+                <li><a href="https://www.advancedcustomfields.com/" target="_blank">Advanced Custom Fields</a></li>
+                <li><a href="https://developer.wordpress.org/themes/" target="_blank">WordPress Theme Handbook</a></li>
+                <li><a href="https://developer.wordpress.org/plugins/" target="_blank">WordPress Plugin Handbook</a>
+                </li>
+                <li><a href="https://underscores.me/" target="_blank">Underscores Starter Theme</a></li>
+            </ul>
+            <h2 data-anchors="react">⚛️ React і сучасні фреймворки</h2>
+            <ul>
+                <li><a href="https://react.dev/" target="_blank">React (офіційний сайт)</a></li>
+                <li><a href="https://create-react-app.dev/" target="_blank">Create React App</a></li>
+                <li><a href="https://vitejs.dev/" target="_blank">Vite</a> – сучасний білдер для JS</li>
+                <li><a href="https://reactrouter.com/" target="_blank">React Router</a> – маршрутизація</li>
+                <li><a href="https://redux-toolkit.js.org/" target="_blank">Redux Toolkit</a> – менеджер стану</li>
+                <li><a href="https://mui.com/" target="_blank">Material UI</a> – UI-компоненти</li>
+                <li><a href="https://react-hook-form.com/" target="_blank">React Hook Form</a> – форми</li>
+                <li><a href="https://www.framer.com/motion/" target="_blank">Framer Motion</a> – анімації</li>
+            </ul>
+            <h2 data-anchors="tools">📚 Корисні інструменти</h2>
+            <ul>
+                <li><a href="https://fonts.google.com/" target="_blank">Google Fonts</a></li>
+                <li><a href="https://favicon.io/" target="_blank">Favicon Generator</a></li>
+                <li><a href="https://colorhunt.co/" target="_blank">Color Hunt</a> – палітри кольорів</li>
+                <li><a href="https://regex101.com/" target="_blank">Regex101</a> – регулярні вирази з поясненням</li>
+                <li><a href="https://jsonformatter.org/" target="_blank">JSON Formatter</a></li>
+                <li><a href="https://www.onlineimagetool.com/en/" target="_blank">Online Image Tool</a> – оптимізація
+                    зображень</li>
+                <li><a href="https://picsum.photos/" target="_blank">Lorem Picsum</a> – заглушки-зображення</li>
+                <li><a href="https://responsively.app/" target="_blank">Responsively App</a> – прев’ю сайту в різних
+                    розмірах</li>
+                <li><a href="https://coolors.co/" target="_blank">Coolors</a> – генератор кольорових схем</li>
+                <li><a href="https://www.svgbackgrounds.com/" target="_blank">SVG Backgrounds</a></li>
+                <li><a href="https://andreyk1n.github.io/aspect-ratio/" target="_blank">Aspect Ratio Calculator</a> –
+                    калькулятор співвідношення сторін</li>
+                <li><a href="https://andreyk1n.github.io/qrcode/" target="_blank">QR Code Generator</a></li>
+                <li><a href="https://andreyk1n.github.io/minicode/" target="_blank">Minicode</a> – мінімізатор
+                    HTML/CSS/JS</li>
+                <li><a href="https://www.svgbackgrounds.com/tools/svg-to-css/" target="_blank">SVG to CSS</a> –
+                    інструмент для конвертації SVG</li>
+                <li><a href="https://www.svgviewer.dev/" target="_blank">SVG Viewer</a> – переглядач і редактор SVG
+                </li>
             </ul>
             <section class="contacts" id="contacts">
     <h2 class="contacts__title">📬 Контакти</h2>
