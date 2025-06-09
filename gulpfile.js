@@ -22,7 +22,7 @@ async function clean() {
 // Шляхи до вхідних/вихідних файлів
 const paths = {
   html: {
-    src: 'src/html/pages/*.html', // HTML-сторінки
+    src: 'src/html/pages/**/*.html', // HTML-сторінки
     watch: 'src/html/**/*.html',  // Всі HTML-файли для відслідковування змін
     dest: 'dist/' // Куди зберігати HTML
   },
