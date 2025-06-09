@@ -3,6 +3,7 @@
 @use 'partials/header';
 @use 'partials/sidebar';
 @use 'partials/footer';
+@use 'partials/side-button';
 
 
 // ==============================================================================================
@@ -395,27 +396,6 @@ button {
     &:hover {
       background-color: var(--bg);
       border: 2px solid var(--sidebarBg);
-    }
-  }
-
-}
-
-.side-button {
-  padding: 30px 25px;
-  border-radius: 20px;
-  background-color: var(--sidebarBg);
-  color: var(--text);
-  font-size: 18px;
-  line-height: 150%;
-  letter-spacing: 2px;
-  position: fixed;
-  right: -70px;
-  bottom: 10%;
-  transition-duration: $transitionDuration;
-
-  @media (hover: hover) {
-    &:hover {
-      right: -20px;
     }
   }
 }
