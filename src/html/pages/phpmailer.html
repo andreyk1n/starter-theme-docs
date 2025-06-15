@@ -1,0 +1,97 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1 data-anchors="base">Шаблон для PHPMailer</h1>
+            <p>У цьому розділі наведено базовий шаблон використання бібліотеки PHPMailer для відправки електронних
+                листів з вашого PHP-проєкту через SMTP. PHPMailer — це одна з найпопулярніших та надійних бібліотек для
+                надсилання email-повідомлень, яка підтримує HTML-листи, вкладення, шифрування та автентифікацію.</p>
+            <p>Код нижче демонструє повноцінну реалізацію відправки листа з використанням SMTP-сервера (наприклад,
+                Gmail), включаючи:</p>
+            <ul>
+                <li>підключення бібліотеки,</li>
+                <li>налаштування з’єднання,</li>
+                <li>вказування відправника й отримувача,</li>
+                <li>додавання вкладень (опціонально),</li>
+                <li>форматування HTML-повідомлення,</li>
+                <li>обробку помилок.</li>
+            </ul>
+            <blockquote>Цей приклад можна адаптувати під будь-який SMTP-сервер, замінивши відповідні параметри. Для
+                Gmail додатково потрібен пароль додатку, а не звичайний пароль від облікового запису.</blockquote>
+            <h2 data-anchors="code">Код шаблону для PHPMailer</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+<?php
+// Підключаємо Composer автозавантажувач або вручну PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Якщо ви використовуєте Composer:
+require 'vendor/autoload.php';
+
+// Якщо ви завантажили PHPMailer вручну, замініть це:
+//// require 'path/to/PHPMailer/src/PHPMailer.php';
+//// require 'path/to/PHPMailer/src/SMTP.php';
+//// require 'path/to/PHPMailer/src/Exception.php';
+
+// Створюємо новий екземпляр PHPMailer
+$mail = new PHPMailer(true);
+
+try {
+    // =========================
+    // НАЛАШТУВАННЯ SMTP
+    // =========================
+    $mail->isSMTP();                                            // Використовуємо SMTP
+    $mail->Host       = 'smtp.gmail.com';                       // SMTP сервер (для Gmail)
+    $mail->SMTPAuth   = true;                                   // Включити автентифікацію
+    $mail->Username   = 'your-email@gmail.com';                 // Ваша електронна пошта
+    $mail->Password   = 'your-app-password';                    // Пароль додатку (не звичайний пароль)
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            // Шифрування: ssl/tls/smtps
+    $mail->Port       = 465;                                    // Порт для SMTPS (465) або TLS (587)
+
+    // =========================
+    // НАЛАШТУВАННЯ ВІДПРАВНИКА І ОТРИМУВАЧА
+    // =========================
+    $mail->setFrom('your-email@gmail.com', 'Ваше ім’я');        // Хто надсилає (email, ім’я)
+    $mail->addAddress('recipient@example.com', 'Отримувач');    // Кому надсилаємо (можна додавати кількох)
+    // $mail->addReplyTo('your-email@gmail.com', 'Ваше ім’я'); // Відповісти на (необов’язково)
+    // $mail->addCC('cc@example.com');                          // Копія
+    // $mail->addBCC('bcc@example.com');                        // Прихована копія
+
+    // =========================
+    // ДОДАТКИ
+    // =========================
+    // $mail->addAttachment('/path/to/file.pdf');               // Прикріпити файл
+    // $mail->addAttachment('/path/to/image.jpg', 'photo.jpg'); // Прикріпити з іншим ім’ям
+
+    // =========================
+    // ВМІСТ ЛИСТА
+    // =========================
+    $mail->isHTML(true);                                  // Встановлюємо формат листа: HTML
+    $mail->Subject = 'Тема вашого листа';
+    $mail->Body = '&lt;h1&gt;Вітаю!&lt;/h1&gt;&lt;p&gt;Це тестовий лист, відправлений через &lt;strong&gt;PHPMailer&lt;/strong&gt;.&lt;/p&gt;';
+    $mail->AltBody = 'Це текстова версія листа для клієнтів, які не підтримують HTML.';
+
+    // Відправляємо лист
+    $mail->send();
+    echo 'Лист успішно надіслано!';
+} catch (Exception $e) {
+    echo "Помилка при надсиланні: {$mail->ErrorInfo}";
+}
+?>
+  </code></pre>
+            </div>
+
+            @@include('partials/contacts.html')
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
+
