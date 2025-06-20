@@ -1,0 +1,90 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+  <div class="wrapper__container">
+    @@include('partials/sidebar.html')
+    <main class="content">
+      <h1 data-anchors="base">Адаптивне завантаження зображень</h1>
+      <p>Цей функціонал дозволяє завантажувати лише відповідне зображення для поточної ширини екрана, тим самим
+        оптимізуючи продуктивність сторінки.</p>
+      <p>Він замінює атрибути <span>data-desktop-src</span>, <span>data-tablet-src</span>, <span>data-mobile-src</span>
+        на звичайний <span>src</span> у картинки.</p>
+      <p>Також враховано:</p>
+      <ul>
+        <li>Порожні або відсутні атрибути ігноруються</li>
+        <li>Перевірка на дублювання <span>src</span></li>
+        <li>Підтримка <span>resize</span> з <span>debounce-таймером</span></li>
+      </ul>
+      <h2 data-anchors="js">JavaScript функціонал</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
+const updateImageSources = () => {
+    const w = window.innerWidth;
+    document.querySelectorAll('img[data-desktop-src], img[data-tablet-src], img[data-mobile-src]')
+      .forEach(img => {
+        const src = w >= 1024 ? img.dataset.desktopSrc :
+                    w >= 768  ? img.dataset.tabletSrc :
+                                img.dataset.mobileSrc;
+
+        if (src && src.trim() && img.src !== src) {
+          img.src = src;
+        }
+      });
+  };
+
+  window.addEventListener('DOMContentLoaded', updateImageSources);
+  window.addEventListener('resize', () => {
+    clearTimeout(window._imgSrcTimeout);
+    window._imgSrcTimeout = setTimeout(updateImageSources, 200);
+});
+  </code></pre>
+      </div>
+      <h2 data-anchors="usage">Приклад використання</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
+&lt;img 
+  src=&quot;fallback.jpg&quot; 
+  data-desktop-src=&quot;img/desktop.jpg&quot; 
+  data-tablet-src=&quot;img/tablet.jpg&quot; 
+  data-mobile-src=&quot;img/mobile.jpg&quot; 
+  alt=&quot;Опис зображення&quot;&gt;
+  </code></pre>
+      </div>
+
+
+      @@include('partials/contacts.html')
+    </main>
+    @@include('partials/anchors.html')
+  </div>
+</div>
+</div>
+
+<script>
+  const updateImageSources = () => {
+    const w = window.innerWidth;
+    document.querySelectorAll('img[data-desktop-src], img[data-tablet-src], img[data-mobile-src]')
+      .forEach(img => {
+        const src = w >= 1024 ? img.dataset.desktopSrc :
+          w >= 768 ? img.dataset.tabletSrc :
+            img.dataset.mobileSrc;
+
+        if (src && src.trim() && img.src !== src) {
+          img.src = src;
+        }
+      });
+  };
+
+  window.addEventListener('DOMContentLoaded', updateImageSources);
+  window.addEventListener('resize', () => {
+    clearTimeout(window._imgSrcTimeout);
+    window._imgSrcTimeout = setTimeout(updateImageSources, 200);
+  });
+</script>
+
+
+
+
+@@include('partials/footer.html')

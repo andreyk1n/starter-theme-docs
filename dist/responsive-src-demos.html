@@ -47,8 +47,8 @@
 
 
 <div class="wrapper">
-    <div class="wrapper__container">
-        <div class="sidebar">
+  <div class="wrapper__container">
+    <div class="sidebar">
   <header class="header" data-move=".wrapper" data-breakpoint="992">
   <div class="header__container">
     <a href="index.html" class="header__logo">
@@ -156,97 +156,58 @@
     });
   });
 </script>
-        <main class="content">
-            <h1>Функціональний модуль спостереження за елементами</h1>
-            <h2 data-anchors="desribe">Опис функціоналу</h2>
-            <p>Цей модуль відповідає за відстеження появи елементів у зоні видимості користувача <span>(viewport)</span>
-                за допомогою сучасного браузерного API — <span>IntersectionObserver</span>. Як тільки DOM повністю
-                завантажується <span>(DOMContentLoaded),</span> ініціалізується система спостереження. У ній задаються
-                параметри: використовується стандартне вікно перегляду (тобто без додаткового контейнера), не
-                застосовуються зовнішні відступи, і тригер спрацьовує, коли хоча б 10% площі елемента стає видимою.
-                Кожен елемент з атрибутом <span>data-watch</span> потрапляє під спостереження. Якщо елемент потрапляє у
-                видиму частину сторінки, йому додається клас <span>_watcher--view</span>, а якщо зникає — цей клас
-                видаляється. Усі ці дії супроводжуються повідомленнями в консолі.</p>
-            <h2 data-anchors="usage">Використання</h2>
-            <p>Щоб використати цей функціонал, достатньо додати до потрібного HTML-елемента атрибут
-                <span>data-watch</span> — наприклад, <span>&lt;section data-watch&gt;</span>. Скрипт автоматично знайде
-                всі такі елементи після завантаження сторінки і почне відстежувати їхню появу або зникнення з області
-                перегляду. Коли користувач скролить сторінку і певний елемент з цим атрибутом потрапляє у видиму зону,
-                до нього додається клас <span>_watcher--view</span>, завдяки якому можна запускати анімації, змінювати
-                стилі, виводити дані тощо. Коли елемент виходить із поля зору, клас зникає — відповідно, можна
-                реалізовувати "повторні появи" або "згасання".
-            </p>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-&lt;section class="section" data-watch&gt;
-  &lt;h2&gt;Про нас&lt;/h2&gt;
-  &lt;p&gt;Цей блок з'явиться з анімацією, коли потрапить у зону видимості.&lt;/p&gt;
-&lt;/section&gt;
+    <main class="content">
+      <h1 data-anchors="base">Адаптивне завантаження зображень</h1>
+      <p>Цей функціонал дозволяє завантажувати лише відповідне зображення для поточної ширини екрана, тим самим
+        оптимізуючи продуктивність сторінки.</p>
+      <p>Він замінює атрибути <span>data-desktop-src</span>, <span>data-tablet-src</span>, <span>data-mobile-src</span>
+        на звичайний <span>src</span> у картинки.</p>
+      <p>Також враховано:</p>
+      <ul>
+        <li>Порожні або відсутні атрибути ігноруються</li>
+        <li>Перевірка на дублювання <span>src</span></li>
+        <li>Підтримка <span>resize</span> з <span>debounce-таймером</span></li>
+      </ul>
+      <h2 data-anchors="js">JavaScript функціонал</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
+const updateImageSources = () => {
+    const w = window.innerWidth;
+    document.querySelectorAll('img[data-desktop-src], img[data-tablet-src], img[data-mobile-src]')
+      .forEach(img => {
+        const src = w >= 1024 ? img.dataset.desktopSrc :
+                    w >= 768  ? img.dataset.tabletSrc :
+                                img.dataset.mobileSrc;
 
-&lt;section class="section" data-watch&gt;
-  &lt;h2&gt;Наші послуги&lt;/h2&gt;
-  &lt;p&gt;Ще один блок, який реагує на скрол завдяки класу _watcher--view.&lt;/p&gt;
-&lt;/section&gt;
-  </code></pre>
-            </div>
-            <h3>Приклад стилів</h3>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-.section {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  margin: 100px 0;
-  padding: 40px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
+        if (src && src.trim() && img.src !== src) {
+          img.src = src;
+        }
+      });
+  };
 
-._watcher--view {
-  opacity: 1;
-  transform: translateY(0);
-}
-  </code></pre>
-            </div>
-            <h2 data-anchors="js-logic">JavaScript-логіка</h2>
-            <div class="code">
-                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-                <pre><code>
-document.addEventListener('DOMContentLoaded', () => {
-    console.log(`Element watcher --- Готовий до роботи.`);
-    const observerOptions = {
-        root: null, // Використовуємо viewport як корінь
-        rootMargin: '0px', // Немає додаткових відступів
-        threshold: 0.1 // Елемент вважається видимим, якщо 10% його площі видимі
-    };
-    const observerCallback = (entries) => {
-        entries.forEach(entry => {
-            const element = entry.target; // Елемент, за яким спостерігаємо
-            if (entry.isIntersecting) {
-                element.classList.add('_watcher--view');
-                console.log(`Додано клас _watcher--view до елемента з класами: ${element.className}`);
-            } else {
-                element.classList.remove('_watcher--view');
-                console.log(`Видалено клас _watcher--view з елемента з класами: ${element.className}`);
-            }
-        });
-    };
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const elementsToWatch = document.querySelectorAll('[data-watch]');
-    elementsToWatch.forEach(element => observer.observe(element));
+  window.addEventListener('DOMContentLoaded', updateImageSources);
+  window.addEventListener('resize', () => {
+    clearTimeout(window._imgSrcTimeout);
+    window._imgSrcTimeout = setTimeout(updateImageSources, 200);
 });
   </code></pre>
-            </div>
-            <h2 data-anchors="recomendation">Рекомендації</h2>
-            <p>Цей підхід зручний для створення анімованих ефектів на скролі, поступового з’явлення блоків або
-                підвантаження контенту. Щоб підвищити продуктивність, не додавайте <span>data-watch</span> до великої
-                кількості дрібних елементів — краще спостерігати за більшими контейнерами. Також варто використовувати
-                клас <span>_watcher--view</span> у CSS з переходами або анімаціями, які будуть активуватись саме при
-                його появі. Якщо ви працюєте з динамічно підвантаженим контентом, після вставки нових елементів на
-                сторінку потрібно повторно викликати спостереження або перепризначити його для нових вузлів.</p>
-            <section class="contacts" id="contacts">
+      </div>
+      <h2 data-anchors="usage">Приклад використання</h2>
+      <div class="code">
+        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+        <pre><code>
+&lt;img 
+  src=&quot;fallback.jpg&quot; 
+  data-desktop-src=&quot;img/desktop.jpg&quot; 
+  data-tablet-src=&quot;img/tablet.jpg&quot; 
+  data-mobile-src=&quot;img/mobile.jpg&quot; 
+  alt=&quot;Опис зображення&quot;&gt;
+  </code></pre>
+      </div>
+
+
+      <section class="contacts" id="contacts">
     <h2 class="contacts__title">📬 Контакти</h2>
     <ul class="contacts__list">
         <li class="contacts__item">
@@ -273,11 +234,36 @@ document.addEventListener('DOMContentLoaded', () => {
         </li>
     </ul>
 </section>
-        </main>
-        <div id="anchors" class="anchors"></div>
-    </div>
+    </main>
+    <div id="anchors" class="anchors"></div>
+  </div>
 </div>
 </div>
+
+<script>
+  const updateImageSources = () => {
+    const w = window.innerWidth;
+    document.querySelectorAll('img[data-desktop-src], img[data-tablet-src], img[data-mobile-src]')
+      .forEach(img => {
+        const src = w >= 1024 ? img.dataset.desktopSrc :
+          w >= 768 ? img.dataset.tabletSrc :
+            img.dataset.mobileSrc;
+
+        if (src && src.trim() && img.src !== src) {
+          img.src = src;
+        }
+      });
+  };
+
+  window.addEventListener('DOMContentLoaded', updateImageSources);
+  window.addEventListener('resize', () => {
+    clearTimeout(window._imgSrcTimeout);
+    window._imgSrcTimeout = setTimeout(updateImageSources, 200);
+  });
+</script>
+
+
+
 
 <button class="side-button" onclick="document.location='sitemap.html'">Site<br>map</button>
 
