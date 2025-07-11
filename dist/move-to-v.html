@@ -158,77 +158,96 @@
 </script>
         <main class="content">
             <h1>Динамічне переміщення елементів при адаптиві</h1>
-            <p>Цей модуль дозволяє переміщувати HTML-елементи в інші контейнери при зміні розміру вікна. Він особливо
-                корисний у адаптивній верстці, коли один і той самий елемент має перебувати в різних місцях DOM на
-                мобільних і десктопних екранах.</p>
-            <p>Модуль автоматично:</p>
+            <p>Цей модуль дозволяє автоматично переміщувати HTML-елементи в інші DOM-контейнери залежно від ширини вікна
+                браузера. Він особливо корисний у адаптивній верстці, коли певний елемент повинен відображатись у різних
+                місцях для мобільних і десктопних пристроїв.</p>
+            <p>Можливості:</p>
             <ul>
-                <li>зберігає початкову позицію елемента;</li>
-                <li>переміщує елемент до нового контейнера при зміні ширини вікна;</li>
-                <li>повертає елемент на місце, якщо ширина знову стала більшою за вказаний брейкпойнт.</li>
+                <li>Зберігає початкове розташування елемента;</li>
+                <li>Переміщує елемент у вказаний контейнер при зменшенні ширини вікна до заданого брейкпойнта;</li>
+                <li>Повертає елемент назад, коли ширина перевищує брейкпойнт;</li>
+                <li>Додає логування в консоль, якщо додано атрибут <span>data-move-log</span>.</li>
             </ul>
-            <h2 data-anchors="usage">Використання</h2>
-            <p>Щоб використовувати цю функцію, потрібно додати до HTML елементу два атрибути:</p>
-            <ul>
-                <li><span>data-move</span> — селектор цільового контейнера (наприклад, .mobile-wrapper);</li>
-                <li><span>data-breakpoint</span> — число, при ширині вікна менше або дорівнює якому елемент буде
-                    переміщено.</li>
-            </ul>
+            <h2 data-anchors="usage">Використання:</h2>
+            <p>Додай до HTML-елемента такі атрибути:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Атрибут</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>data-move</td>
+                        <td>CSS-селектор цільового контейнера, куди елемент має переміститися.</td>
+                    </tr>
+                    <tr>
+                        <td>data-breakpoint</td>
+                        <td>Брейкпойнт у пікселях (число), до якого переміщення буде активним.</td>
+                    </tr>
+                    <tr>
+                        <td>data-move-log</td>
+                        <td>(необов’язковий) Активує логування для конкретного елемента.</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-&lt;div class="header"&gt;
-  &lt;div class="some-element" data-move=".mobile-wrapper" data-breakpoint="768"&gt;
+&lt;div class=&quot;header&quot;&gt;
+  &lt;div class=&quot;some-element&quot; data-move=&quot;.mobile-wrapper&quot; data-breakpoint=&quot;768&quot; data-move-log&gt;
     Це елемент, який переміщується
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="mobile-wrapper"&gt;&lt;/div&gt;
+&lt;div class=&quot;mobile-wrapper&quot;&gt;&lt;/div&gt;
   </code></pre>
             </div>
             <h2 data-anchors="js-logic">JavaScript-логіка</h2>
             <div class="code">
                 <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
                 <pre><code>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const movedElements = document.querySelectorAll('[data-move]');
     const originalContainers = new WeakMap();
     const originalIndexes = new WeakMap();
 
-    if (movedElements.length === 0) {
-        console.log("Не знайдено жодного елемента з атрибутом 'data-move'");
-    }
-
     movedElements.forEach((element) => {
-        const targetSelector = element.getAttribute('data-move');
-        const breakpoint = parseInt(element.getAttribute('data-breakpoint'), 10);
+      const targetSelector = element.getAttribute('data-move');
+      const breakpoint = parseInt(element.getAttribute('data-breakpoint'), 10);
+      const log = element.hasAttribute('data-move-log');
 
-        if (!targetSelector || isNaN(breakpoint)) return;
+      if (!targetSelector || isNaN(breakpoint)) return;
 
-        const parent = element.parentNode;
-        originalContainers.set(element, parent);
-        originalIndexes.set(element, Array.from(parent.children).indexOf(element));
+      const parent = element.parentNode;
+      originalContainers.set(element, parent);
+      originalIndexes.set(element, Array.from(parent.children).indexOf(element));
 
-        const moveElement = () => {
-            if (window.innerWidth <= breakpoint) {
-                const targetContainer = document.querySelector(targetSelector);
-                if (targetContainer) targetContainer.appendChild(element);
-            } else {
-                const originalContainer = originalContainers.get(element);
-                const originalIndex = originalIndexes.get(element);
-                if (originalContainer) {
-                    const referenceNode = originalContainer.children[originalIndex];
-                    if (referenceNode) {
-                        originalContainer.insertBefore(element, referenceNode);
-                    } else {
-                        originalContainer.appendChild(element);
-                    }
-                }
-            }
-        };
+      const moveElement = () => {
+        if (window.innerWidth <= breakpoint) {
+          const targetContainer = document.querySelector(targetSelector);
+          if (targetContainer) {
+            targetContainer.appendChild(element);
+            if (log) console.log(`→ Переміщено (${element.className}) → (${targetContainer.className})`);
+          } else if (log) {
+            console.log(`× Не знайдено контейнер для (${targetSelector})`);
+          }
+        } else {
+          const originalContainer = originalContainers.get(element);
+          const originalIndex = originalIndexes.get(element);
+          if (originalContainer) {
+            const referenceNode = originalContainer.children[originalIndex];
+            referenceNode
+              ? originalContainer.insertBefore(element, referenceNode)
+              : originalContainer.appendChild(element);
+            if (log) console.log(`← Повернуто (${element.className}) ← (${originalContainer.className})`);
+          }
+        }
+      };
 
-        window.addEventListener('resize', moveElement);
-        moveElement();
+      window.addEventListener('resize', moveElement);
+      moveElement();
     });
 });
   </code></pre>
@@ -238,12 +257,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 <li>Використовуйте унікальні селектори в <span>data-move</span>, щоб уникнути помилок.</li>
                 <li>Слідкуйте за порядком елементів — особливо, якщо з ними пов’язані стилі або JavaScript.</li>
                 <li>Ініціалізуйте цей скрипт після завантаження DOM (що й робить <span>DOMContentLoaded</span>).</li>
-                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській
-                    стороні й може мати мікрозатримки.</li>
-                <li>Перевіряйте наявність цільових контейнерів <span>(.mobile-wrapper у прикладі)</span> — інакше буде
-                    помилка в консолі.</li>
                 <li>Не додавайте до одного елемента декілька <span>data-move</span> або <span>data-breakpoint</span> —
                     це не підтримується.</li>
+                <li>Якщо використовуєте <span>data-move-log</span>, консоль виведе корисні повідомлення про переміщення
+                    — це зручно для дебагу.</li>
+                <li>Не використовуйте цей підхід для критичних інтерфейсних елементів — він спрацьовує на клієнтській
+                    стороні й може мати мікрозатримки.</li>
             </ol>
             <section class="contacts" id="contacts">
     <h2 class="contacts__title">📬 Контакти</h2>
