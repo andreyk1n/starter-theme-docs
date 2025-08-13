@@ -1,0 +1,377 @@
+@@include('partials/head.html')
+
+<style>
+    .slider {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .slider__wrapper {
+        display: flex;
+        transition: transform 0.4s ease;
+    }
+
+    .slider__slide {
+        flex: 0 0 calc(100% / 3);
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    .slider__card {
+        background: white;
+        border: 1px solid #ddd;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .slider__image {
+        width: 100%;
+        display: block;
+    }
+
+    .slider__content {
+        padding: 15px;
+    }
+
+    .slider__category {
+        color: #4f46e5;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .slider__title {
+        font-size: 18px;
+        margin: 5px 0;
+    }
+
+    .slider__link {
+        display: inline-flex;
+        align-items: center;
+        font-size: 14px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .slider__link:hover {
+        text-decoration: underline;
+    }
+
+    .slider__controls {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        display: flex;
+        gap: 5px;
+    }
+
+    .slider__button {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .slider__button:hover {
+        background: #f0f0f0;
+    }
+
+    /* Адаптив */
+    @media (max-width: 900px) {
+        .slider__slide {
+            flex: 0 0 calc(100% / 2);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .slider__slide {
+            flex: 0 0 100%;
+        }
+    }
+</style>
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Слайдер на ванільному JavaScript</h1>
+            <p>Цей слайдер працює за принципом горизонтального прокручування контейнера зі слайдами. Вся група слайдів
+                знаходиться всередині елемента <span>.slider__wrapper</span>, який має <span>display: flex</span>,
+                завдяки чому слайди розташовуються в один ряд. При натисканні на кнопки «←» або «→» змінюється змінна
+                <span>currentIndex</span>, яка відповідає за те, з якого слайда починати показ. Після цього функція
+                <span>updateSlider()</span> змінює властивість transform: <span>translateX()</span> у контейнера,
+                зсуваючи його на необхідну кількість пікселів.
+            </p>
+            <p>Кількість одночасно видимих слайдів залежить від ширини вікна браузера і визначається функцією
+                <span>getSlidesToShow()</span>. Якщо ширина екрана менша або дорівнює 600px, відображається один слайд.
+                При ширині до 900px — два слайди. Якщо ширина більша за 900px, то на екрані видно три слайди. Це
+                дозволяє адаптувати слайдер під різні пристрої.
+            </p>
+            <p>Крім кнопок, слайдер підтримує свайп-жести на мобільних пристроях. При торканні екрану фіксується
+                початкова координата пальця (startX), а при відпусканні — кінцева (endX). Якщо різниця між ними більша
+                за 50 пікселів, визначається напрям руху, і викликається відповідна функція перемикання.</p>
+            <p>Слайдер має циклічну поведінку: коли користувач доходить до останнього слайда і натискає «→», він
+                повертається на початок, і навпаки — при натисканні «←» на першому слайді переходить до останнього.</p>
+
+            <h2 data-anchors="html">Необхідна верстка</h2>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;div class="slider" id="slider"&gt;
+    &lt;div class="slider__wrapper"&gt;
+        &lt;div class="slider__slide"&gt;
+            &lt;div class="slider__card"&gt;
+                &lt;img src="https://placehold.co/600x400/" alt="" class="slider__image"&gt;
+                &lt;div class="slider__content"&gt;
+                    &lt;div class="slider__category"&gt;Branding 1&lt;/div&gt;
+                    &lt;div class="slider__title"&gt;Soulful Rebrand&lt;/div&gt;
+                    &lt;a href="#" class="slider__link"&gt;View Project →&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="slider__slide"&gt;
+            &lt;div class="slider__card"&gt;
+                &lt;img src="https://placehold.co/600x400/" alt="" class="slider__image"&gt;
+                &lt;div class="slider__content"&gt;
+                    &lt;div class="slider__category"&gt;Product Design 2&lt;/div&gt;
+                    &lt;div class="slider__title"&gt;Datadash Product Design&lt;/div&gt;
+                    &lt;a href="#" class="slider__link"&gt;View Project →&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="slider__slide"&gt;
+            &lt;div class="slider__card"&gt;
+                &lt;img src="https://placehold.co/600x400/" alt="" class="slider__image"&gt;
+                &lt;div class="slider__content"&gt;
+                    &lt;div class="slider__category"&gt;Web Design 3&lt;/div&gt;
+                    &lt;div class="slider__title"&gt;Maize Website Design&lt;/div&gt;
+                    &lt;a href="#" class="slider__link"&gt;View Project →&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="slider__controls"&gt;
+        &lt;button class="slider__button" id="prev"&gt;←&lt;/button&gt;
+        &lt;button class="slider__button" id="next"&gt;→&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </code></pre>
+            </div>
+
+            <h2 data-anchors="javascript">Необхідний JavaScript</h2>
+            <p>Скрипт починає з вибору основних елементів DOM: контейнера слайдера, обгортки з усіма слайдами, масиву
+                слайдів та кнопок керування. Змінна currentIndex зберігає поточну позицію показу, а
+                <span>slidesToShow</span> визначає
+                кількість видимих слайдів. Функція <span>getSlidesToShow()</span> повертає значення залежно від ширини
+                вікна, а
+                <span>updateSlider()</span> розраховує ширину одного слайда і зсуває контейнер на потрібну відстань.
+            </p>
+
+            <p>Функції <span>nextSlide()</span> та <span>prevSlide()</span> змінюють currentIndex і викликають оновлення
+                відображення. При зміні
+                розміру вікна виконується перерахунок slidesToShow і оновлення позиції слайдів, щоб вони завжди
+                відображались коректно.</p>
+
+            <p> Для підтримки сенсорних пристроїв додані обробники <span>touchstart</span> та <span>touchend</span>, які
+                визначають напрямок свайпу та перемикають слайди відповідно.</p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+const slider = document.querySelector('#slider');
+const wrapper = slider.querySelector('.slider__wrapper');
+const slides = slider.querySelectorAll('.slider__slide');
+const prevBtn = slider.querySelector('#prev');
+const nextBtn = slider.querySelector('#next');
+
+let currentIndex = 0;
+let slidesToShow = getSlidesToShow();
+
+function getSlidesToShow() {
+  if (window.innerWidth <= 600) return 1;
+  if (window.innerWidth <= 900) return 2;
+  return 3;
+}
+
+function updateSlider() {
+  const slideWidth = slider.offsetWidth / slidesToShow;
+  wrapper.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+}
+
+function nextSlide() {
+  if (currentIndex < slides.length - slidesToShow) {
+    currentIndex++;
+  } else {
+    currentIndex = 0;
+  }
+  updateSlider();
+}
+
+function prevSlide() {
+  if (currentIndex > 0) {
+    currentIndex--;
+  } else {
+    currentIndex = slides.length - slidesToShow;
+  }
+  updateSlider();
+}
+
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+
+window.addEventListener('resize', () => {
+  slidesToShow = getSlidesToShow();
+  updateSlider();
+});
+
+// Свайп
+let startX = 0;
+let endX = 0;
+
+wrapper.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+wrapper.addEventListener('touchend', e => {
+  endX = e.changedTouches[0].clientX;
+  if (startX - endX > 50) {
+    nextSlide();
+  } else if (endX - startX > 50) {
+    prevSlide();
+  }
+});
+
+updateSlider();
+            </code></pre>
+            </div>
+
+            <h2 data-anchors="css">Необхідні стилі</h2>
+            <p> Слайдер має overflow: hidden, щоб приховувати непотрібні слайди за межами видимої області. Обгортка
+                <span>.slider__wrapper</span> використовує display: flex і плавний перехід transition для анімації
+                зміщення. Слайди мають фіксовану ширину, яка змінюється через flex: 0 0 calc(100% / N) залежно від
+                кількості видимих слайдів. Картки мають білий фон, тінь і округлені кути для приємного вигляду. Кнопки
+                керування розташовані поверх слайдера в правому нижньому куті.</p>
+
+            <p> Через медіа-запити змінюється ширина слайдів, щоб на планшетах відображалося два слайди, а на телефонах — один.</p>
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+.slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.slider__wrapper {
+    display: flex;
+    transition: transform 0.4s ease;
+}
+
+.slider__slide {
+    flex: 0 0 calc(100% / 3);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.slider__card {
+    background: white;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.slider__image {
+    width: 100%;
+    display: block;
+}
+
+.slider__content {
+    padding: 15px;
+}
+
+.slider__category {
+    color: #4f46e5;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.slider__title {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.slider__link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
+}
+
+.slider__link:hover {
+    text-decoration: underline;
+}
+
+.slider__controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.slider__button {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.slider__button:hover {
+    background: #f0f0f0;
+}
+
+/* Адаптив */
+@media (max-width: 900px) {
+    .slider__slide {
+        flex: 0 0 calc(100% / 2);
+    }
+}
+
+@media (max-width: 600px) {
+    .slider__slide {
+        flex: 0 0 100%;
+    }
+}
+            </code></pre>
+            </div>
+
+            @@include('partials/contacts.html')
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
+
+<!-- 
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+code
+  </code></pre>
+            </div> -->
