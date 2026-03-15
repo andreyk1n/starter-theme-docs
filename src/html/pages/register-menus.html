@@ -1,0 +1,110 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Виведення навігаційного меню</h1>
+
+            <p>
+                У WordPress навігаційне меню створюється в адміністративній панелі сайту
+                у розділі <span>Зовнішній вигляд → Меню</span>. Після створення меню його
+                можна прив’язати до певної <strong>локації меню</strong>, яка визначається
+                у темі. Це дозволяє гнучко керувати структурою навігації без зміни коду.
+            </p>
+
+            <p>
+                Щоб меню можна було використовувати у темі, спочатку потрібно
+                <strong>зареєструвати локацію меню</strong>. Після цього у шаблоні
+                сторінки або в компоненті шапки сайту можна вивести меню за допомогою
+                функції <span>wp_nav_menu()</span>.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;?php
+
+function register_theme_menus() {
+
+    register_nav_menus([
+        'main_menu' =&gt; 'Головне меню'
+    ]);
+
+}
+
+add_action('after_setup_theme', 'register_theme_menus');
+
+?&gt;
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="vyvedennia-menu">Виведення меню у шаблоні</h2>
+
+            <p>
+                Після реєстрації локації меню його можна вивести у будь-якому
+                шаблоні теми. Найчастіше меню виводиться у файлі
+                <span>header.php</span>, щоб воно відображалось на всіх сторінках сайту.
+            </p>
+
+            <p>
+                Для цього використовується функція <strong>wp_nav_menu()</strong>,
+                яка отримує параметри та генерує HTML структуру меню.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;?php
+
+wp_nav_menu([
+    'theme_location' =&gt; 'main_menu',
+    'container' =&gt; 'nav',
+    'menu_class' =&gt; 'menu'
+]);
+
+?&gt;
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="princip-roboty">Принцип роботи</h2>
+
+            <p>
+                Після реєстрації локації меню WordPress дозволяє прив’язати до неї
+                будь-яке меню, створене у адмін-панелі. Коли у шаблоні викликається
+                функція <span>wp_nav_menu()</span>, система знаходить меню,
+                яке прив’язане до відповідної локації, і автоматично генерує
+                HTML список з пунктами меню.
+            </p>
+
+            <blockquote>
+                💡 Якщо меню не прив’язане до локації, функція
+                <strong>wp_nav_menu()</strong> може нічого не вивести або
+                використати резервне меню зі сторінок сайту.
+            </blockquote>
+
+            <h2 data-anchors="rekomendacii">Рекомендації використання</h2>
+
+            <p>
+                Рекомендується створювати окремі локації меню для різних частин
+                сайту, наприклад <span>головне меню</span>, <span>меню у футері</span>
+                або <span>мобільне меню</span>. Це дозволяє керувати кожним меню
+                незалежно та спрощує підтримку теми.
+            </p>
+
+            <p>
+                Для складніших проєктів меню часто виносять у окремий компонент,
+                наприклад у файл <span>template-parts/header/menu.php</span>.
+                Такий підхід робить структуру теми більш модульною і дозволяє
+                повторно використовувати один і той самий код у різних місцях сайту.
+            </p>
+
+            @@include('partials/contacts.html')
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
