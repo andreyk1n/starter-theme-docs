@@ -1,0 +1,99 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Шорткоди (Shortcodes)</h1>
+
+            <p>
+                <strong>Шорткоди</strong> у WordPress дозволяють вставляти динамічний контент
+                у текст сторінки або запису за допомогою спеціального короткого синтаксису.
+                Вони використовуються для виведення різних елементів сайту без написання
+                HTML або PHP коду безпосередньо у редакторі.
+            </p>
+
+            <p>
+                Шорткод виглядає як невелика текстова конструкція у квадратних дужках,
+                наприклад <span>[example]</span>. Коли WordPress обробляє сторінку,
+                він знаходить цей запис і викликає функцію, яка генерує відповідний
+                HTML або інший контент.
+            </p>
+
+            <p>
+                Шорткоди часто використовуються для вставлення <span>кнопок</span>,
+                <span>галерей</span>, <span>контактних форм</span> або інших
+                інтерактивних елементів прямо у текст сторінки.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;?php
+
+function example_shortcode() {
+
+    return '&lt;div class="example"&gt;Hello from shortcode&lt;/div&gt;';
+
+}
+
+add_shortcode('example', 'example_shortcode');
+
+?&gt;
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="princip-roboty">Принцип роботи</h2>
+
+            <p>
+                Шорткод створюється за допомогою функції <strong>add_shortcode()</strong>,
+                яка приймає два параметри: назву шорткоду та функцію, що буде
+                виконуватися при його виклику. Коли WordPress зустрічає
+                відповідний запис у контенті сторінки, він викликає функцію
+                і підставляє результат її роботи у HTML сторінки.
+            </p>
+
+            <blockquote>
+                💡 Функція шорткоду повинна <strong>повертати результат</strong> через
+                <span>return</span>, а не виводити його через echo.
+            </blockquote>
+
+            <h2 data-anchors="vykorystannia">Використання шорткоду</h2>
+
+            <p>
+                Після реєстрації шорткод можна використовувати у будь-якому
+                текстовому полі WordPress: у записах, сторінках або віджетах.
+                Для цього достатньо вставити його назву у квадратних дужках.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+[example]
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="rekomendacii">Рекомендації використання</h2>
+
+            <p>
+                Шорткоди зручно використовувати для елементів, які потрібно
+                вставляти у контент багато разів. Це дозволяє централізовано
+                керувати їхньою логікою у коді теми або плагіна.
+            </p>
+
+            <p>
+                У складніших проєктах шорткоди часто використовуються разом
+                із <strong>ACF</strong> або іншими даними з бази, щоб
+                створювати гнучкі блоки контенту, які редактор може
+                вставляти у будь-яке місце сторінки.
+            </p>
+
+            @@include('partials/contacts.html')
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
