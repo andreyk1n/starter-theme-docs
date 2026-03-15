@@ -47,8 +47,8 @@
 
 
 <div class="wrapper">
-  <div class="wrapper__container">
-    <div class="sidebar">
+    <div class="wrapper__container">
+        <div class="sidebar">
   <header class="header" data-move=".wrapper" data-breakpoint="992">
   <div class="header__container">
     <a href="index.html" class="header__logo">
@@ -155,58 +155,126 @@
     });
   });
 </script>
-    <main class="content">
-      <h1 data-anchors="base">Адаптивне завантаження зображень</h1>
-      <p>Цей функціонал дозволяє завантажувати лише відповідне зображення для поточної ширини екрана, тим самим
-        оптимізуючи продуктивність сторінки.</p>
-      <p>Він замінює атрибути <span>data-desktop-src</span>, <span>data-tablet-src</span>, <span>data-mobile-src</span>
-        на звичайний <span>src</span> у картинки.</p>
-      <p>Також враховано:</p>
-      <ul>
-        <li>Порожні або відсутні атрибути ігноруються</li>
-        <li>Перевірка на дублювання <span>src</span></li>
-        <li>Підтримка <span>resize</span> з <span>debounce-таймером</span></li>
-      </ul>
-      <h2 data-anchors="js">JavaScript функціонал</h2>
-      <div class="code">
-        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-        <pre><code>
-const updateImageSources = () => {
-    const w = window.innerWidth;
-    document.querySelectorAll('img[data-desktop-src], img[data-tablet-src], img[data-mobile-src]')
-      .forEach(img => {
-        const src = w >= 1024 ? img.dataset.desktopSrc :
-                    w >= 768  ? img.dataset.tabletSrc :
-                                img.dataset.mobileSrc;
+        <main class="content">
+            <h1>WP_Query цикл</h1>
 
-        if (src && src.trim() && img.src !== src) {
-          img.src = src;
-        }
-      });
-  };
+            <p>
+                WP_Query — це основний клас WordPress, який використовується для отримання записів із бази даних.
+                Він дозволяє створювати кастомні цикли постів і повністю контролювати те, які записи будуть
+                відображатися на сторінці. На відміну від стандартного WordPress Loop, WP_Query дозволяє
+                задавати параметри запиту: тип записів, кількість постів, категорії, сортування та інші фільтри.
+            </p>
 
-  window.addEventListener('DOMContentLoaded', updateImageSources);
-  window.addEventListener('resize', () => {
-    clearTimeout(window._imgSrcTimeout);
-    window._imgSrcTimeout = setTimeout(updateImageSources, 200);
-});
+            <p>
+                Принцип роботи досить простий. Спочатку створюється масив параметрів запиту, після чого
+                створюється об'єкт WP_Query. Далі перевіряється, чи є записи у результаті запиту,
+                і запускається цикл, який перебирає кожен пост. Усередині циклу можна використовувати
+                стандартні функції WordPress для виведення заголовка, посилання, уривка тексту або зображення.
+                Після завершення циклу важливо повернути глобальні дані поста до початкового стану.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;?php
+
+$args = [
+    'post_type' =&gt; 'post',
+    'posts_per_page' =&gt; 3
+];
+
+$query = new WP_Query($args);
+
+if ($query-&gt;have_posts()) :
+    while ($query-&gt;have_posts()) : $query-&gt;the_post();
+?&gt;
+
+&lt;article class="post-card"&gt;
+    &lt;h2&gt;&lt;?php the_title(); ?&gt;&lt;/h2&gt;
+    &lt;p&gt;&lt;?php the_excerpt(); ?&gt;&lt;/p&gt;
+    &lt;a href="&lt;?php the_permalink(); ?&gt;"&gt;Read more&lt;/a&gt;
+&lt;/article&gt;
+
+&lt;?php
+    endwhile;
+    wp_reset_postdata();
+endif;
+
+?&gt;
   </code></pre>
-      </div>
-      <h2 data-anchors="usage">Приклад використання</h2>
-      <div class="code">
-        <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
-        <pre><code>
-&lt;img 
-  src=&quot;fallback.jpg&quot; 
-  data-desktop-src=&quot;img/desktop.jpg&quot; 
-  data-tablet-src=&quot;img/tablet.jpg&quot; 
-  data-mobile-src=&quot;img/mobile.jpg&quot; 
-  alt=&quot;Опис зображення&quot;&gt;
-  </code></pre>
-      </div>
+            </div>
 
+            <h2 data-anchors="general-information">Основна інформація</h2>
+            <p>
+                WP_Query використовується для створення окремих блоків контенту на сторінці. Найчастіше
+                його застосовують для виведення останніх новин, пов’язаних статей, постів певної категорії
+                або записів кастомного типу. Такий підхід дозволяє створювати незалежні контентні блоки
+                у різних частинах сторінки без зміни основного запиту WordPress.
+            </p>
 
-      <section class="contacts" id="contacts">
+            <blockquote>
+                💡 Після завершення циклу завжди використовуйте функцію wp_reset_postdata(), щоб
+                відновити глобальний об’єкт поста і уникнути помилок у наступних циклах.
+            </blockquote>
+
+            <h2 data-anchors="single-server">Параметри</h2>
+            <p>
+                Поведінка WP_Query визначається параметрами запиту. Найчастіше використовуються
+                параметри для визначення типу записів, кількості постів та сортування результатів.
+                Наприклад, параметр post_type задає тип контенту, posts_per_page визначає
+                кількість записів, які потрібно отримати, а order та orderby контролюють
+                порядок сортування результатів.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>post_type</td>
+                        <td>Type of posts to retrieve</td>
+                        <td>post</td>
+                    </tr>
+                    <tr>
+                        <td>posts_per_page</td>
+                        <td>Number of posts in the query</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>orderby</td>
+                        <td>Sorting field</td>
+                        <td>date</td>
+                    </tr>
+                    <tr>
+                        <td>order</td>
+                        <td>Sorting direction</td>
+                        <td>DESC</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 data-anchors="manual-installation">Рекомендації</h2>
+            <p>
+                WP_Query найкраще використовувати для створення кастомних контентних блоків
+                на сторінці. Наприклад, для відображення останніх записів блогу, слайдерів,
+                пов’язаних постів або спеціальних секцій на головній сторінці сайту.
+                У більш складних проєктах розмітку поста бажано винести у окремий template part,
+                щоб зробити код більш модульним та зручним для підтримки.
+            </p>
+
+            <p>
+                Також рекомендується обмежувати кількість записів у запиті та уникати
+                надто складних фільтрів, щоб не створювати зайве навантаження на базу даних.
+                Якщо потрібно змінити основний запит сторінки, краще використовувати
+                фільтр pre_get_posts, а не створювати новий запит у шаблоні.
+            </p>
+
+            <section class="contacts" id="contacts">
     <h2 class="contacts__title">📬 Контакти</h2>
     <ul class="contacts__list">
         <li class="contacts__item">
@@ -233,36 +301,11 @@ const updateImageSources = () => {
         </li>
     </ul>
 </section>
-    </main>
-    <div id="anchors" class="anchors"></div>
-  </div>
+        </main>
+        <div id="anchors" class="anchors"></div>
+    </div>
 </div>
 </div>
-
-<script>
-  const updateImageSources = () => {
-    const w = window.innerWidth;
-    document.querySelectorAll('img[data-desktop-src], img[data-tablet-src], img[data-mobile-src]')
-      .forEach(img => {
-        const src = w >= 1024 ? img.dataset.desktopSrc :
-          w >= 768 ? img.dataset.tabletSrc :
-            img.dataset.mobileSrc;
-
-        if (src && src.trim() && img.src !== src) {
-          img.src = src;
-        }
-      });
-  };
-
-  window.addEventListener('DOMContentLoaded', updateImageSources);
-  window.addEventListener('resize', () => {
-    clearTimeout(window._imgSrcTimeout);
-    window._imgSrcTimeout = setTimeout(updateImageSources, 200);
-  });
-</script>
-
-
-
 
 <button class="side-button" onclick="document.location='sitemap.html'">Site<br>map</button>
 
