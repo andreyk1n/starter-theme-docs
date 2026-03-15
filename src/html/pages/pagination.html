@@ -1,0 +1,149 @@
+@@include('partials/head.html')
+
+
+<div class="wrapper">
+    <div class="wrapper__container">
+        @@include('partials/sidebar.html')
+        <main class="content">
+            <h1>Pagination</h1>
+
+            <p>
+                Пагінація у WordPress використовується для розділення великої кількості записів
+                на декілька сторінок. Це дозволяє покращити навігацію по контенту та зменшити
+                навантаження на сторінку, оскільки відображається лише певна кількість постів
+                за один запит.
+            </p>
+
+            <p>
+                Найчастіше пагінація використовується на сторінках блогу, архівах категорій
+                або у кастомних циклах WP_Query. WordPress автоматично визначає поточну сторінку
+                через параметр <strong>paged</strong>, після чого відповідні записи отримуються
+                з бази даних. Для виведення навігації між сторінками зазвичай використовується
+                функція <strong>paginate_links()</strong>.
+            </p>
+
+            <div class="code">
+                <button class="copy-button" onclick="copyCode(this)">Скопіювати</button>
+                <pre><code>
+&lt;?php
+
+$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+$args = [
+    'post_type' =&gt; 'post',
+    'posts_per_page' =&gt; 6,
+    'paged' =&gt; $paged
+];
+
+$query = new WP_Query($args);
+
+if ($query-&gt;have_posts()) :
+    while ($query-&gt;have_posts()) : $query-&gt;the_post();
+?&gt;
+
+&lt;article class="post-card"&gt;
+    &lt;h2&gt;&lt;?php the_title(); ?&gt;&lt;/h2&gt;
+    &lt;a href="&lt;?php the_permalink(); ?&gt;"&gt;Read more&lt;/a&gt;
+&lt;/article&gt;
+
+&lt;?php
+    endwhile;
+?&gt;
+
+&lt;div class="pagination"&gt;
+&lt;?php
+echo paginate_links([
+    'total' =&gt; $query-&gt;max_num_pages
+]);
+?&gt;
+&lt;/div&gt;
+
+&lt;?php
+    wp_reset_postdata();
+endif;
+
+?&gt;
+  </code></pre>
+            </div>
+
+            <h2 data-anchors="general-information">Основна інформація</h2>
+            <p>
+                Під час роботи пагінації WordPress зберігає номер поточної сторінки у змінній
+                <strong>paged</strong>. Цей параметр передається у WP_Query, щоб отримати правильну
+                частину записів із бази даних. Якщо користувач переходить на другу або третю
+                сторінку, WordPress автоматично змінює значення параметра paged і запит
+                повертає інший набір постів.
+            </p>
+
+            <blockquote>
+                💡 Без передачі параметра paged у WP_Query пагінація не буде працювати,
+                оскільки кожна сторінка буде показувати однакові записи.
+            </blockquote>
+
+            <h2 data-anchors="single-server">Вихідні параметри</h2>
+            <p>
+                Функція paginate_links() генерує список посилань для переходу між сторінками.
+                Вона враховує загальну кількість сторінок, поточну сторінку та автоматично
+                створює правильні URL для навігації. Зазвичай ця функція використовується
+                після завершення циклу постів.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>total</td>
+                        <td>Total number of pages</td>
+                        <td>$query-&gt;max_num_pages</td>
+                    </tr>
+                    <tr>
+                        <td>current</td>
+                        <td>Current page</td>
+                        <td>$paged</td>
+                    </tr>
+                    <tr>
+                        <td>mid_size</td>
+                        <td>Number of pages around current</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>prev_text</td>
+                        <td>Previous page label</td>
+                        <td>Prev</td>
+                    </tr>
+                    <tr>
+                        <td>next_text</td>
+                        <td>Next page label</td>
+                        <td>Next</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 data-anchors="manual-installation">Рекомендації</h2>
+            <p>
+                Пагінацію варто використовувати на сторінках, де відображається велика кількість
+                записів. Це покращує читабельність сторінки та зменшує навантаження на сервер,
+                оскільки одночасно завантажується менше контенту. Найчастіше вона застосовується
+                у блогах, архівах категорій, новинних стрічках та кастомних списках постів.
+            </p>
+
+            <p>
+                Для більш складних проєктів пагінацію можна стилізувати або обгорнути у власний
+                компонент. Це дозволяє використовувати однаковий дизайн навігації по всьому сайту
+                та легко змінювати його у майбутньому.
+            </p>
+
+            @@include('partials/contacts.html')
+        </main>
+        @@include('partials/anchors.html')
+    </div>
+</div>
+</div>
+
+@@include('partials/footer.html')
